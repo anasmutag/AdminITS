@@ -1,0 +1,146 @@
+@import "variables.less";
+@import "funciones.less";
+@import "management/matricula.less";
+
+.contenedor_formularioadmin {
+    min-height: 200px;
+    position: relative;
+    color: @base;
+    background-color: #ffffff;
+
+    .boxShadow(0;0;5px;2px;rgba(0, 0, 0, 0.2));
+    .dimensions(@width:60%);
+    .flexBox;
+    .font(@robotomedium;16px);
+    .borderRadius(8px);
+    
+    .etiqueta_encabezadoformlarioadmin {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px 0;
+        color: @blanco;
+
+        background: @base;
+        background: -moz-linear-gradient(top, @base 0%, #2989d8 100%, #207cca 100%, #7db9e8 100%);
+        background: -webkit-linear-gradient(top, @base 0%,#2989d8 100%,#207cca 100%,#7db9e8 100%);
+        background: linear-gradient(to bottom, @base 0%,#2989d8 100%,#207cca 100%,#7db9e8 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@base', endColorstr='#7db9e8',GradientType=0 );
+
+        .dimensions;
+        .borderRadius(8px;8px;100%;100%);
+        .font(@robotobold;18px);
+    }
+    #dv_semestrematricula {
+        margin: 70px 0 15px 0;
+        padding: 0;
+        
+        .dimensions;
+        .flexBox(@align-items:flex-start;@align-content:flex-start);
+
+        div {
+            .dimensions;
+            .flexBox;
+
+            .etiqueta_textoradioformularioadmin {
+                margin: 0 20px 0 5px;
+            }
+        }
+    }
+    .formulario_admin {
+        margin: 15px 0 0 0;
+        
+        .dimensions;
+        .flexBox;
+        
+        .etiqueta_encabezadoelementoformularioadmin {
+            margin: 0 0 15px 0;
+            padding: 0;
+            
+            .font(@robotobold;16px);
+        }
+        .contendor_elementoformularioadmin {
+            margin: 0 0 15px 0;
+            padding: 0;
+
+            .dimensions;
+            .flexBox(@align-items:flex-start;@align-content:flex-start);
+            
+            div {
+                .dimensions;
+                .flexBox;
+                
+                .etiqueta_textoradioformularioadmin {
+                    margin: 0 20px 0 5px;
+                }
+                .etiqueta_textoelementoformularioadmin {
+                    margin: 0 10px 0 0;
+                    text-align: right;
+
+                    .dimensions(@width:170px);
+                }
+                .etiqueta_espacioelementoformularioadmin {
+                    margin-right: 30px;
+                }
+                .entrada_datoformularioadmin {
+                    padding: 5px 6px;
+                    color: @base;
+                    border: 1px solid @base;
+
+                    .dimensions(50%);
+                    .borderRadius(5px);
+                    .font(@robotomedium;14px);
+                }
+                .entrada_datocomboformularioadmin {
+                    min-width: 145px;
+                    margin-right: 15px;
+                    
+                    .dimensions(20%);
+                    
+                    &:nth-last-of-type(1) {
+                        margin: 0;
+                    }
+                }
+            }
+            
+            /*label {
+                margin: 0 10px 0 0;
+                padding: 6.5px 0;
+            }*/
+            /*#lbl_codigoestudiante {
+                text-align: center;
+
+                .dimensions(@width:auto);
+            }*/
+            .boton_formularioadmin {
+                .button(@font-size:16px);
+                
+                &:hover {
+                    .hoverButton(@base);
+                }
+            }
+            &:nth-last-of-type(1) {
+                margin: 20px 0 35px 0;
+            }
+        }
+        .contenedor_elementociudadformularioadmin {
+            div {
+                .etiqueta_textoelementoformularioadmin {
+                    margin: 0 0 15px 0;
+                    text-align: center;
+                    
+                    .dimensions;
+                }
+            }
+        }
+        .entrada_camponovalido {
+            border: 1px solid @error !important;
+        }
+    }
+}
+.contenedor_formulariomatricula {
+    width: 70%;
+}
+.displaynone {
+    display: none !important;
+}

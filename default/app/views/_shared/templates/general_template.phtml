@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv='Content-type' content='text/html; charset=<?= APP_CHARSET ?>' />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        
+        <title>ITS - Administración</title>
+        
+        <? Tag::css('general') ?>
+        <? Tag::css('management') ?>
+        <? Tag::css("jquery/jquery-ui") ?>
+        <? Tag::css("jquery/jquery-ui.structure") ?>
+        <? Tag::css("jquery/jquery-ui.theme") ?>
+        <?= Html::includeCss() ?>
+        
+        <link rel="icon" type="img/ico" href="<?= PUBLIC_PATH."img/favicon.ico "?>">
+        
+        <?= Tag::js('jquery/jquery-2.2.3.min') ?>
+        <?= Tag::js('jquery/jquery-ui') ?>
+        <?= Tag::js('jquery/jquery.blockUI') ?>
+        <?= Tag::js('funciones') ?>
+        
+        <script type="text/javascript">
+            $(document).ready(function(){
+                hb = $('body').innerHeight();
+                hw = window.innerHeight;
+                
+                h = (hw - hb) / 2;
+                
+                if(hb <= hw){
+                    $('html').addClass('contenido_admin');
+                    $('body').addClass('cuerpo_admin');
+                    $('body').css({
+                        'margin-top': h.toString() + "px"
+                    });
+                    $('#cab_admin').addClass('cabecera_admin');
+                    $('#dv_infoinstitutoadmin').addClass('pie_admin');
+                }
+            });
+            
+            $(window).resize(function(){
+                hb = $('body').innerHeight();
+                hw = window.innerHeight;
+                
+                h = (hw - hb) / 2;
+                
+                if(hb <= hw){
+                    $('html').addClass('contenido_admin');
+                    $('body').addClass('cuerpo_admin');
+                    $('body').css({
+                        'margin-top': h.toString() + "px"
+                    });
+                    $('#cab_admin').addClass('cabecera_admin');
+                    $('#dv_infoinstitutoadmin').addClass('pie_admin');
+                }else{
+                    $('html').removeClass('contenido_admin');
+                    $('body').removeClass('cuerpo_admin');
+                    $('body').removeAttr('style');
+                    $('#cab_admin').removeClass('cabecera_admin');
+                    $('#dv_infoinstitutoadmin').removeClass('pie_admin');
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <header id="cab_admin">
+            <? View::partial('header', false, array('view'=>1)); ?>
+        </header>
+        <section id="sec_contenidologinadmin">
+            <? View::content(); ?>
+        </section>
+        <footer>
+            <? View::partial('footer'); ?>
+        </footer>
+    </body>
+</html>

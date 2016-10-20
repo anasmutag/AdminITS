@@ -1,0 +1,339 @@
+<form id="frm_matriculaestudiiante" class="formulario_admin">
+    <span class="etiqueta_encabezadoelementoformularioadmin">Sede Instituto Técnico Surcolombiano</span>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <input id="rb_sede" type="radio" name="sedematricula" value="1" checked>
+            <span class="etiqueta_textoradioformularioadmin">Pasto</span>
+            <input id="rb_sede" type="radio" name="sedematricula" value="2">
+            <span class="etiqueta_textoradioformularioadmin">Ipiales</span>
+        </div>
+    </div>
+    <span class="etiqueta_encabezadoelementoformularioadmin">Datos Personales</span>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin etiqueta_espacioelementoformularioadmin">Tipo de Documento</span>
+            <?foreach($tipodocumentos as $tipodocumento):?>
+                <input id="rb_tipodoc" type="radio" name="tipodocumento" value="<?= $tipodocumento->id_tipodocumento?>" <?= ($tipodocumento===end($tipodocumentos))?'checked':'';?>>
+                <span class="etiqueta_textoradioformularioadmin"><?= $tipodocumento->abreviatura_tipodocumento?></span>
+            <?endforeach;?>
+            <!--select id="slt_tipodocumento" class="entrada_datoformularioadmin">
+                <option value="0">Seleccionar tipo de documento</option>
+                <?foreach($tipodocumentos as $tipodocumento):?>
+                    <option value="<?= $tipodocumento->id_tipodocumento?>"><?= $tipodocumento->nombre_tipodocumento?></option>
+                <?endforeach;?>
+            </select-->
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Número de Documento</span>
+            <input id="txt_numerodocumento" class="entrada_datoformularioadmin" type="text" required="required" onkeypress="return soloNumeros(event);">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin contenedor_elementociudadformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Lugar de Expedición</span>
+            <select class="combo_paises entrada_datoformularioadmin entrada_datocomboformularioadmin">
+                <?foreach($paises as $pais):?>
+                    <option value="<?= $pais->id_pais?>" <?= ($pais->id_pais === '82')?'selected':'';?>><?= $pais->nombre_pais?></option>
+                <?endforeach;?>
+            </select>
+            <select class="combo_regiones entrada_datoformularioadmin entrada_datocomboformularioadmin">
+                <option value="0">Región</option>
+                <?foreach($regiones as $region):?>
+                    <option value="<?= $region->id_region?>"><?= $region->nombre_region?></option>
+                <?endforeach;?>
+            </select>
+            <select class="combo_localidades entrada_datoformularioadmin entrada_datocomboformularioadmin">
+                <option>Localidad</option>
+            </select>
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Nombre(s)</span>
+            <input class="entrada_datoformularioadmin" type="text" required="required">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Apellido(s)</span>
+            <input class="entrada_datoformularioadmin" type="text" required="required">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Fecha de Nacimiento</span>
+            <input id="txt_fechanacimiento" class="entrada_datoformularioadmin" type="text" placeholder="YYYY-MM-DD" required="required">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin contenedor_elementociudadformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Lugar de Nacimiento</span>
+            <select id="sl_paises" class="combo_paises entrada_datoformularioadmin entrada_datocomboformularioadmin">
+                <?foreach($paises as $pais):?>
+                    <option value="<?= $pais->id_pais?>" <?= ($pais->id_pais === '82')?'selected':'';?>><?= $pais->nombre_pais?></option>
+                <?endforeach;?>
+            </select>
+            <select id="sl_regiones" class="combo_regiones entrada_datoformularioadmin entrada_datocomboformularioadmin">
+                <option value="0">Región</option>
+                <?foreach($regiones as $region):?>
+                    <option value="<?= $region->id_region?>"><?= $region->nombre_region?></option>
+                <?endforeach;?>
+            </select>
+            <select id="sl_localidades" class="combo_localidades entrada_datoformularioadmin entrada_datocomboformularioadmin">
+                <option>Localidad</option>
+            </select>
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Dirección</span>
+            <input class="entrada_datoformularioadmin" type="text" required="required">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Teléfono/Celular</span>
+            <input class="entrada_datoformularioadmin" type="text" required="required" onkeypress="return soloNumeros(event);">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Correo Electrónico</span>
+            <input class="entrada_datoformularioadmin" type="email" required="required">
+        </div>
+    </div>
+    <span class="etiqueta_encabezadoelementoformularioadmin">Datos Acudiente</span>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Nombre(s)</span>
+            <input class="entrada_datoformularioadmin" type="text" required="required">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Apellido(s)</span>
+            <input class="entrada_datoformularioadmin" type="text" required="required">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Teléfono/Celular</span>
+            <input class="entrada_datoformularioadmin" type="text" required="required" onkeypress="return soloNumeros(event);">
+        </div>
+    </div>
+    <span class="etiqueta_encabezadoelementoformularioadmin">Datos Laborales</span>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Empresa</span>
+            <input class="entrada_datoformularioadmin" type="text" required="required">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Ocupación/Cargo</span>
+            <input class="entrada_datoformularioadmin" type="text" required="required">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Dirección</span>
+            <input class="entrada_datoformularioadmin" type="text" required="required">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Teléfono/Celular</span>
+            <input class="entrada_datoformularioadmin" type="text" required="required" onkeypress="return soloNumeros(event);">
+        </div>
+    </div>
+    <span class="etiqueta_encabezadoelementoformularioadmin">Datos Programa</span>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Programa</span>
+            <select id="slt_tipodocumento" class="entrada_datoformularioadmin">
+                <option value="0">Seleccionar programa</option>
+                <?foreach($programas as $programa):?>
+                    <option value="<?= $programa->codigo_programa?>"><?= $programa->nombre_programa?></option>
+                <?endforeach;?>
+            </select>
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Semestre</span>
+            <select id="slt_tipodocumento" class="entrada_datoformularioadmin">
+                <option value="0">Seleccionar semestre</option>
+                <?foreach($semestres as $semestre):?>
+                    <option value="<?= $semestre->id_semestre?>"><?= $semestre->nombre_semestre?></option>
+                <?endforeach;?>
+            </select>
+        </div>
+    </div>
+    <span class="etiqueta_encabezadoelementoformularioadmin">Datos Matrícula</span>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Código Estudiante</span>
+            <input id="txt_codigoestudiantil" class="entrada_datoformularioadmin" type="text" readonly="readonly" required="required">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Número Matrícula</span>
+            <input class="entrada_datoformularioadmin" type="text" readonly="readonly" required="required">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Fecha Matricula</span>
+            <input class="entrada_datoformularioadmin" type="text" value="<?= date('Y-m-d')?>" readonly="readonly" required="required">
+        </div>
+    </div>
+    <span class="etiqueta_encabezadoelementoformularioadmin">Datos Pago</span>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin etiqueta_espacioelementoformularioadmin">Forma de Pago</span>
+            <?foreach($formapagos as $formapago):?>
+                <input id="rb_fp<?= $formapago->nombre_formapago?>" type="radio" name="formapago" value="<?= $formapago->id_formapago?>" <?= ($formapago===reset($formapagos))?'checked':'';?>>
+                <span class="etiqueta_textoradioformularioadmin"><?= $formapago->nombre_formapago?></span>
+            <?endforeach;?>
+        </div>
+    </div>
+    <div id="dv_numerocuotas" class="contendor_elementoformularioadmin displaynone">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Número de Cuotas</span>
+            <input id="num_numerocuotas" class="entrada_datoformularioadmin" type="number" min="2" required="required">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <input class="boton_formularioadmin" type="button" value="Consultar">
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(function($){
+        $.datepicker.regional['es'] = {
+            closeText: 'Cerrar',
+            prevText: 'Anterior',
+            nextText: 'Siguiente',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+            dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+            weekHeader: 'Sm',
+            dateFormat: 'yy-mm-dd',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['es']);
+    });
+    
+    $('#txt_fechanacimiento').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "1950:2016"
+    });
+    
+    /*$('#txt_fechanacimiento').datetimepicker({
+	controlType: 'select',
+	oneLine: true,
+	dateFormat: 'yy-mm-dd',
+	timeFormat: 'HH:mm:ss',
+        minDate: new Date(),
+        
+        onSelect: function (selectedDateTime){
+            $(this).removeClass('cajastexto_novalida');
+        }
+    });*/
+    
+    $('#rb_fpContado').on('click', function (){
+        $('#dv_numerocuotas').addClass('displaynone');
+        $('#num_numerocuotas').val(-1);
+    });
+    
+    $('#rb_fpCuotas').on('click', function (){
+        $('#dv_numerocuotas').removeClass('displaynone');
+        $('#num_numerocuotas').val(2);
+    });
+    
+    $('.combo_paises').change(function(){
+        var p = $(this);
+        
+        if($(this).val().length > 0){
+            var pais = $(this).val();
+            
+            $.ajax({
+                type: 'GET',
+                url: "<?= PUBLIC_PATH . 'management/obtenerRegiones/'?>" + pais,
+                dataType: 'json',
+                success: function(data){
+                    try{
+                        var bandera = 0;
+                        
+                        p.next().empty();
+                        p.next().append('<option value="0">Región</option>');
+                        p.next().next().empty();
+                        p.next().next().append('<option value="0">Localidad</option>');
+                        
+                        for(var i=0; i<data.length; i++){
+                            try {
+                                p.next().append('<option value="' + data[i].id_region + '">'+ data[i].nombre_region + '</option>');
+                            }catch(e){
+                                bandera = 1;
+                            }
+                        }
+                    }catch(e){
+                        
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError){ } 
+            });
+        }
+    });
+    
+    $('.combo_regiones').change(function(){
+        var r = $(this);
+        
+        if($(this).val().length > 0){
+            var pais = $(this).prev().val(),
+                region = $(this).val();
+            
+            $.ajax({
+                type: 'GET',
+                url: "<?= PUBLIC_PATH . 'management/obtenerLocalidades/'?>" + pais + "/" + region,
+                dataType: 'json',
+                success: function(data){
+                    try{
+                        var bandera = 0;
+                        
+                        r.next().empty();
+                        r.next().append('<option value="0">Localidad</option>');
+                        
+                        for(var i=0; i<data.length; i++){
+                            try {
+                                r.next().append('<option value="' + data[i].id_localidad + '">'+ data[i].nombre_localidad + '</option>');
+                            }catch(e){
+                                bandera = 1;
+                            }
+                        }
+                    }catch(e){
+                        
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError){ } 
+            });
+        }
+    });
+    
+    $('#txt_numerodocumento').on('keyup', function (){
+        var documento = $(this).val();    
+        var codigo = $('#txt_codigoestudiantil');
+        
+        codigo.val(documento);
+    });
+</script>

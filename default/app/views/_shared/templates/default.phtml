@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv='Content-type' content='text/html; charset=<?= APP_CHARSET ?>' />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        
+        <title>ITS - Administración</title>
+        
+        <? Tag::css('general') ?>
+        <?= Html::includeCss() ?>
+        
+        <link rel="icon" type="img/ico" href="<?= PUBLIC_PATH."img/favicon.ico "?>">
+        
+        <?= Tag::js('jquery/jquery-2.2.3.min') ?>
+        <?= Tag::js('jquery/jquery-ui') ?>
+        <?= Tag::js('jquery/jquery.blockUI') ?>
+        
+        <script type="text/javascript">
+            $(document).ready(function(){
+                hb = $('body').innerHeight();
+                hw = window.innerHeight;
+                
+                h = (hw - hb) / 2;
+                
+                if(hb <= hw){
+                    $('html').addClass('contenido_admin');
+                    $('body').addClass('cuerpo_admin');
+                    $('body').css({
+                        'margin-top': h.toString() + "px"
+                    });
+                    $('#cab_admin').addClass('cabecera_admin');
+                    $('#dv_infoinstitutoadmin').addClass('pie_admin');
+                }
+                
+                $('#btn_loginadmin').on('click', function (){
+                    var id = $('#identificacion').val(),
+                        pass = $('#contrasena').val();
+
+                    if(id.length > 0 && pass.length > 0){
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?= PUBLIC_PATH?>account/logearAdmin/',
+                            data: $('#frm_loginadmin').serialize(),
+                            dataType: 'json',
+                            beforeSend: function(){
+                                $('body').addClass('menuopen');
+
+                                $.blockUI({
+                                    message: "Validando datos..."
+                                });
+                            },
+                            success: function(data) {
+                                if(data !== null && data.res === 'ok'){
+                                    window.location = "<?= PUBLIC_PATH?>management/administracion/";
+                                }else{
+                                    console.log(data.msg);
+                                }
+                            },
+                            error: function(){
+                                console.log('Ocurrio un error inesperado. Intenta nuevamente -');
+                            }
+                        }).always(function(){
+                            $.unblockUI();
+                        });
+                    }else{
+                        $input = $('#identificacion');
+                        if(id.length === 0){
+                            $input.addClass('entrada_camponovalido');
+                        }else{
+                            $input.removeClass('entrada_camponovalido');
+                        }
+                        $input = $('#contrasena');
+                        if(pass.length === 0){
+                            $input.addClass('entrada_camponovalido');
+                        }else{
+                            $input.removeClass('entrada_camponovalido');
+                        }
+                    }
+                });
+                
+                $('#identificacion, #contrasena').on('blur', function() {
+                    var txt = $(this).val();
+
+                    if (txt.length <= 0) {
+                        $(this).addClass('entrada_camponovalido');
+                    } else {
+                        $(this).removeClass('entrada_camponovalido');
+                    }
+                });
+
+                $('#identificacion, #contrasena').on('keyup', function() {
+                    var txt = $(this).val();
+
+                    if (txt.length <= 0) {
+                        $(this).addClass('entrada_camponovalido');
+                    } else {
+                        $(this).removeClass('entrada_camponovalido');
+                    }
+                });
+            });
+            
+            $(window).resize(function(){
+                hb = $('body').innerHeight();
+                hw = window.innerHeight;
+                
+                h = (hw - hb) / 2;
+                
+                if(hb <= hw){
+                    $('html').addClass('contenido_admin');
+                    $('body').addClass('cuerpo_admin');
+                    $('body').css({
+                        'margin-top': h.toString() + "px"
+                    });
+                    $('#cab_admin').addClass('cabecera_admin');
+                    $('#dv_infoinstitutoadmin').addClass('pie_admin');
+                }else{
+                    $('html').removeClass('contenido_admin');
+                    $('body').removeClass('cuerpo_admin');
+                    $('body').removeAttr('style');
+                    $('#cab_admin').removeClass('cabecera_admin');
+                    $('#dv_infoinstitutoadmin').removeClass('pie_admin');
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <header id="cab_admin">
+            <? View::partial('header', false, array('view'=>0)); ?>
+        </header>
+        <section id="sec_contenidologinadmin">
+            <div class="contenedor_loginadmin">
+                <span>&nbsp;</span>
+                <form id="frm_loginadmin">
+                    <div class="contendor_elementologinadmin">
+                        <label class="etiqueta_textologinadmin">Identificación</label>
+                        <input id="identificacion" class="entrada_datosloginadmin" type="text" name="identificacion" autofocus placeholder="Digite aquí su identificación">
+                    </div>
+                    <div class="contendor_elementologinadmin">
+                        <label class="etiqueta_textologinadmin">Contraseña</label>
+                        <input id="contrasena" class="entrada_datosloginadmin" type="password" name="contrasena" placeholder="Digite aquí su contraseña">
+                    </div>
+                    <div class="contendor_elementologinadmin">
+                        <input id="btn_loginadmin" class="boton_loginadmin" type="button" value="Ingresar">
+                    </div>
+                </form>
+            </div>
+        </section>
+        <footer>
+            <? View::partial('footer'); ?>
+        </footer>
+    </body>
+</html>

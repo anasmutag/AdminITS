@@ -1,0 +1,528 @@
+/*@html: #006369;*/
+@font-face {
+  font-family: 'RobotoBold';
+  src: url(../font/Roboto-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'RobotoBoldItalic';
+  src: url(../font/Roboto-BoldItalic.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'RobotoLightItalic';
+  src: url(../font/Roboto-LightItalic.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'RobotoMedium';
+  src: url(../font/Roboto-Medium.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'RobotoRegular';
+  src: url(../font/Roboto-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'RobotoItalic';
+  src: url(../font/Roboto-Italic.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto-Black';
+  src: url(../font/Roboto-Black.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto-Light';
+  src: url(../font/Roboto-Light.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto-Thin';
+  src: url(../font/Roboto-Thin.ttf) format('truetype');
+}
+/*
+@font-face {
+    font-family: 'ralewaybold';
+    src: url('raleway-bold-webfont.eot');
+    src: url('raleway-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('raleway-bold-webfont.woff') format('woff'),
+         url('raleway-bold-webfont.ttf') format('truetype'),
+         url('raleway-bold-webfont.svg#ralewaybold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+*/
+/*.hoverButton(@border-color) when(@border-color = #000000){
+    color: @colorw;
+    background-color: @border-color;
+}
+
+.hoverButton(@border-color) when(@border-color = #FF3E00){
+    color: @colorw;
+    border-color: @border-color;
+    background-color: @border-color;
+}
+
+.hoverButton(@border-color) when(@border-color = #7C7471){
+    color: @colorw;
+    background-color: @border-color;
+}
+
+.hoverButton(@border-color) when(@border-color = #80016B){
+    color: @border-color;
+    border-color: @colorw;
+    background-color: @colorw;
+}
+
+.icon(
+    @width;
+    @height;
+    @bpy;
+    @bpx: 0px
+){
+    width: @width;
+    height: @height;
+    background-position: @bpx @bpy;
+}*/
+.contenedor_formularioadmin {
+  /*min-height: 200px;
+    position: relative;
+    color: @base;
+    background-color: #ffffff;
+
+    .boxShadow(0;0;5px;2px;rgba(0, 0, 0, 0.2));
+    .dimensions(@width:60%);
+    .flexBox;
+    .font(@robotomedium;16px);
+    .borderRadius(8px);
+    
+    .etiqueta_encabezadoformlarioadmin {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px 0;
+        color: @blanco;
+
+        background: @base;
+        background: -moz-linear-gradient(top, @base 0%, #2989d8 100%, #207cca 100%, #7db9e8 100%);
+        background: -webkit-linear-gradient(top, @base 0%,#2989d8 100%,#207cca 100%,#7db9e8 100%);
+        background: linear-gradient(to bottom, @base 0%,#2989d8 100%,#207cca 100%,#7db9e8 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@base', endColorstr='#7db9e8',GradientType=0 );
+
+        .dimensions;
+        .borderRadius(8px;8px;100%;100%);
+        .font(@robotobold;18px);
+    }*/
+}
+.contenedor_formularioadmin .formulario_admin {
+  /*margin: 70px 0 0 0;
+        
+        .dimensions;
+        .flexBox;
+        
+        .etiqueta_encabezadoelementoformularioadmin {
+            margin: 0 0 15px 0;
+            padding: 0;
+            
+            .font(@robotobold;16px);
+        }*/
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin {
+  /*margin: 0 0 15px 0;
+            padding: 0;
+
+            .dimensions;
+            .flexBox(@align-items:flex-start;@align-content:flex-start);
+            
+            &:nth-of-type(2) div .etiqueta_textoelementoformularioadmin {
+                margin-right: 30px;
+            }*/
+  /*label {
+                margin: 0 10px 0 0;
+                padding: 6.5px 0;
+            }
+            #lbl_codigoestudiante {
+                text-align: center;
+
+                .dimensions(@width:auto);
+            }
+            .boton_formularioadmin {
+                .button(@font-size:16px);
+                
+                &:hover {
+                    .hoverButton(@base);
+                }
+            }
+            &:nth-last-of-type(1) {
+                margin: 20px 0 35px 0;
+            }*/
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div {
+  /*.dimensions;
+                .flexBox;
+                
+                .etiqueta_textoradioformularioadmin {
+                    margin: 0 20px 0 5px;
+                }
+                .etiqueta_textoelementoformularioadmin {
+                    margin: 0 10px 0 0;
+                    text-align: right;
+
+                    .dimensions(@width:145px);
+                }.entrada_datoformularioadmin {
+                    padding: 5px 6px;
+                    color: @base;
+                    border: 1px solid @base;
+
+                    .dimensions(50%);
+                    .borderRadius(5px);
+                    .font(@robotomedium;14px);
+                }*/
+}
+.contenedor_formularioadmin .formulario_admin .entrada_camponovalido {
+  border: 1px solid #ff0000 !important;
+}
+.contenedor_formularioadmin {
+  min-height: 200px;
+  position: relative;
+  color: #00529B;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+  width: 60%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+  font-family: 'RobotoMedium';
+  font-size: 16px;
+  border-radius: 8px;
+  -moz-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  -webkit-border-radius: 8px;
+}
+.contenedor_formularioadmin .etiqueta_encabezadoformlarioadmin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  color: #ffffff;
+  background: #00529B;
+  background: -moz-linear-gradient(top, #00529B 0%, #2989d8 100%, #207cca 100%, #7db9e8 100%);
+  background: -webkit-linear-gradient(top, #00529B 0%, #2989d8 100%, #207cca 100%, #7db9e8 100%);
+  background: linear-gradient(to bottom, #00529B 0%, #2989d8 100%, #207cca 100%, #7db9e8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@base', endColorstr='#7db9e8', GradientType=0);
+  width: 100%;
+  height: auto;
+  border-radius: 8px 8px 100% 100%;
+  -moz-border-radius: 8px 8px 100% 100%;
+  -o-border-radius: 8px 8px 100% 100%;
+  -ms-border-radius: 8px 8px 100% 100%;
+  -khtml-border-radius: 8px 8px 100% 100%;
+  -webkit-border-radius: 8px 8px 100% 100%;
+  font-family: 'RobotoBold';
+  font-size: 18px;
+}
+.contenedor_formularioadmin #dv_semestrematricula {
+  margin: 70px 0 15px 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: flex-start;
+  -moz-box-align: flex-start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-align-content: flex-start;
+  -ms-flex-pack: flex-start;
+  align-content: flex-start;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+}
+.contenedor_formularioadmin #dv_semestrematricula div {
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+}
+.contenedor_formularioadmin #dv_semestrematricula div .etiqueta_textoradioformularioadmin {
+  margin: 0 20px 0 5px;
+}
+.contenedor_formularioadmin .formulario_admin {
+  margin: 15px 0 0 0;
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+}
+.contenedor_formularioadmin .formulario_admin .etiqueta_encabezadoelementoformularioadmin {
+  margin: 0 0 15px 0;
+  padding: 0;
+  font-family: 'RobotoBold';
+  font-size: 16px;
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin {
+  margin: 0 0 15px 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: flex-start;
+  -moz-box-align: flex-start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-align-content: flex-start;
+  -ms-flex-pack: flex-start;
+  align-content: flex-start;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+  /*label {
+                margin: 0 10px 0 0;
+                padding: 6.5px 0;
+            }*/
+  /*#lbl_codigoestudiante {
+                text-align: center;
+
+                .dimensions(@width:auto);
+            }*/
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div {
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div .etiqueta_textoradioformularioadmin {
+  margin: 0 20px 0 5px;
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div .etiqueta_textoelementoformularioadmin {
+  margin: 0 10px 0 0;
+  text-align: right;
+  width: 170px;
+  height: auto;
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div .etiqueta_espacioelementoformularioadmin {
+  margin-right: 30px;
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div .entrada_datoformularioadmin {
+  padding: 5px 6px;
+  color: #00529B;
+  border: 1px solid #00529B;
+  width: 50%;
+  height: auto;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  font-family: 'RobotoMedium';
+  font-size: 14px;
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div .entrada_datocomboformularioadmin {
+  min-width: 145px;
+  margin-right: 15px;
+  width: 20%;
+  height: auto;
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div .entrada_datocomboformularioadmin:nth-last-of-type(1) {
+  margin: 0;
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin .boton_formularioadmin {
+  width: 100px;
+  min-width: 100px;
+  height: 35px;
+  min-height: 35px;
+  font-family: 'RobotoRegular';
+  font-size: 16px;
+  color: #ffffff;
+  border: 2px solid #00529B;
+  background-color: #00529B;
+  padding: 0;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin .boton_formularioadmin:hover {
+  color: #00529B;
+  background-color: #ffffff;
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin:nth-last-of-type(1) {
+  margin: 20px 0 35px 0;
+}
+.contenedor_formularioadmin .formulario_admin .contenedor_elementociudadformularioadmin div .etiqueta_textoelementoformularioadmin {
+  margin: 0 0 15px 0;
+  text-align: center;
+  width: 100%;
+  height: auto;
+}
+.contenedor_formularioadmin .formulario_admin .entrada_camponovalido {
+  border: 1px solid #ff0000 !important;
+}
+.contenedor_formulariomatricula {
+  width: 70%;
+}
+.displaynone {
+  display: none !important;
+}
+/*# sourceMappingURL=management.css.map */

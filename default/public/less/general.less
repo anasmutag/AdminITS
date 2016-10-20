@@ -1,0 +1,202 @@
+@import "variables.less";
+@import "funciones.less";
+
+.normalize();
+.reset();
+
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+html {
+    background: white;
+    background: -webkit-linear-gradient(white, @html);
+    background: -o-linear-gradient(white, @html);
+    background: -moz-linear-gradient(white, @html);
+    background: linear-gradient(white, @html);
+    background-repeat: no-repeat;
+    
+    .font(@robotoregular;14px);
+}
+body {
+    text-align: center;
+    margin: auto;
+    min-width: 320px;
+    max-width: 1024px;
+    background-color: @fondo;
+    
+    .boxShadow(0;0;10px;2px;rgba(0, 0, 0, 0.5));
+}
+.contenido_admin {
+    height: 100%;
+}
+.cuerpo_admin {
+    .borderRadius(8px);
+}
+input, textarea, select {
+  outline: 0;
+}
+.menuopen {
+  overflow: hidden;
+}
+header {
+    background: @base;
+    background: -moz-linear-gradient(top, @base 0%, #2989d8 100%, #207cca 100%, #7db9e8 100%);
+    background: -webkit-linear-gradient(top, @base 0%,#2989d8 100%,#207cca 100%,#7db9e8 100%);
+    background: linear-gradient(to bottom, @base 0%,#2989d8 100%,#207cca 100%,#7db9e8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@base', endColorstr='#7db9e8',GradientType=0 );
+    
+    .dimensions;
+    .flexBox;
+    
+    #dv_logoadmin {
+        height: 70px;
+        margin: 0 2.5% 0 0;
+        padding: 5px 0;
+        
+        .flexBox;
+        
+        img {
+            margin: 0;
+            
+            .dimensions(60px;60px);
+            .borderRadius(100%);
+            .boxShadow(-8px;0;16px;-2px);
+        }
+    }
+    #dv_institutoadmin {
+        height: 80px;
+        margin: 0 0 0 2.5%;
+        color: @its;
+        text-shadow:
+            -2px -2px 0 @blanco,
+            2px -2px 0 @blanco,
+            -2px 2px 0 @blanco,
+            2px 2px 0 @blanco;
+        letter-spacing: 0;
+        
+        .flexBox(@flex-direction:column);
+        .font(@robotoblack;25px);
+        
+        /*h1, span {
+            .dimensions;
+        }*/
+    }
+}
+.cabecera_admin {
+    .borderRadius(8px;8px;0;0);
+}
+footer {
+    .dimensions;
+    .flexBox;
+    
+    #dv_infoinstitutoadmin {
+        background-color: @amarillo;
+        
+        .dimensions;
+        .flexBox;
+        
+        #dv_contenidoinformacioninstitutoadmin {
+            background: @base;
+            background: -moz-linear-gradient(top, @base 0%, #2989d8 100%, #207cca 100%, #7db9e8 100%);
+            background: -webkit-linear-gradient(top, @base 0%,#2989d8 100%,#207cca 100%,#7db9e8 100%);
+            background: linear-gradient(to bottom, @base 0%,#2989d8 100%,#207cca 100%,#7db9e8 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@base', endColorstr='#7db9e8',GradientType=0 );
+
+            .dimensions(@height:40px);
+            .flexBox;
+            .borderRadius(0;0;100%;100%);
+
+            div {
+                .dimensions;
+                .flexBox;
+            }
+        }
+    }
+}
+.pie_admin {
+    .borderRadius(0;0;8px;8px);
+}
+#sec_contenidologinadmin {
+    min-height: 350px;
+    padding: 30px 0;
+    
+    .flexBox;
+    
+    .contenedor_loginadmin {
+        min-height: 200px;
+        position: relative;
+        color: @base;
+        background-color: #ffffff;
+
+        .boxShadow(0;0;5px;2px;rgba(0, 0, 0, 0.2));
+        .dimensions(@width:60%);
+        .flexBox;
+        .font(@robotomedium;16px);
+        .borderRadius(8px);
+
+        span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px 0;
+            color: @blanco;
+
+            background: @base;
+            background: -moz-linear-gradient(top, @base 0%, #2989d8 100%, #207cca 100%, #7db9e8 100%);
+            background: -webkit-linear-gradient(top, @base 0%,#2989d8 100%,#207cca 100%,#7db9e8 100%);
+            background: linear-gradient(to bottom, @base 0%,#2989d8 100%,#207cca 100%,#7db9e8 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@base', endColorstr='#7db9e8',GradientType=0 );
+
+            .dimensions;
+            .borderRadius(8px;8px;100%;100%);
+            .font(@robotobold;18px);
+        }
+        #frm_loginadmin {
+            .dimensions;
+            .flexBox;
+
+            .contendor_elementologinadmin {
+                margin: 0 0 15px 0;
+                padding: 0;
+
+                .dimensions;
+                .flexBox(@align-items:flex-start;@align-content:flex-start);
+
+                label {
+                    margin: 0 10px 0 0;
+                    padding: 6.5px 0;
+                }
+                .etiqueta_textologinadmin {
+                    text-align: right;
+
+                    .dimensions(@width:100px);
+                }
+                .entrada_datosloginadmin {
+                    padding: 5px 6px;
+                    color: @base;
+                    border: 1px solid @base;
+
+                    .dimensions(50%);
+                    .borderRadius(5px);
+                    .font(@robotomedium;14px);
+                }
+                .boton_loginadmin {
+                    .button(@font-size:16px);
+
+                    &:hover {
+                        .hoverButton(@base);
+                    }
+                }
+                &:nth-of-type(1) {
+                    margin-top: 70px;
+                }
+                &:nth-last-of-type(1) {
+                    margin: 20px 0 35px 0;
+                }
+            }
+            .entrada_camponovalido {
+                border: 1px solid @error !important;
+            }
+        }
+    }
+}
