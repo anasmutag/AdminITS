@@ -177,6 +177,124 @@
 .contenedor_formularioadmin .formulario_admin .entrada_camponovalido {
   border: 1px solid #ff0000 !important;
 }
+#dv_buscardocumento {
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+}
+#dv_buscardocumento div {
+  margin: 15px 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+}
+#dv_buscardocumento div span {
+  margin: 0 10px 0 0;
+  text-align: right;
+  width: 170px;
+  height: auto;
+}
+#dv_buscardocumento div .entrada_datoformularioadmin {
+  padding: 5px 6px;
+  color: #00529B;
+  border: 1px solid #00529B;
+  width: 50%;
+  height: auto;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  font-family: 'RobotoMedium';
+  font-size: 14px;
+}
+#dv_buscardocumento div .boton_buscardocumento {
+  width: 125px;
+  min-width: 100px;
+  height: 35px;
+  min-height: 35px;
+  font-family: 'RobotoRegular';
+  font-size: 16px;
+  color: #ffffff;
+  border: 2px solid #00529B;
+  background-color: #00529B;
+  padding: 0;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+#dv_buscardocumento div .boton_buscardocumento:hover {
+  color: #00529B;
+  background-color: #ffffff;
+}
+#dv_buscardocumento div:nth-of-type(2) {
+  margin-bottom: 45px;
+}
 .contenedor_formularioadmin {
   min-height: 200px;
   position: relative;
@@ -322,7 +440,7 @@
     -webkit-order: 2;
     order: 2;*/
 }
-.contenedor_formularioadmin #dv_semestrematricula div .etiqueta_textoradioformularioadmin {
+.contenedor_formularioadmin #dv_semestrematricula div:nth-of-type(1) .etiqueta_textoradioformularioadmin {
   margin: 0 20px 0 5px;
 }
 .contenedor_formularioadmin .formulario_admin {

@@ -2,12 +2,72 @@
     <span class="etiqueta_encabezadoformlarioadmin">Matricular Estudiante</span>
     <div id="dv_semestrematricula">
         <div>
-            <input type="radio" name="matricula" value="1" checked>
+            <input id="rb_semestreuno" type="radio" name="matricula" value="1" checked>
             <span class="etiqueta_textoradioformularioadmin">Primer Semestre</span>
-            <input type="radio" name="matricula" value="2">
+            <input id="rb_semestredostres" type="radio" name="matricula" value="2">
             <span class="etiqueta_textoradioformularioadmin">Segundo y Tercer Semetre</span>
         </div>
     </div>
-        
-    <? View::partial('management/formulariomatricula', false, array('tipodocumentos'=>$tipodocumentos, 'programas'=>$programas, 'semestres'=>$semestres, 'formapagos'=>$formapagos, 'paises'=>$paises, 'regiones'=>$regiones)); ?>
+    <div id="dv_buscardocumento" class="displaynone">
+        <div>
+            <span>Número de Documento</span>
+            <input class="entrada_datoformularioadmin" type="text" required="required" onkeypress="return soloNumeros(event);">
+        </div>
+        <div>
+            <input class="boton_buscardocumento" type="button" value="Cargar Datos">
+        </div>
+    </div>
+    <div id="dv_formulariomatricula"></div>
+    
+    <? //View::partial('management/formulariomatricula', false, array('tipodocumentos'=>$tipodocumentos, 'programas'=>$programas, 'semestres'=>$semestres, 'formapagos'=>$formapagos, 'paises'=>$paises, 'regiones'=>$regiones)); ?>
 </div>
+
+<script type="text/javascript">
+    function cargarForm(tipoForm){
+        $.ajax({
+                type: 'POST',
+                url: <?= PUBLIC_PATH?> + 'management/formulariomatricula/',
+                data: {
+                    tipoForm: tipoForm
+                },
+                beforeSend: function(){
+                    /*document.getElementById("btn_consultarnotas").disabled = true;
+                    
+                    $('body').addClass('menuopen');
+                    
+                    $.blockUI({
+                        message: "Procesando solicitud..."
+                    });*/
+                },
+                success: function(data) {
+                    /*$('body').removeClass('menuopen');
+                    document.getElementById("frm_codigoestudiante").reset();*/
+                    
+                    $('#dv_formulariomatricula').html('');
+                    $('#dv_formulariomatricula').html(data);
+                },
+                error: function(){
+                    //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                }
+            }).always(function(){
+                /*document.getElementById("btn_consultarnotas").disabled = false;
+                
+                $.unblockUI();*/
+            });
+    }
+    
+    cargarForm(0);
+    
+    $('#rb_semestreuno').on('click', function (){
+        $('#dv_buscardocumento').addClass('displaynone');
+        
+        cargarForm(0);
+    });
+    
+    $('#rb_semestredostres').on('click', function (){
+        //cargarForm(1);
+        
+        $('#dv_formulariomatricula').html('');
+        $('#dv_buscardocumento').removeClass('displaynone');
+    });
+</script>

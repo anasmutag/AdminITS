@@ -17,7 +17,7 @@ class ManagementController extends AppController {
         if(Auth::is_valid()){
             View::template('general_template');
             
-            $tipodocumento = new Tipodocumento();
+            /*$tipodocumento = new Tipodocumento();
             $programa = new Programa();
             $semestre = new Semestre();
             $formapago = new Formapago();
@@ -29,10 +29,29 @@ class ManagementController extends AppController {
             $this->semestres = $semestre->semestres();
             $this->formapagos = $formapago->formapagos();
             $this->paises = $pais->paises();
-            $this->regiones = $region->regiones(82);
+            $this->regiones = $region->regiones(82);*/
         }else{
             Router::redirect("/");
         }
+    }
+    
+    function formulariomatricula() {
+        View::template(NULL);
+        
+        $tipodocumento = new Tipodocumento();
+        $programa = new Programa();
+        $semestre = new Semestre();
+        $formapago = new Formapago();
+        $pais = new Pais();
+        $region = new Region();
+        
+        $this->tipoForm = Input::request('tipoForm');
+        $this->tipodocumentos = $tipodocumento->tipoDocumentos();
+        $this->programas = $programa->programas();
+        $this->semestres = $semestre->semestres();
+        $this->formapagos = $formapago->formapagos();
+        $this->paises = $pais->paises();
+        $this->regiones = $region->regiones(82);
     }
     
     public function obtenerRegiones($idpais = '0') {
