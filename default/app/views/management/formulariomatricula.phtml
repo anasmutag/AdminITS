@@ -1,12 +1,11 @@
-<? if($tipoForm == 0): ?>
-
-<form id="frm_matriculaestudiiante" class="formulario_admin">
+<form id="frm_matriculaestudiante" class="formulario_admin">
+    <?if($bandera==1):?><span class="etiqueta_encabezadoelementoformularioadmin">MATRICULA SEMESTRE NÚMERO:&nbsp;<input class="texto_semestre" type="text" name="semestre" value="<?= ($datos[0]->id_semestre + 1)?>" readonly="readonly"></span><?endif;?>
     <span class="etiqueta_encabezadoelementoformularioadmin">Sede Instituto Técnico Surcolombiano</span>
     <div class="contendor_elementoformularioadmin">
         <div>
-            <input id="rb_sede" type="radio" name="sedematricula" value="1" checked>
+            <input type="radio" name="sedematricula" value="1" <?= ($bandera==1&&$datos[0]->id_sede==1)?'cheked':($bandera==0)?'checked':'';?>>
             <span class="etiqueta_textoradioformularioadmin">Pasto</span>
-            <input id="rb_sede" type="radio" name="sedematricula" value="2">
+            <input type="radio" name="sedematricula" value="2" <?= ($bandera==1&&$datos[0]->id_sede==2)?'cheked':'';?>>
             <span class="etiqueta_textoradioformularioadmin">Ipiales</span>
         </div>
     </div>
@@ -15,7 +14,7 @@
         <div>
             <span class="etiqueta_textoelementoformularioadmin etiqueta_espacioelementoformularioadmin">Tipo de Documento</span>
             <?foreach($tipodocumentos as $tipodocumento):?>
-                <input id="rb_tipodoc" type="radio" name="tipodocumento" value="<?= $tipodocumento->id_tipodocumento?>" <?= ($tipodocumento===end($tipodocumentos))?'checked':'';?>>
+                <input type="radio" name="tipodocumento" value="<?= $tipodocumento->id_tipodocumento?>" <?= ($bandera==0&&$tipodocumento===end($tipodocumentos))?'checked':($bandera==1&&$datos[0]->id_tipodocumento==$tipodocumento->id_tipodocumento)?'checked':'';?>><?/*= ($bandera==1)?'onclick="return false;"':''*/?>
                 <span class="etiqueta_textoradioformularioadmin"><?= $tipodocumento->abreviatura_tipodocumento?></span>
             <?endforeach;?>
             <!--select id="slt_tipodocumento" class="entrada_datoformularioadmin">
@@ -29,140 +28,152 @@
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Número de Documento</span>
-            <input id="txt_numerodocumento" class="entrada_datoformularioadmin" type="text" required="required" onkeypress="return soloNumeros(event);">
+            <input id="txt_numerodocumento" class="entrada_datoformularioadmin" type="text" name="numerodocumento" required="required" onkeypress="return soloNumeros(event);" <?= ($bandera==1)?'value="'.$datos[0]->identificacion_alumno.'" readonly':'';?>>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin contenedor_elementociudadformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Lugar de Expedición</span>
-            <select class="combo_paises entrada_datoformularioadmin entrada_datocomboformularioadmin">
+            <select id="slt_paisE" class="combo_paises entrada_datoformularioadmin entrada_datocomboformularioadmin" name="paisE" <?= ($bandera==1)?'disabled':'';?>>
                 <?foreach($paises as $pais):?>
-                    <option value="<?= $pais->id_pais?>" <?= ($pais->id_pais === '82')?'selected':'';?>><?= $pais->nombre_pais?></option>
+                    <option value="<?= $pais->id_pais?>" <?= ($bandera==0&&$pais->id_pais==='82')?'selected':($bandera==1&&$datoslocalidad[0]->id_pais==$pais->id_pais)?'selected':'';?>><?= $pais->nombre_pais?></option>
                 <?endforeach;?>
             </select>
-            <select class="combo_regiones entrada_datoformularioadmin entrada_datocomboformularioadmin">
+            <select id="slt_regionE" class="combo_regiones entrada_datoformularioadmin entrada_datocomboformularioadmin" name="regionE" <?= ($bandera==1)?'disabled':'';?>>
                 <option value="0">Región</option>
                 <?foreach($regiones as $region):?>
-                    <option value="<?= $region->id_region?>"><?= $region->nombre_region?></option>
+                    <option value="<?= $region->id_region?>" <?= ($bandera==1&&$datoslocalidad[0]->id_region==$region->id_region)?'selected':'';?>><?= $region->nombre_region?></option>
                 <?endforeach;?>
             </select>
-            <select class="combo_localidades entrada_datoformularioadmin entrada_datocomboformularioadmin">
-                <option>Localidad</option>
+            <select id="slt_localidadE" class="combo_localidades entrada_datoformularioadmin entrada_datocomboformularioadmin" name="localidadE" <?= ($bandera==1)?'disabled':'';?>>
+                <? if($bandera==0): ?>
+                    <option value="0">Localidad</option>
+                <? else: ?>
+                    <?foreach($localidadesE as $localidadE):?>
+                        <option value="<?= $localidadE->id_localidad?>" <?= ($bandera==1&&$datos[0]->lugar_expedicion_identificacion_alumno==$localidadE->id_localidad)?'selected':'';?>><?= $localidadE->nombre_localidad?></option>
+                    <?endforeach;?>
+                <? endif; ?>
             </select>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Nombre(s)</span>
-            <input class="entrada_datoformularioadmin" type="text" required="required">
+            <input id="txt_nombre" class="entrada_datoformularioadmin" type="text" name="nombre" required="required" <?= ($bandera==1)?'value="'.$datos[0]->nombre_alumno.'" readonly':'';?>>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Apellido(s)</span>
-            <input class="entrada_datoformularioadmin" type="text" required="required">
+            <input id="txt_apellido" class="entrada_datoformularioadmin" type="text" name="apellido" required="required" <?= ($bandera==1)?'value="'.$datos[0]->apellido_alumno.'" readonly':'';?>>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Fecha de Nacimiento</span>
-            <input id="txt_fechanacimiento" class="entrada_datoformularioadmin" type="text" placeholder="YYYY-MM-DD" required="required">
+            <input id="txt_fechanacimiento" class="entrada_datoformularioadmin" type="text" name="fechanacimiento" placeholder="YYYY-MM-DD" required="required" <?= ($bandera==1)?'value="'.$fechanacimiento.'" readonly':'';?>>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin contenedor_elementociudadformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Lugar de Nacimiento</span>
-            <select id="sl_paises" class="combo_paises entrada_datoformularioadmin entrada_datocomboformularioadmin">
+            <select id="slt_paisN" class="combo_paises entrada_datoformularioadmin entrada_datocomboformularioadmin" name="paisN" <?= ($bandera==1)?'disabled':'';?>>
                 <?foreach($paises as $pais):?>
-                    <option value="<?= $pais->id_pais?>" <?= ($pais->id_pais === '82')?'selected':'';?>><?= $pais->nombre_pais?></option>
+                    <option value="<?= $pais->id_pais?>" <?= ($bandera==0&&$pais->id_pais==='82')?'selected':($bandera==1&&$datoslocalidad[0]->id_pais==$pais->id_pais)?'selected':'';?>><?= $pais->nombre_pais?></option>
                 <?endforeach;?>
             </select>
-            <select id="sl_regiones" class="combo_regiones entrada_datoformularioadmin entrada_datocomboformularioadmin">
+            <select id="slt_regionN" class="combo_regiones entrada_datoformularioadmin entrada_datocomboformularioadmin" name="regionN" <?= ($bandera==1)?'disabled':'';?>>
                 <option value="0">Región</option>
                 <?foreach($regiones as $region):?>
-                    <option value="<?= $region->id_region?>"><?= $region->nombre_region?></option>
+                    <option value="<?= $region->id_region?>" <?= ($bandera==1&&$datoslocalidad[0]->id_region==$region->id_region)?'selected':'';?>><?= $region->nombre_region?></option>
                 <?endforeach;?>
             </select>
-            <select id="sl_localidades" class="combo_localidades entrada_datoformularioadmin entrada_datocomboformularioadmin">
-                <option>Localidad</option>
+            <select id="slt_localidadN" class="combo_localidades entrada_datoformularioadmin entrada_datocomboformularioadmin" name="localidadN" <?= ($bandera==1)?'disabled':'';?>>
+                <? if($bandera==0): ?>
+                    <option value="0">Localidad</option>
+                <? else: ?>
+                    <?foreach($localidades as $localidad):?>
+                        <option value="<?= $localidad->id_localidad?>" <?= ($bandera==1&&$datos[0]->lugar_nacimiento_alumno==$localidad->id_localidad)?'selected':'';?>><?= $localidad->nombre_localidad?></option>
+                    <?endforeach;?>
+                <? endif; ?>
             </select>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Dirección</span>
-            <input class="entrada_datoformularioadmin" type="text" required="required">
+            <input id="txt_direccion" class="entrada_datoformularioadmin" type="text" name="direccion" required="required" <?= ($bandera==1)?'value="'.$datos[0]->direccion_alumno.'"':'';?>>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Teléfono/Celular</span>
-            <input class="entrada_datoformularioadmin" type="text" required="required" onkeypress="return soloNumeros(event);">
+            <input id="txt_telefono" class="entrada_datoformularioadmin" type="text" name="telefono" required="required" onkeypress="return soloNumeros(event);" <?= ($bandera==1)?'value="'.$datos[0]->telefono_alumno.'"':'';?>>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Correo Electrónico</span>
-            <input class="entrada_datoformularioadmin" type="email" required="required">
+            <input id="txt_correoelectronico" class="entrada_datoformularioadmin" type="email" name="correoelectronico" required="required" <?= ($bandera==1)?'value="'.$datos[0]->correo_electronico_alumno.'"':'';?>>
         </div>
     </div>
     <span class="etiqueta_encabezadoelementoformularioadmin">Datos Acudiente</span>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Nombre(s)</span>
-            <input class="entrada_datoformularioadmin" type="text" required="required">
+            <input id="txt_nombreA" class="entrada_datoformularioadmin" type="text" name="nombreA" required="required" <?= ($bandera==1)?'value="'.$datos[0]->nombre_acudiente_alumno.'"':'';?>>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Apellido(s)</span>
-            <input class="entrada_datoformularioadmin" type="text" required="required">
+            <input id="txt_apellidoA" class="entrada_datoformularioadmin" type="text" name="apellidoA" required="required" <?= ($bandera==1)?'value="'.$datos[0]->apellido_acudiente_alumno.'"':'';?>>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Teléfono/Celular</span>
-            <input class="entrada_datoformularioadmin" type="text" required="required" onkeypress="return soloNumeros(event);">
+            <input id="txt_telefonoA" class="entrada_datoformularioadmin" type="text" name="telefonoA" required="required" onkeypress="return soloNumeros(event);" <?= ($bandera==1)?'value="'.$datos[0]->telefono_acudiente_alumno.'"':'';?>>
         </div>
     </div>
     <span class="etiqueta_encabezadoelementoformularioadmin">Datos Laborales</span>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Empresa</span>
-            <input class="entrada_datoformularioadmin" type="text" required="required">
+            <input id="txt_empresa" class="entrada_datoformularioadmin" type="text" name="empresa" required="required" <?= ($bandera==1)?'value="'.$datos[0]->empresa_alumno.'"':'';?>>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Ocupación/Cargo</span>
-            <input class="entrada_datoformularioadmin" type="text" required="required">
+            <input id="txt_cargo" class="entrada_datoformularioadmin" type="text" name="cargo" required="required" <?= ($bandera==1)?'value="'.$datos[0]->ocupacion_alumno.'"':'';?>>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Dirección</span>
-            <input class="entrada_datoformularioadmin" type="text" required="required">
+            <input id="txt_direccionE" class="entrada_datoformularioadmin" type="text" name="direccionE" required="required" <?= ($bandera==1)?'value="'.$datos[0]->direccion_empresa_alumno.'"':'';?>>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Teléfono/Celular</span>
-            <input class="entrada_datoformularioadmin" type="text" required="required" onkeypress="return soloNumeros(event);">
+            <input id="txt_telefonoE" class="entrada_datoformularioadmin" type="text" name="telefonoE" required="required" onkeypress="return soloNumeros(event);" <?= ($bandera==1)?'value="'.$datos[0]->telefono_empresa_alumno.'"':'';?>>
         </div>
     </div>
     <span class="etiqueta_encabezadoelementoformularioadmin">Datos Programa</span>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Programa</span>
-            <select id="slt_tipodocumento" class="entrada_datoformularioadmin">
+            <select id="slt_programa" class="entrada_datoformularioadmin" name="programa" <?= ($bandera==1)?'disabled':'';?>>
                 <option value="0">Seleccionar programa</option>
                 <?foreach($programas as $programa):?>
-                    <option value="<?= $programa->codigo_programa?>"><?= $programa->nombre_programa?></option>
+                    <option value="<?= $programa->id_programa?>"  <?= ($bandera==1&&$datos[0]->id_programa==$programa->id_programa)?'selected':'';?>><?= $programa->nombre_programa?></option>
                 <?endforeach;?>
             </select>
         </div>
     </div>
-    <div class="contendor_elementoformularioadmin">
+    <!--div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Semestre</span>
             <select id="slt_tipodocumento" class="entrada_datoformularioadmin">
@@ -172,24 +183,33 @@
                 <?endforeach;?>
             </select>
         </div>
-    </div>
+    </div-->
     <span class="etiqueta_encabezadoelementoformularioadmin">Datos Matrícula</span>
     <div class="contendor_elementoformularioadmin">
         <div>
+            <span class="etiqueta_textoelementoformularioadmin etiqueta_anchoelementoformularioadmin">Periodo (<?= date("Y");?>)</span>
+            <input type="radio" name="periodomatricula" value="1" <?= ($bandera==1&&$datos[0]->id_periodo==1)?'checked':($bandera==0)?'checked':'';?>>
+            <span class="etiqueta_textoradioformularioadmin">A</span>
+            <input type="radio" name="periodomatricula" value="2" <?= ($bandera==1&&$datos[0]->id_periodo==2)?'checked':'';?>>
+            <span class="etiqueta_textoradioformularioadmin">B</span>
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
             <span class="etiqueta_textoelementoformularioadmin">Código Estudiante</span>
-            <input id="txt_codigoestudiantil" class="entrada_datoformularioadmin" type="text" readonly="readonly" required="required">
+            <input id="txt_codigoestudiantil" class="entrada_datoformularioadmin" type="text" name="codigoestudiantil" readonly="readonly" required="required" <?= ($bandera==1)?'value="'.$datos[0]->identificacion_alumno.'"':'';?>>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Número Matrícula</span>
-            <input class="entrada_datoformularioadmin" type="text" readonly="readonly" required="required">
+            <input id="txt_numeromatricula" class="entrada_datoformularioadmin" type="text" name="numeromatricula" value="<?= $numeromatricula?>" readonly="readonly" required="required">
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Fecha Matricula</span>
-            <input class="entrada_datoformularioadmin" type="text" value="<?= date('Y-m-d')?>" readonly="readonly" required="required">
+            <input id="txt_fechamatricula" class="entrada_datoformularioadmin" type="text" name="fechamatricula" value="<?= date('Y-m-d')?>" readonly="readonly" required="required">
         </div>
     </div>
     <span class="etiqueta_encabezadoelementoformularioadmin">Datos Pago</span>
@@ -205,15 +225,13 @@
     <div id="dv_numerocuotas" class="contendor_elementoformularioadmin displaynone">
         <div>
             <span class="etiqueta_textoelementoformularioadmin">Número de Cuotas</span>
-            <input id="num_numerocuotas" class="entrada_datoformularioadmin" type="number" min="2" required="required">
+            <input id="num_numerocuotas" class="entrada_datoformularioadmin" type="number" name="numerocuotas" value="1" min="2" required="required">
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
-        <input class="boton_formularioadmin" type="button" value="Consultar">
+        <input id="btn_registrarestudiante" class="boton_formularioadmin" type="button" value="Registrar">
     </div>
 </form>
-
-<? endif; ?>
 
 <script type="text/javascript">
     $(function($){
@@ -237,11 +255,18 @@
         $.datepicker.setDefaults($.datepicker.regional['es']);
     });
     
-    $('#txt_fechanacimiento').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "1950:2016"
-    });
+    <? if($bandera == 0): ?>
+        $('#txt_fechanacimiento').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            //yearRange: "1950:+nn",
+            yearRange: "1950:" + new Date().getFullYear(),
+
+            onSelect: function (selectedDateTime){
+                $(this).removeClass('entrada_textonovalido');
+            }
+        });
+    <? endif; ?>
     
     /*$('#txt_fechanacimiento').datetimepicker({
 	controlType: 'select',
@@ -257,7 +282,7 @@
     
     $('#rb_fpContado').on('click', function (){
         $('#dv_numerocuotas').addClass('displaynone');
-        $('#num_numerocuotas').val(-1);
+        $('#num_numerocuotas').val(1);
     });
     
     $('#rb_fpCuotas').on('click', function (){
@@ -339,5 +364,354 @@
         var codigo = $('#txt_codigoestudiantil');
         
         codigo.val(documento);
+    });
+    
+    $('#btn_registrarestudiante').on('click', function (){
+        var matricula = convertiranumero(document.querySelector('input[name="matricula"]:checked').value),
+            sede = convertiranumero(document.querySelector('input[name="sedematricula"]:checked').value),
+            tipoDocumento = convertiranumero(document.querySelector('input[name="tipodocumento"]:checked').value),
+            documento = $('#txt_numerodocumento').val(),
+            pais = $('#slt_paisE option:selected').val(),
+            region = $('#slt_regionE option:selected').val(),
+            localidad = $('#slt_localidadE option:selected').val(),
+            nombre = $('#txt_nombre').val(),
+            apellido = $('#txt_apellido').val(),
+            fechaNacimiento = $('#txt_fechanacimiento').val(),
+            paisNacimiento = $('#slt_paisN option:selected').val(),
+            regionNacimiento = $('#slt_regionN option:selected').val(),
+            localidadNacimiento = $('#slt_localidadN option:selected').val(),
+            direccion = $('#txt_direccion').val(),
+            telefono = $('#txt_telefono').val(),
+            correoElectronico = $('#txt_correoelectronico').val(),
+            nombreAcudiente = $('#txt_nombreA').val(),
+            apellidoAcudiente = $('#txt_apellidoA').val(),
+            telefonoAcudiente = $('#txt_telefonoA').val(),
+            empresa = $('#txt_empresa').val(),
+            cargo = $('#txt_cargo').val(),
+            direccionEmpresa = $('#txt_direccionE').val(),
+            telefonoEmpresa = $('#txt_telefonoE').val(),
+            programa = $('#slt_programa option:selected').val(),
+            periodo = convertiranumero(document.querySelector('input[name="periodomatricula"]:checked').value),
+            codigoEstudiante = $('#txt_codigoestudiantil').val(),
+            numeroMatricula = $('#txt_numeromatricula').val(),
+            fechaMatricula = $('#txt_fechamatricula').val(),
+            formaPago = convertiranumero(document.querySelector('input[name="formapago"]:checked').value),
+            numeroCuotas = $('#num_numerocuotas').val();
+        
+        if(documento.length > 0 && convertiranumero(region) > 0 && convertiranumero(localidad) > 0
+            && nombre.length > 0 && apellido.length > 0 && fechaNacimiento.length > 0
+            && convertiranumero(regionNacimiento) > 0 && convertiranumero(localidadNacimiento) > 0 && direccion.length > 0
+            && telefono.length > 0 && correoElectronico.length > 0 && validar_email(correoElectronico)
+            && nombreAcudiente.length > 0 && apellidoAcudiente.length > 0 && telefonoAcudiente.length > 0
+            && empresa.length > 0 && cargo.length > 0 && direccionEmpresa.length > 0
+            && telefonoEmpresa.length > 0 && convertiranumero(programa) > 0 && codigoEstudiante.length > 0
+            && numeroMatricula.length > 0 && fechaMatricula.length > 0){
+        
+            switch(matricula){
+                case 1:
+                    $.ajax({
+                        type: 'POST',
+                        url: <?= PUBLIC_PATH?> + 'management/registrarEstudiante/',
+                        data: $('#frm_matriculaestudiante').serialize(),
+                        dataType: 'json',
+                        beforeSend: function(){
+                            /*document.getElementById("btn_consultarnotas").disabled = true;
+
+                            $('body').addClass('menuopen');
+
+                            $.blockUI({
+                                message: "Procesando solicitud..."
+                            });*/
+                        },
+                        success: function(data) {
+                            /*$('body').removeClass('menuopen');
+                            document.getElementById("frm_codigoestudiante").reset();*/
+
+                            if(data !== null && data.res === 'ok'){
+                                window.localStorage.idPagoMatricula = data.id;
+                                
+                                document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + data.id;
+                                
+                                console.log(data.res);
+                            }else{
+                                console.log(data.msg);
+                            }
+                        },
+                        error: function(){
+                            //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                        }
+                    }).always(function(){
+                        /*document.getElementById("btn_consultarnotas").disabled = false;
+
+                        $.unblockUI();*/
+                    });
+                    
+                    break;
+                case 2:
+                    $.ajax({
+                        type: 'POST',
+                        url: <?= PUBLIC_PATH?> + 'management/registrarMatricula/',
+                        data: $('#frm_matriculaestudiante').serialize(),
+                        dataType: 'json',
+                        beforeSend: function(){
+                            /*document.getElementById("btn_consultarnotas").disabled = true;
+
+                            $('body').addClass('menuopen');
+
+                            $.blockUI({
+                                message: "Procesando solicitud..."
+                            });*/
+                        },
+                        success: function(data) {
+                            /*$('body').removeClass('menuopen');
+                            document.getElementById("frm_codigoestudiante").reset();*/
+
+                            if(data !== null && data.res === 'ok'){
+                                window.localStorage.idPagoMatricula = data.id;
+                                
+                                document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + data.id;
+                                
+                                console.log(data.res);
+                            }else{
+                                console.log(data.msg);
+                            }
+                        },
+                        error: function(){
+                            //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                        }
+                    }).always(function(){
+                        /*document.getElementById("btn_consultarnotas").disabled = false;
+
+                        $.unblockUI();*/
+                    });
+                    
+                    break;
+            }
+        }else{
+            validarcampos(documento, convertiranumero(region), convertiranumero(localidad), nombre, apellido, fechaNacimiento, convertiranumero(regionNacimiento), convertiranumero(localidadNacimiento), direccion, telefono, correoElectronico, nombreAcudiente, apellidoAcudiente, telefonoAcudiente, empresa, cargo, direccionEmpresa, telefonoEmpresa, convertiranumero(programa), codigoEstudiante, numeroMatricula, fechaMatricula);
+        }
+    });
+    
+    function validarcampos(documento, region, localidad, nombre, apellido, fechaNacimiento, regionNacimiento, localidadNacimiento, direccion, telefono, correoElectronico, nombreAcudiente, apellidoAcudiente, telefonoAcudiente, empresa, cargo, direccionEmpresa, telefonoEmpresa, programa, codigoEstudiante, numeroMatricula, fechaMatricula){
+        $inputfocus = null;
+        $input = $('#txt_numerodocumento');
+        if(documento.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#slt_regionE');
+        if(region === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#slt_localidadE');
+        if(localidad === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_nombre');
+        if(nombre.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_apellido');
+        if(apellido.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_fechanacimiento');
+        if(fechaNacimiento.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#slt_regionN');
+        if(regionNacimiento === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#slt_localidadN');
+        if(localidadNacimiento === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_direccion');
+        if(direccion.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_telefono');
+        if(telefono.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_correoelectronico');
+        if(correoElectronico.length === 0 || !validar_email(correoElectronico)){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_nombreA');
+        if(nombreAcudiente.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_apellidoA');
+        if(apellidoAcudiente.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_telefonoA');
+        if(telefonoAcudiente.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_empresa');
+        if(empresa.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_cargo');
+        if(cargo.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_direccionE');
+        if(direccionEmpresa.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_telefonoE');
+        if(telefonoEmpresa.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#slt_programa');
+        if(programa === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_codigoestudiantil');
+        if(codigoEstudiante.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_numeromatricula');
+        if(numeroMatricula.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+        $input = $('#txt_fechamatricula');
+        if(fechaMatricula.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
+
+        if($inputfocus !== null){
+            $('html, body').animate({scrollTop: $inputfocus.position().top+'px'}, 1000);
+            $inputfocus.focus();
+        }
+    }
+    
+    $("#txt_numerodocumento").on('keyup', function (){
+        if($(this).val().length > 0){
+            $(this).removeClass('entrada_textonovalido');
+            $('#txt_codigoestudiantil').removeClass('entrada_textonovalido');
+        }else{
+            $(this).addClass('entrada_textonovalido');
+            $('#txt_codigoestudiantil').addClass('entrada_textonovalido');
+        }
+    });
+    
+    $("#txt_nombre, #txt_apellido, #txt_fechanacimiento, #txt_direccion, #txt_telefono, #txt_correoelectronico, #txt_nombreA, #txt_apellidoA, #txt_telefonoA, #txt_empresa, #txt_cargo, #txt_direccionE, #txt_telefonoE, #num_numerocuotas").on('keyup', function (){
+        if($(this).val().length > 0){
+            $(this).removeClass('entrada_textonovalido');
+        }else{
+            $(this).addClass('entrada_textonovalido');
+        }
+    });
+    
+    $('#slt_regionE').change(function(event){
+        if(convertiranumero($('#slt_regionE option:selected').val()) === 0){
+            $(this).addClass('entrada_textonovalido');
+            $('#slt_localidadE').addClass('entrada_textonovalido');
+        }else{
+            $(this).removeClass('entrada_textonovalido');
+        }
+    });
+    
+    $('#slt_localidadE').change(function(event){
+        if(convertiranumero($('#slt_localidadE option:selected').val()) === 0){
+            $(this).addClass('entrada_textonovalido');
+        }else{
+            $(this).removeClass('entrada_textonovalido');
+        }
+    });
+    
+    $('#slt_regionN').change(function(event){
+        if(convertiranumero($('#slt_regionN option:selected').val()) === 0){
+            $(this).addClass('entrada_textonovalido');
+            $('#slt_localidadN').addClass('entrada_textonovalido');
+        }else{
+            $(this).removeClass('entrada_textonovalido');
+        }
+    });
+    
+    $('#slt_localidadN').change(function(event){
+        if(convertiranumero($('#slt_localidadN option:selected').val()) === 0){
+            $(this).addClass('entrada_textonovalido');
+        }else{
+            $(this).removeClass('entrada_textonovalido');
+        }
+    });
+    
+    $('#slt_programa').change(function(event){
+        if(convertiranumero($('#slt_programa option:selected').val()) === 0){
+            $(this).addClass('entrada_textonovalido');
+        }else{
+            $(this).removeClass('entrada_textonovalido');
+        }
     });
 </script>

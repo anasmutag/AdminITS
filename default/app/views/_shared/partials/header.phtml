@@ -5,8 +5,28 @@
     <h1>INSTITUTO TÉCNICO SURCOLOMBIANO</h1>
 </div>
 <? if($view > 0 && Auth::is_valid()): ?>
-    <div style="width: 100%; height: 60px; background-color: #ffffff">
-        <span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span>
-        <button onclick="window.location = '<?= PUBLIC_PATH?>account/salirAdmin'">Salir</button>
+    <div id="nav_opcionesadmin">
+        <ul>
+            <li>
+                <a id="lnk_matricula" href="<?= PUBLIC_PATH?>management/matricula">Matricula</a>
+                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
+            </li>
+            <li>
+                <a id="lnk_pagos" href="<?= PUBLIC_PATH?>management/pagomatricula">Pagos</a>
+                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
+            </li>
+            <li>
+                <span id="sp_salir" onclick="window.location = '<?= PUBLIC_PATH?>account/salirAdmin'">Salir</span>
+                <!--button onclick="window.location = '<?= PUBLIC_PATH?>account/salirAdmin'">Salir</button-->
+            </li>
+        </ul>
     </div>
 <? endif; ?>
+
+<script type="text/javascript">
+    $('#lnk_pagos, #lnk_matricula, #sp_salir').on('click', function (){
+        if(!isNaN(window.localStorage.idPagoMatricula)){
+            window.localStorage.removeItem('idPagoMatricula');
+        }
+    });
+</script>

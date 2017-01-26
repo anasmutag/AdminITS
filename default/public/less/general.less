@@ -81,6 +81,40 @@ header {
             .dimensions;
         }*/
     }
+    #nav_opcionesadmin {
+        background-color: @blanco;
+        border-bottom: 1px solid @base;
+        
+        .dimensions(@height:45px);
+        .flexBox;
+        
+        ul {
+            .dimensions(@height:100%);
+            .flexBox;
+            
+            li {
+                .dimensions(120px;100%);
+                .flexBox;
+                
+                a, span {
+                    color: @base;
+                    text-decoration: none;
+                    cursor: pointer;
+                    
+                    .dimensions(@height:100%);
+                    .flexBox;
+                    .font(@robotomedium;16px);
+                    
+                    &:hover {
+                        /*border-left: 1px solid @base;
+                        border-right: 1px solid @base;*/
+                        
+                        background-color: #f0f0f0;
+                    }
+                }
+            }
+        }
+    }
 }
 .cabecera_admin {
     .borderRadius(8px;8px;0;0);

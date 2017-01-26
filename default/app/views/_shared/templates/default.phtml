@@ -54,6 +54,9 @@
                                     window.location = "<?= PUBLIC_PATH?>management/administracion/";
                                 }else{
                                     console.log(data.msg);
+                                    
+                                    document.getElementById("frm_loginadmin").reset();
+                                    $('#identificacion').focus();
                                 }
                             },
                             error: function(){
@@ -133,11 +136,11 @@
                 <form id="frm_loginadmin">
                     <div class="contendor_elementologinadmin">
                         <label class="etiqueta_textologinadmin">Identificación</label>
-                        <input id="identificacion" class="entrada_datosloginadmin" type="text" name="identificacion" autofocus placeholder="Digite aquí su identificación">
+                        <input id="identificacion" class="entrada_datosloginadmin" type="text" name="identificacion" autofocus>
                     </div>
                     <div class="contendor_elementologinadmin">
                         <label class="etiqueta_textologinadmin">Contraseña</label>
-                        <input id="contrasena" class="entrada_datosloginadmin" type="password" name="contrasena" placeholder="Digite aquí su contraseña">
+                        <input id="contrasena" class="entrada_datosloginadmin" type="password" name="contrasena">
                     </div>
                     <div class="contendor_elementologinadmin">
                         <input id="btn_loginadmin" class="boton_loginadmin" type="button" value="Ingresar">

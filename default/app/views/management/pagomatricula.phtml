@@ -1,0 +1,202 @@
+<div id="dv_pagomatricula" class="contenedor_formularioadmin contenedor_formulariomatricula">
+    <span class="etiqueta_encabezadoformlarioadmin">Pago de Matricula</span>
+    <div class="contendor_pagomatricula">
+        <? if($idAlumno===0): ?>
+            <form id="frm_consultadocumentopagomatricula">
+                <div>
+                    <label>Número de Documento</label>
+                    <input id="txt_documentopagomatricula" class="entrada_datoformularioadmin" name="documentopagomatricula" type="text" autofocus required="required">
+                </div><br>
+                <div>
+                    <input id="btn_consultardocumentopm" class="boton_buscardocumento" type="button" value="Consultar">
+                </div>
+            </form>
+        <? else: ?>
+            <div class="contenedor_datospagomatricula">
+                <? switch($tipoPago):
+                    case 1: ?>
+                        <label><?= $nombre?></label>
+                        <label><?= $abreviaturaid . ' ' . $id?></label>
+                        <label>Programa: <?= $programa?></label>
+                        <label>Número de Matricula: <?= $numeroMatricula?></label>
+                        <label>Matricula realizada el <?= $fechaMatricula?></label>
+                        <label>Tipo de Pago: CONTADO</label>
+                        <label>Valor a Pagar: <?= '1.000.000'?></label>
+                        
+                        <? break;
+                    case 2: ?>
+                        <label><?= $nombre?></label>
+                        <label><?= $abreviaturaid . ' ' . $id?></label>
+                        <label>Programa: <?= $programa?></label>
+                        <label>Número de Matricula: <?= $numeroMatricula?></label>
+                        <label>Matricula realizada el <?= $fechaMatricula?></label>
+                        <label>Tipo de Pago: A CUOTAS</label>
+                        <label>Total a Pagar: <?= '1.000.000'?></label>
+                        <label>Número de Cuotas: <?= $numeroCuotas?></label>
+                        <div id="dv_cuotaspagomatricula">
+                            <? for($i = 0; $i < $numeroCuotas; $i++): ?>
+                                <div class="contendor_cuotapagomatricula">
+                                    <label class="etiqueta_textocuota">Valor Cuota No. <?= $i + 1?>: <?= number_format(1000000/$numeroCuotas, 0, '',  '.')?></label>
+                                    
+                                    <? if($i<$cuotasPagadas): ?>
+                                        <label class="etiqueta_cuotapagada">Cuota Pagada</label>
+                                    <? elseif($i==$cuotasPagadas): ?>
+                                        <input class="boton_registrarPagoCuotaMatricula boton_pagarcuota" data-valor="<?= (1000000/$numeroCuotas)?>" type="button" value="Pagar Cuota">
+                                    <? elseif($i>$cuotasPagadas): ?>
+                                        <input class="boton_pagarcuotadisabled" type="button" value="Pagar Cuota" disabled="disabled">
+                                    <? endif; ?>
+                                </div>
+                            <? endfor; ?>
+                        </div>
+                        
+                        <? break;
+                    default:
+                        
+                        break;
+                endswitch; ?>
+            </div>
+            <div id="dv_accionespagomatricula">
+                <? if($saldo): ?>
+                    <label class="etiqueta_matriculapagada">Total del valor de matricula pagado</label>
+                <? else: ?>
+                    <? if($tipoPago == 1): ?>
+                        <input id="btn_registrarpagocontadomatricula" class="boton_accionpagomatricula" type="button" value="Registrar Pago">
+                    <? endif; ?>
+                    <input id="btn_cancelarpagomatricula" class="boton_accionpagomatricula" type="button" value="Cancelar Pago">
+                <? endif; ?>
+            </div>
+        <? endif; ?>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#btn_consultardocumentopm').on('click', function (){
+        var identificacion = $('#txt_documentopagomatricula').val();
+        
+        $.ajax({
+            type: 'POST',
+            url: <?= PUBLIC_PATH?> + 'management/consultardocumentopagomatricula/',
+            data: $('#frm_consultadocumentopagomatricula').serialize(),
+            dataType: 'json',
+            beforeSend: function(){
+                /*document.getElementById("btn_consultarnotas").disabled = true;*/
+
+                /*$('body').addClass('menuopen');
+
+                $.blockUI({
+                    message: "Procesando solicitud..."
+                });*/
+            },
+            success: function(data) {
+                /*$('body').removeClass('menuopen');
+                document.getElementById("frm_codigoestudiante").reset();*/
+
+                if(data !== null && data.res === 'ok'){
+                    window.localStorage.idPagoMatricula = identificacion;
+
+                    document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + identificacion;
+                }else{
+                    document.getElementById("frm_consultadocumentopagomatricula").reset();
+                    $('#txt_documentopagomatricula').focus();
+                    
+                    console.log(data.msg);
+                }
+            },
+            error: function(){
+                console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }
+        }).always(function(){
+            /*document.getElementById("btn_consultarnotas").disabled = false;*/
+
+            //$.unblockUI();
+        });
+    });
+    
+    $('#btn_cancelarpagomatricula').on('click', function (){
+        window.localStorage.removeItem('idPagoMatricula');
+        
+        document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/';
+    });
+    
+    $('#btn_registrarpagocontadomatricula').on('click', function (){
+        var valormatricula = 1000000,
+            idmatricula = <?= $idMatricula?>;
+        
+        $.ajax({
+            type: 'POST',
+            url: <?= PUBLIC_PATH?> + 'management/registrarpagocontado/',
+            data: {
+                valor: valormatricula,
+                idMatricula: idmatricula
+            },
+            dataType: 'json',
+            beforeSend: function(){
+                /*document.getElementById("btn_consultarnotas").disabled = true;*/
+
+                /*$('body').addClass('menuopen');
+
+                $.blockUI({
+                    message: "Procesando solicitud..."
+                });*/
+            },
+            success: function(data) {
+                /*$('body').removeClass('menuopen');
+                document.getElementById("frm_codigoestudiante").reset();*/
+
+                if(data !== null && data.res === 'ok'){
+                    document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + window.localStorage.idPagoMatricula;
+                }else{
+                    console.log(data.msg);
+                }
+            },
+            error: function(){
+                console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }
+        }).always(function(){
+            /*document.getElementById("btn_consultarnotas").disabled = false;*/
+
+            //$.unblockUI();
+        });
+    });
+    
+    $('.boton_registrarPagoCuotaMatricula').on('click', function (){
+        var valormatricula = $(this).data('valor'),
+            idmatricula = <?= $idMatricula?>;
+        
+        $.ajax({
+            type: 'POST',
+            url: <?= PUBLIC_PATH?> + 'management/registrarpagocuota/',
+            data: {
+                valor: valormatricula,
+                idMatricula: idmatricula
+            },
+            dataType: 'json',
+            beforeSend: function(){
+                /*document.getElementById("btn_consultarnotas").disabled = true;*/
+
+                /*$('body').addClass('menuopen');
+
+                $.blockUI({
+                    message: "Procesando solicitud..."
+                });*/
+            },
+            success: function(data) {
+                /*$('body').removeClass('menuopen');
+                document.getElementById("frm_codigoestudiante").reset();*/
+
+                if(data !== null && data.res === 'ok'){
+                    document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + window.localStorage.idPagoMatricula;
+                }else{
+                    console.log(data.msg);
+                }
+            },
+            error: function(){
+                console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }
+        }).always(function(){
+            /*document.getElementById("btn_consultarnotas").disabled = false;*/
+
+            //$.unblockUI();
+        });
+    });
+</script>

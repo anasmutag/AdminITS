@@ -65,7 +65,8 @@
                     text-align: right;
 
                     .dimensions(@width:145px);
-                }.entrada_datoformularioadmin {
+                }
+                .entrada_datoformularioadmin {
                     padding: 5px 6px;
                     color: @base;
                     border: 1px solid @base;
@@ -99,6 +100,12 @@
         .entrada_camponovalido {
             border: 1px solid @error !important;
         }
+    }
+    .contendor_pagomatricula {
+        margin: 40px 0 0 0;
+        
+        .dimensions;
+        .flexBox;
     }
 }
 #dv_buscardocumento {
@@ -138,4 +145,123 @@
             margin-bottom: 45px;
         }
     }
+}
+#dv_pagomatricula {
+    .contendor_pagomatricula {
+        form {
+            .dimensions;
+            .flexBox;
+            
+            div {
+                margin: 15px 0;
+                padding: 0;
+                
+                .dimensions;
+                .flexBox;
+            }
+            label {
+                margin: 0 10px 0 0;
+                text-align: right;
+
+                .dimensions(@width:170px);
+            }
+            .entrada_datoformularioadmin {
+                padding: 5px 6px;
+                color: @base;
+                border: 1px solid @base;
+
+                .dimensions(50%);
+                .borderRadius(5px);
+                .font(@robotomedium;14px);
+            }
+            .boton_buscardocumento {
+                .button(@width:125px;@font-size:16px);
+
+                &:hover {
+                    .hoverButton(@base);
+                }
+            }
+            &:nth-of-type(2) {
+                margin-bottom: 45px;
+            }
+        }
+        .contenedor_datospagomatricula {
+            .dimensions;
+            .flexBox;
+            
+            label {
+                margin: 0 0 5px 0;
+                
+                .dimensions;
+                
+                &:nth-child(1) {
+                    margin-top: 15px;
+                }
+                &:nth-last-child(1) {
+                    margin-bottom: 35px;
+                }
+            }
+            #dv_cuotaspagomatricula {
+                margin: 25px 0 25px 0;
+                
+                .dimensions;
+                .flexBox;
+                
+                .contendor_cuotapagomatricula {
+                    margin: 0 0 10px 0;
+                    
+                    .dimensions;
+                    .flexBox;
+                    
+                    .etiqueta_textocuota {
+                        width: 205px;
+                        margin: 0 15px 0 0;
+                        
+                        .flexBox(@justify-content:flex-end);
+                    }
+                    .etiqueta_cuotapagada {
+                        .flexBox;
+                    }
+                    .etiqueta_cuotapagada, .boton_pagarcuotadisabled {
+                        margin: 0;
+                        
+                        .button(@width:125px;@font-size:16px;@border-color:@grisnav;@background-color:@grisnav);
+                    }
+                    .boton_pagarcuota {
+                        .button(@width:125px;@font-size:16px);
+                        
+                        &:hover {
+                            .hoverButton(@base);
+                        }
+                    }
+                }
+            }
+        }
+        #dv_accionespagomatricula {
+            margin: 0 0 40px 0;
+            
+            .dimensions;
+            .flexBox;
+            
+            .boton_accionpagomatricula {
+                margin: 0 10px;
+                
+                .button(@width:140px;@height:40px;@font-size:16px);
+
+                &:hover {
+                    .hoverButton(@base);
+                }
+            }
+            .etiqueta_matriculapagada {
+                margin: 0;
+                
+                .flexBox;
+                
+                .button(@width:200px;@height:60px;@font-size:20px;@border-color:@grisnav;@background-color:@grisnav);
+            }
+        }
+    }
+}
+.entrada_textonovalido {
+    border: 1px solid @error !important;
 }

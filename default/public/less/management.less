@@ -54,10 +54,21 @@
         .dimensions;
         .flexBox;
         
+        .texto_semestre {
+            margin: 0;
+            padding: 0;
+            color: @base;
+            border: 0;
+            
+            .dimensions(@width:8px);
+            .font(@robotobold;16px);
+        }
         .etiqueta_encabezadoelementoformularioadmin {
             margin: 0 0 15px 0;
             padding: 0;
             
+            .dimensions;
+            .flexBox;
             .font(@robotobold;16px);
         }
         .contendor_elementoformularioadmin {
@@ -81,6 +92,10 @@
                     .dimensions(@width:170px);
                 }
                 .etiqueta_espacioelementoformularioadmin {
+                    margin-right: 30px;
+                }
+                .etiqueta_anchoelementoformularioadmin {
+                    width: 120px;
                     margin-right: 30px;
                 }
                 .entrada_datoformularioadmin {
