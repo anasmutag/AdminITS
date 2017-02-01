@@ -1,6 +1,6 @@
 <?php
 
-Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota');
+Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota', 'Egresado', 'Egresadoprograma');
 
 class ManagementController extends AppController {
     function administracion() {
@@ -615,5 +615,76 @@ class ManagementController extends AppController {
         }
         
         $this->egresados = $egresados;
+    }
+    
+    public function registraregresados() {
+        View::select(NULL, NULL);
+        
+        $graduated = new Egresado();
+        
+        $egresados = json_decode(stripslashes(Input::request('egresados')));
+        $banegresados = 1;
+        
+        $arr['res'] = 'fail';
+        $arr['msg'] = '';
+        
+        $graduated->begin();
+        
+        foreach ($egresados as $e) {
+            $alumno = new Alumno();
+            $egresado = new Egresado();
+            
+            $noegresado = $alumno->cargarDatosAlumno($e->idalumno);
+            
+            $egresado->identificacion_egresado = $noegresado->identificacion_alumno;
+            $egresado->lugar_expedicion_identificacion_egresado = $noegresado->lugar_expedicion_identificacion_alumno;
+            $egresado->nombre_egresado = $noegresado->nombre_alumno;
+            $egresado->apellido_egresado = $noegresado->apellido_alumno;
+            $egresado->fecha_nacimiento_egresado = $noegresado->fecha_nacimiento_alumno;
+            $egresado->lugar_nacimiento_egresado = $noegresado->lugar_nacimiento_alumno;
+            $egresado->direccion_egresado = $noegresado->direccion_alumno;
+            $egresado->telefono_egresado = $noegresado->telefono_alumno;
+            $egresado->correo_electronico_egresado = $noegresado->correo_electronico_alumno;
+            $egresado->contrasena_egresado = $noegresado->contrasena_alumno;
+            $egresado->ocupacion_egresado = $noegresado->ocupacion_alumno;
+            $egresado->empresa_egresado = $noegresado->empresa_alumno;
+            $egresado->direccion_empresa_egresado = $noegresado->direccion_empresa_alumno;
+            $egresado->telefono_empresa_egresado = $noegresado->telefono_empresa_alumno;
+            
+            if($egresado->save()){
+                $egresadoprograma = new Egresadoprograma();
+                
+                $egresadoprograma->id_egresado = $egresado->id_egresado;
+                $egresadoprograma->id_programa = $e->idprograma;
+                
+                if($egresadoprograma->save()){
+                    $estudiante = new Alumno();
+                    
+                    $estudiante->cargarDatosAlumno($e->idalumno);
+                    
+                    $estudiante->id_estadoegresado = 1;
+                    
+                    if(!$estudiante->update()){
+                        $banegresados = 0;
+                    }
+                }else{
+                    $banegresados = 0;
+                }
+            }else{
+                $banegresados = 0;
+            }
+        }
+        
+        if($banegresados === 1){
+            $arr['res'] = 'ok';
+            
+            $graduated->commit();
+        }else{
+            $arr['msg'] = 'El registro de egresados no fue exitoso. Intentar nuevamente';
+            
+            $graduated->rollback();
+        }
+        
+        exit(json_encode($arr));
     }
 }

@@ -5,7 +5,9 @@
     <div class="contenedor_verificarregistroegresado">
         <div class="contendor_pazsalvoestudiantes">
             <span class="etiqueta_tituloseccionegresados">Estudiantes que se encuentran a paz y salvo academicamente</span>
-            <? foreach($programas as $programa): ?>
+            <? $numeroegresados = 0;
+            
+            foreach($programas as $programa): ?>
                 <span class="etiqueta_programaalumnosegresados"><?= $programa->nombre_programa?></span>
                 <? foreach($alumnos as $alumno):
                     if($programa->id_programa == $alumno->id_programa):
@@ -19,15 +21,19 @@
                             endif;
                         endforeach;
                         
-                        if($banegresados === 1): ?>
+                        if($banegresados === 1):
+                            $numeroegresados += 1;?>
                             <label class="etiqueta_alumnoegresado" data-alumno="<?= $alumno->id_alumno?>"><?= $alumno->nombre_alumno . ' ' . $alumno->apellido_alumno?></label>
                         <? endif;
                     endif;
                 endforeach;
-            endforeach; ?>
-            <div class="contenedor_registroegresados">
-                <input id="btn_registraregresados" type="button" value="Registrar">
-            </div>
+            endforeach;
+            
+            if($numeroegresados > 0): ?>
+                <div class="contenedor_registroegresados">
+                    <input id="btn_registraregresados" type="button" value="Registrar">
+                </div>
+            <? endif; ?>
         </div>
     </div>
     <div class="contenedor_verificarregistroegresado">
@@ -56,9 +62,86 @@
         </div>
     </div>
 </div>
+<div class="contendor_regresarprincipal">
+    <a href="<?= PUBLIC_PATH?>management/egresados" class="etiqueta_regresarprincipal">Regresar</a>
+</div>
+<div id="dv_dialogoconfirmacionregistroegresados">
+    <span>Registro de egresados extoso. Aceptar para continuar o salir del sistema administrativo</span>
+</div>
 
 <script type="text/javascript">
+    $('#dv_dialogoconfirmacionregistroegresados').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Aceptar": function() {
+                window.location = "<?= PUBLIC_PATH?>management/egresados/";
+            }
+        },
+        close: function (){}
+    });
+    
     $('#btn_registraregresados').on('click', function (){
+        var egresados = new Array();
         
+        <? foreach($alumnos as $alumno):
+            $banegresados = 1;
+
+            foreach($egresados as $egresado):
+                if($alumno->id_alumno == $egresado['id']):
+                    if($egresado['estado'] == 2):
+                        $banegresados = 0;
+                    endif;
+                endif;
+            endforeach;
+
+            if($banegresados === 1): ?>
+                var idalumno = <?= $alumno->id_alumno?>;
+
+                egresados.push({
+                    idalumno: idalumno,
+                    idprograma: <?= $alumno->id_programa?>
+                });
+            <? endif;
+        endforeach; ?>
+        
+        $.ajax({
+            type: 'POST',
+            url: <?= PUBLIC_PATH?> + 'management/registraregresados/',
+            data: {
+                egresados: JSON.stringify(egresados)
+            },
+            dataType: 'json',
+            beforeSend: function(){
+                //document.getElementById("btn_consultarnotas").disabled = true;
+                
+                $('body').addClass('menuopen');
+                
+                $.blockUI({
+                    message: "Registrando egresados..."
+                });
+            },
+            success: function(data) {
+                $('body').removeClass('menuopen');
+                //document.getElementById("frm_codigoestudiante").reset();
+                
+                if(data !== null && data.res === 'ok'){
+                    $('#dv_dialogoconfirmacionregistroegresados').dialog('open');
+                    
+                    console.log(data.res);
+                }else{
+                    console.log(data.msg);
+                }
+            },
+            error: function(){
+                //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }
+        }).always(function(){
+            //*document.getElementById("btn_consultarnotas").disabled = false;
+            
+            $.unblockUI();
+        });
     });
 </script>

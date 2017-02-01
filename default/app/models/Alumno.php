@@ -1,6 +1,10 @@
 <?php
 
 class Alumno extends ActiveRecord {
+    public function cargarDatosAlumno($id) {
+        return $this->find_first("conditions: id_alumno = $id");
+    }
+    
     public function cargarDatosAlumnoActualizar($id) {
         return $this->find_first("conditions: identificacion_alumno = $id");
     }

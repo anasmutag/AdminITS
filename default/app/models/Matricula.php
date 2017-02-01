@@ -49,7 +49,9 @@ class Matricula extends ActiveRecord {
                 "join: join alumno on matricula.id_alumno = alumno.id_alumno
                     join alumnoprograma on alumno.id_alumno = alumnoprograma.id_alumno
                     join programa on alumnoprograma.id_programa = programa.id_programa",
-                "conditions: id_semestre = 3 and id_estadomatricula = 2",
+                "conditions: id_semestre = 3
+                    and id_estadomatricula = 2
+                    and id_estadoegresado = 2",
                 "order: apellido_alumno");
     }
     
@@ -60,6 +62,7 @@ class Matricula extends ActiveRecord {
                     join programa on alumnoprograma.id_programa = programa.id_programa",
                 "conditions: id_semestre = 3
                     and id_estadomatricula = 2
+                    and id_estadoegresado = 2
                     group by programa.id_programa",
                 "order: programa.id_programa");
     }
