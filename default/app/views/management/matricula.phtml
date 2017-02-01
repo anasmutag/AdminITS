@@ -32,18 +32,18 @@
                 documento: documento
             },
             beforeSend: function(){
-                /*document.getElementById("btn_consultarnotas").disabled = true;
-
+                //document.getElementById("btn_consultarnotas").disabled = true;
+                
                 $('body').addClass('menuopen');
-
+                
                 $.blockUI({
-                    message: "Procesando solicitud..."
-                });*/
+                    message: "Cargando formulario de matricula..."
+                });
             },
             success: function(data) {
-                /*$('body').removeClass('menuopen');
-                document.getElementById("frm_codigoestudiante").reset();*/
-
+                $('body').removeClass('menuopen');
+                //document.getElementById("frm_codigoestudiante").reset();
+                
                 $('#dv_formulariomatricula').html('');
                 $('#dv_formulariomatricula').html(data);
                 
@@ -53,9 +53,9 @@
                 //console.log('Ocurrio un error inesperado. Intenta nuevamente');
             }
         }).always(function(){
-            /*document.getElementById("btn_consultarnotas").disabled = false;
-
-            $.unblockUI();*/
+            //document.getElementById("btn_consultarnotas").disabled = false;
+            
+            $.unblockUI();
         });
     }
     
@@ -91,21 +91,21 @@
                 },
                 dataType: 'json',
                 beforeSend: function(){
-                    /*document.getElementById("btn_consultarnotas").disabled = true;
-
+                    //document.getElementById("btn_consultarnotas").disabled = true;
+                    
                     $('body').addClass('menuopen');
-
+                    
                     $.blockUI({
-                        message: "Procesando solicitud..."
-                    });*/
+                        message: "Validando datos..."
+                    });
                 },
                 success: function(data) {
-                    /*$('body').removeClass('menuopen');
-                    document.getElementById("frm_codigoestudiante").reset();
-
+                    $('body').removeClass('menuopen');
+                    //document.getElementById("frm_codigoestudiante").reset();
+                    
                     $('#dv_formulariomatricula').html('');
                     $('#dv_formulariomatricula').html(data);*/
-
+                    
                     if(data !== null && data.res === 'ok'){
                         /*window.location = "<?= PUBLIC_PATH?>management/administracion/";*/
                         
@@ -121,9 +121,9 @@
                     console.log('Ocurrio un error inesperado. Intenta nuevamente');
                 }
             }).always(function(){
-                /*document.getElementById("btn_consultarnotas").disabled = false;
-
-                $.unblockUI();*/
+                //document.getElementById("btn_consultarnotas").disabled = false;
+                
+                $.unblockUI();
             });
         }else{
             $input = $('#txt_numerodocumentoconsultar');

@@ -679,6 +679,28 @@
   color: #00529B;
   background-color: #ffffff;
 }
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarvalidacion {
+  width: 150px;
+  min-width: 100px;
+  height: 35px;
+  min-height: 35px;
+  font-family: 'RobotoRegular';
+  font-size: 16px;
+  color: #ffffff;
+  border: 2px solid #00529B;
+  background-color: #00529B;
+  padding: 0;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarvalidacion:hover {
+  color: #00529B;
+  background-color: #ffffff;
+}
 #dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula {
   margin: 0 0 40px 0;
   width: 100%;

@@ -1,6 +1,6 @@
 <?php
 
-Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago');
+Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota');
 
 class ManagementController extends AppController {
     function administracion() {
@@ -367,6 +367,34 @@ class ManagementController extends AppController {
         }
     }
     
+    public function pagovalidacion($idAlumno = 0) {
+        if(Auth::is_valid()){
+            View::template('general_template');
+            
+            $matricula = new Matricula();
+            $validacion = new Validacion();
+            
+            $this->idAlumno = $idAlumno;
+            
+            if($idAlumno != 0) {
+                $datos = $matricula->cargarDatosMatricula($idAlumno);
+                
+                $this->idMatricula = $datos[0]->id_matricula;
+                $this->abreviaturaid = $datos[0]->abreviatura_tipodocumento;
+                $this->id = $datos[0]->identificacion_alumno;
+                $this->nombre = $datos[0]->nombre_alumno . ' ' . $datos[0]->apellido_alumno;
+                $this->programa = $datos[0]->nombre_programa;
+                
+                //$this->numerovalidaciones = $validacion->cargarNumeroValidacionesAlumno($idAlumno);
+                $this->validaciones = $validacion->cargarValidacionesAlumno($idAlumno);
+            }else{
+                $this->idMatricula = 0;
+            }
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
     public function consultardocumentopagomatricula() {
         View::template(NULL);
         
@@ -462,5 +490,130 @@ class ManagementController extends AppController {
         }
         
         exit(json_encode($arr));
+    }
+    
+    public function registrarpagovalidacion() {
+        View::template(NULL);
+        
+        $pago = new Pagovalidacion();
+        $validacion = Input::request('validacion');
+        
+        $arr['res'] = 'fail';
+        $arr['msg'] = '';
+        
+        $pago->begin();
+        
+        $pago->cargarPagoValidacion($validacion);
+        $pago->estado_pagovalidacion = 2;
+        $pago->valor_pagovalidacion = $pago->valor_pagovalidacion + 10000;
+        
+        if($pago->update()){
+            $arr['res'] = 'ok';
+            
+            $pago->commit();
+        }else{
+            $arr['msg'] = 'Error al registrar el pago de la validacion';
+            
+            $pago->rollback();
+        }
+        
+        exit(json_encode($arr));
+    }
+    
+    public function cerrarsemestre() {
+        if(Auth::is_valid()){
+            View::template(NULL);
+            
+            $matricula = new Matricula();
+            
+            $arr['res'] = 'fail';
+            $arr['msg'] = '';
+            
+            $matricula->begin();
+            
+            if($matricula->update_all("id_estadomatricula = 2", "id_estadomatricula = 1")){
+                $arr['res'] = 'ok';
+                
+                $matricula->commit();
+            }else{
+                $arr['msg'] = 'Error al registrar cierre de semestre';
+                
+                $matricula->rollback();
+            }
+            
+            exit(json_encode($arr));
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function egresados() {
+        if(Auth::is_valid()){
+            View::template('general_template');
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function registroegresados() {
+        View::template(NULL);
+            
+        $matricula = new Matricula();
+        
+        $alumnos = $matricula->alumnos();
+        $this->programas = $matricula->programas();
+        $this->alumnos = $alumnos;
+        $egresados = Array();
+        
+        foreach ($alumnos as $alumno) {
+            $nota = new Nota();
+            $validacion = new Validacion();
+            
+            $materias = $nota->cargarMateriasAlumno($alumno->id_alumno);
+            $notas = $nota->cargarNotasMateriasAlumno($alumno->id_alumno);
+            $validaciones = $validacion->cargarNotasValidacionesMateriasAlumno($alumno->id_alumno);
+            
+            foreach ($materias as $materia) {
+                $definitiva = 0;
+                
+                foreach ($notas as $grade) {
+                    if($materia->id_materia == $grade->id_materia){
+                        switch ($grade->id_tiponota) {
+                            case 1:
+                                $definitiva += ($grade->valor_nota*0.3);
+                                break;
+                            case 2:
+                                $definitiva += ($grade->valor_nota*0.3);
+                                break;
+                            case 3:
+                                $definitiva += ($grade->valor_nota*0.4);
+                                break;
+                        }
+                    }
+                }
+                
+                if(round($definitiva, 1) > 3.5){
+                    $egresados[] = array('id' => $alumno->id_alumno, 'materia' => $materia->id_materia, 'estado' => 1);
+                }else{
+                    $valor = 0;
+                    
+                    foreach ($validaciones as $validacion) {
+                        if($materia->id_materia == $validacion->id_materia && $alumno->id_alumno == $validacion->id_alumno){
+                            $valor = $validacion->valor_validacion;
+                            
+                            break;
+                        }
+                    }
+                    
+                    if($valor < 3.5){
+                        $egresados[] = array('id' => $alumno->id_alumno, 'materia' => $materia->id_materia, 'estado' => 2);
+                    }else{
+                        $egresados[] = array('id' => $alumno->id_alumno, 'materia' => $materia->id_materia, 'estado' => 1);
+                    }
+                }
+            }
+        }
+        
+        $this->egresados = $egresados;
     }
 }

@@ -1,0 +1,64 @@
+<?//= json_encode($programas)?>
+<?//= json_encode($egresados)?>
+
+<div id="dv_verificarregistroegresado">
+    <div class="contenedor_verificarregistroegresado">
+        <div class="contendor_pazsalvoestudiantes">
+            <span class="etiqueta_tituloseccionegresados">Estudiantes que se encuentran a paz y salvo academicamente</span>
+            <? foreach($programas as $programa): ?>
+                <span class="etiqueta_programaalumnosegresados"><?= $programa->nombre_programa?></span>
+                <? foreach($alumnos as $alumno):
+                    if($programa->id_programa == $alumno->id_programa):
+                        $banegresados = 1;
+                        
+                        foreach($egresados as $egresado):
+                            if($alumno->id_alumno == $egresado['id']):
+                                if($egresado['estado'] == 2):
+                                    $banegresados = 0;
+                                endif;
+                            endif;
+                        endforeach;
+                        
+                        if($banegresados === 1): ?>
+                            <label class="etiqueta_alumnoegresado" data-alumno="<?= $alumno->id_alumno?>"><?= $alumno->nombre_alumno . ' ' . $alumno->apellido_alumno?></label>
+                        <? endif;
+                    endif;
+                endforeach;
+            endforeach; ?>
+            <div class="contenedor_registroegresados">
+                <input id="btn_registraregresados" type="button" value="Registrar">
+            </div>
+        </div>
+    </div>
+    <div class="contenedor_verificarregistroegresado">
+        <div class="contendor_pazsalvoestudiantes">
+            <span class="etiqueta_tituloseccionegresados">Estudiantes que no se encuentran a paz y salvo academicamente. Consultar calificaciones</span>
+            <? foreach($programas as $programa): ?>
+                <span class="etiqueta_programaalumnosegresados"><?= $programa->nombre_programa?></span>
+                <? foreach($alumnos as $alumno):
+                    if($programa->id_programa == $alumno->id_programa):
+                        $banegresados = 1;
+                        
+                        foreach($egresados as $egresado):
+                            if($alumno->id_alumno == $egresado['id']):
+                                if($egresado['estado'] == 2):
+                                    $banegresados = 0;
+                                endif;
+                            endif;
+                        endforeach;
+                        
+                        if($banegresados === 0): ?>
+                            <label class="etiqueta_alumnoegresado" data-alumno="<?= $alumno->id_alumno?>"><?= $alumno->nombre_alumno . ' ' . $alumno->apellido_alumno?></label>
+                        <? endif;
+                    endif;
+                endforeach;
+            endforeach; ?>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#btn_registraregresados').on('click', function (){
+        
+    });
+</script>

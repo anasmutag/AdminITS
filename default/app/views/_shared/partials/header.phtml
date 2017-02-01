@@ -12,7 +12,19 @@
                 <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
             <li>
-                <a id="lnk_pagos" href="<?= PUBLIC_PATH?>management/pagomatricula">Pagos</a>
+                <a id="lnk_pagos" href="<?= PUBLIC_PATH?>management/pagomatricula">Pago Matricula</a>
+                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
+            </li>
+            <li>
+                <a id="lnk_pagosvalidacion" href="<?= PUBLIC_PATH?>management/pagovalidacion">Pago Validación</a>
+                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
+            </li>
+            <li>
+                <span id="sp_cierresemestre">Cerrar Semestre</span>
+                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
+            </li>
+            <li>
+                <a id="lnk_pagosvalidacion" href="<?= PUBLIC_PATH?>management/egresados">Egresados</a>
                 <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
             <li>
@@ -21,12 +33,66 @@
             </li>
         </ul>
     </div>
+    <div id="dv_dialogoconfirmacioncierresemestre">
+        <span>Cierre de semestre extoso. Aceptar para continuar o salir del sistema administrativo</span>
+    </div>
 <? endif; ?>
 
 <script type="text/javascript">
-    $('#lnk_pagos, #lnk_matricula, #sp_salir').on('click', function (){
+    $('#lnk_pagos, #lnk_pagosvalidacion, #lnk_matricula, #sp_salir').on('click', function (){
         if(!isNaN(window.localStorage.idPagoMatricula)){
             window.localStorage.removeItem('idPagoMatricula');
+            window.localStorage.removeItem('idPagoValidacion');
         }
+    });
+    
+    $('#dv_dialogoconfirmacioncierresemestre').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Aceptar": function() {
+                window.location = "<?= PUBLIC_PATH?>management/administracion/";
+            }
+        },
+        close: function (){}
+    });
+    
+    $('#sp_cierresemestre').on('click', function (){
+        $.ajax({
+            type: 'POST',
+            url: <?= PUBLIC_PATH?> + 'management/cerrarsemestre/',
+            data: {},
+            dataType: 'json',
+            beforeSend: function(){
+                //document.getElementById("btn_consultarnotas").disabled = true;
+                
+                $('body').addClass('menuopen');
+                
+                $.blockUI({
+                    message: "Procesando solicitud..."
+                });
+            },
+            success: function(data) {
+                $('body').removeClass('menuopen');
+                //document.getElementById("frm_codigoestudiante").reset();
+                
+                if(data !== null && data.res === 'ok'){
+                    $('#dv_dialogoconfirmacioncierresemestre').dialog('open');
+                    
+                    console.log(data.res);
+                }else{
+                    console.log(data.msg);
+                }
+            },
+            error: function(){
+                //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }
+        }).always(function(){
+            //*document.getElementById("btn_consultarnotas").disabled = false;
+            
+            $.unblockUI();
+        });
     });
 </script>

@@ -1,0 +1,129 @@
+<div id="dv_pagomatricula" class="contenedor_formularioadmin contenedor_formulariomatricula">
+    <span class="etiqueta_encabezadoformlarioadmin">Pago de Validación</span>
+    <div class="contendor_pagomatricula">
+        <? if($idAlumno===0): ?>
+            <form id="frm_consultadocumentopagovalidacion">
+                <div>
+                    <label>Número de Documento</label>
+                    <input id="txt_documentopagovalidacion" class="entrada_datoformularioadmin" name="documentopagomatricula" type="text" autofocus required="required">
+                </div><br>
+                <div>
+                    <input id="btn_consultardocumentopv" class="boton_buscardocumento" type="button" value="Consultar">
+                </div>
+            </form>
+        <? else: ?>
+            <div class="contenedor_datospagomatricula">
+                <label><?= $nombre?></label>
+                <label><?= $abreviaturaid . ' ' . $id?></label>
+                <label>Programa: <?= $programa?></label>
+                <label>Valor a Pagar (Por cada materia): 10.000</label>
+                <? if(!empty($validaciones)): ?>
+                    <div id="dv_cuotaspagomatricula">
+                        <? foreach($validaciones as $validacion): ?>
+                            <div class="contendor_cuotapagomatricula">
+                                <label class="etiqueta_textocuota">(<?= $validacion->codigo_materia?>)&nbsp;<?= $validacion->nombre_materia?></label>
+                                <input class="boton_registrarPagoValidacionMateria boton_pagarvalidacion" data-validacion="<?= $validacion->id_validacion?>" type="button" value="Pagar Validación">
+                            </div>
+                        <? endforeach; ?>
+                    </div>
+                <? endif; ?>
+            </div>
+            <div id="dv_accionespagomatricula">
+                <? if(empty($validaciones)): ?>
+                    <label class="etiqueta_matriculapagada">Validación(es) pagada(s)</label>
+                <? else: ?>
+                    <input id="btn_cancelarpagovalidacion" class="boton_accionpagomatricula" type="button" value="Cancelar Pago">
+                <? endif; ?>
+            </div>
+        <? endif; ?>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#btn_consultardocumentopv').on('click', function (){
+        var identificacion = $('#txt_documentopagovalidacion').val();
+        
+        $.ajax({
+            type: 'POST',
+            url: <?= PUBLIC_PATH?> + 'management/consultardocumentopagomatricula/',
+            data: $('#frm_consultadocumentopagovalidacion').serialize(),
+            dataType: 'json',
+            beforeSend: function(){
+                //document.getElementById("btn_consultarnotas").disabled = true;
+                
+                $('body').addClass('menuopen');
+                
+                $.blockUI({
+                    message: "Procesando solicitud..."
+                });
+            },
+            success: function(data) {
+                $('body').removeClass('menuopen');
+                //document.getElementById("frm_codigoestudiante").reset();
+                
+                if(data !== null && data.res === 'ok'){
+                    window.localStorage.idPagoValidacion = identificacion;
+                    
+                    document.location = <?= PUBLIC_PATH?> + 'management/pagovalidacion/' + identificacion;
+                }else{
+                    document.getElementById("frm_consultadocumentopagovalidacion").reset();
+                    $('#txt_documentopagovalidacion').focus();
+                    
+                    console.log(data.msg);
+                }
+            },
+            error: function(){
+                console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }
+        }).always(function(){
+            //document.getElementById("btn_consultarnotas").disabled = false;
+            
+            $.unblockUI();
+        });
+    });
+    
+    $('#btn_cancelarpagovalidacion').on('click', function (){
+        window.localStorage.removeItem('idPagoValidacion');
+        
+        document.location = <?= PUBLIC_PATH?> + 'management/pagovalidacion/';
+    });
+    
+    $('.boton_registrarPagoValidacionMateria').on('click', function (){
+        var validacion = $(this).data('validacion');
+        
+        $.ajax({
+            type: 'POST',
+            url: <?= PUBLIC_PATH?> + 'management/registrarpagovalidacion/',
+            data: {
+                validacion: validacion
+            },
+            dataType: 'json',
+            beforeSend: function(){
+                //document.getElementById("btn_consultarnotas").disabled = true;
+                
+                $('body').addClass('menuopen');
+                
+                $.blockUI({
+                    message: "Procesando solicitud..."
+                });
+            },
+            success: function(data) {
+                $('body').removeClass('menuopen');
+                //document.getElementById("frm_codigoestudiante").reset();
+                
+                if(data !== null && data.res === 'ok'){
+                    document.location = <?= PUBLIC_PATH?> + 'management/pagovalidacion/' + window.localStorage.idPagoValidacion;
+                }else{
+                    console.log(data.msg);
+                }
+            },
+            error: function(){
+                console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }
+        }).always(function(){
+            //document.getElementById("btn_consultarnotas").disabled = false;
+            
+            $.unblockUI();
+        });
+    });
+</script>

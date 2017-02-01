@@ -1,0 +1,39 @@
+<div id="dv_verificarregistraregresados" class="contenedor_opcionegresados">Verificar y Registrar Egresados</div>
+<div id="dv_seguimientoegresados" class="contenedor_opcionegresados">Seguimiento a Egresados</div>
+
+<script type="text/javascript">
+    $('#dv_verificarregistraregresados').on('click', function (){
+        $.ajax({
+            type: 'POST',
+            url: <?= PUBLIC_PATH?> + 'management/registroegresados/',
+            data: {},
+            beforeSend: function(){
+                //document.getElementById("btn_consultarnotas").disabled = true;
+                
+                /*$('body').addClass('menuopen');
+                
+                $.blockUI({
+                    message: "Procesando solicitud..."
+                });*/
+            },
+            success: function(data) {
+                //$('body').removeClass('menuopen');
+                //document.getElementById("frm_codigoestudiante").reset();
+                
+                $('#sec_contenidologinadmin').html('');
+                $('#sec_contenidologinadmin').html(data);
+            },
+            error: function(){
+                //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }
+        }).always(function(){
+            //*document.getElementById("btn_consultarnotas").disabled = false;
+            
+            //$.unblockUI();
+        });
+    });
+    
+    $('#dv_seguimientoegresados').on('click', function (){
+        
+    });
+</script>

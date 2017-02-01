@@ -157,6 +157,85 @@
 .contenedor_formulariomatricula {
     width: 70%;
 }
+.contenedor_opcionegresados {
+    margin: 0 25px;
+    color: @blanco;
+    background-color: @base;
+    border: 2px solid @base;
+    cursor: pointer;
+    
+    .dimensions(260px;100px);
+    .flexBox;
+    .font(@robotomedium;24px);
+    .borderRadius(8px);
+    
+    &:hover {
+        color: @base;
+        background-color: @blanco;
+    }
+}
+#dv_verificarregistroegresado {
+    min-height: 350px;
+    
+    .dimensions;
+    .flexBox(@align-items:flex-start;@align-content:flex-start);
+    
+    .contenedor_verificarregistroegresado {
+        .dimensions(@width:50%);
+        .flexBox;
+        
+        .contendor_pazsalvoestudiantes {
+            padding: 15px 0;
+            
+            .dimensions;
+            .flexBox;
+            
+            .etiqueta_tituloseccionegresados {
+                margin: 0 0 15px 0;
+                padding: 0 20px;
+                color: @base;
+                
+                .dimensions(@height:40px);
+                .flexBox;
+                .font(@robotomedium;18px);
+            }
+            .etiqueta_programaalumnosegresados {
+                margin: 0 0 10px 0;
+                padding: 0 10px 4px 10px;
+                color: @base;
+                border-bottom: 1px solid @base;
+                
+                .dimensions(@width:80%);
+                .flexBox;
+                .font(@robotomedium;16px);
+            }
+            .etiqueta_alumnoegresado {
+                color: @base;
+                
+                .dimensions(@width:50%);
+                .flexBox;
+                .font(@robotoregular;14px);
+            }
+            .contenedor_registroegresados {
+                .dimensions;
+                .flexBox;
+                
+                #btn_registraregresados {
+                    margin: 35px 0 0 0;
+                    
+                    .button;
+                    
+                    &:hover {
+                        .hoverButton(@base);
+                    }
+                }
+            }
+        }
+        &:nth-of-type(1) .contendor_pazsalvoestudiantes {
+            border-right: 1px solid @base;
+        }
+    }
+}
 .displaynone {
     display: none !important;
 }

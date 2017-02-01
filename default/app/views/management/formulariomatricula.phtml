@@ -368,16 +368,16 @@
     
     $('#btn_registrarestudiante').on('click', function (){
         var matricula = convertiranumero(document.querySelector('input[name="matricula"]:checked').value),
-            sede = convertiranumero(document.querySelector('input[name="sedematricula"]:checked').value),
-            tipoDocumento = convertiranumero(document.querySelector('input[name="tipodocumento"]:checked').value),
+            //sede = convertiranumero(document.querySelector('input[name="sedematricula"]:checked').value),
+            //tipoDocumento = convertiranumero(document.querySelector('input[name="tipodocumento"]:checked').value),
             documento = $('#txt_numerodocumento').val(),
-            pais = $('#slt_paisE option:selected').val(),
+            //pais = $('#slt_paisE option:selected').val(),
             region = $('#slt_regionE option:selected').val(),
             localidad = $('#slt_localidadE option:selected').val(),
             nombre = $('#txt_nombre').val(),
             apellido = $('#txt_apellido').val(),
             fechaNacimiento = $('#txt_fechanacimiento').val(),
-            paisNacimiento = $('#slt_paisN option:selected').val(),
+            //paisNacimiento = $('#slt_paisN option:selected').val(),
             regionNacimiento = $('#slt_regionN option:selected').val(),
             localidadNacimiento = $('#slt_localidadN option:selected').val(),
             direccion = $('#txt_direccion').val(),
@@ -391,12 +391,12 @@
             direccionEmpresa = $('#txt_direccionE').val(),
             telefonoEmpresa = $('#txt_telefonoE').val(),
             programa = $('#slt_programa option:selected').val(),
-            periodo = convertiranumero(document.querySelector('input[name="periodomatricula"]:checked').value),
+            //periodo = convertiranumero(document.querySelector('input[name="periodomatricula"]:checked').value),
             codigoEstudiante = $('#txt_codigoestudiantil').val(),
             numeroMatricula = $('#txt_numeromatricula').val(),
-            fechaMatricula = $('#txt_fechamatricula').val(),
-            formaPago = convertiranumero(document.querySelector('input[name="formapago"]:checked').value),
-            numeroCuotas = $('#num_numerocuotas').val();
+            fechaMatricula = $('#txt_fechamatricula').val();
+            //formaPago = convertiranumero(document.querySelector('input[name="formapago"]:checked').value),
+            //numeroCuotas = $('#num_numerocuotas').val();
         
         if(documento.length > 0 && convertiranumero(region) > 0 && convertiranumero(localidad) > 0
             && nombre.length > 0 && apellido.length > 0 && fechaNacimiento.length > 0
@@ -415,18 +415,18 @@
                         data: $('#frm_matriculaestudiante').serialize(),
                         dataType: 'json',
                         beforeSend: function(){
-                            /*document.getElementById("btn_consultarnotas").disabled = true;
-
+                            //document.getElementById("btn_consultarnotas").disabled = true;
+                            
                             $('body').addClass('menuopen');
-
+                            
                             $.blockUI({
-                                message: "Procesando solicitud..."
-                            });*/
+                                message: "Registrando y matriculando estudiante..."
+                            });
                         },
                         success: function(data) {
-                            /*$('body').removeClass('menuopen');
-                            document.getElementById("frm_codigoestudiante").reset();*/
-
+                            $('body').removeClass('menuopen');
+                            //document.getElementById("frm_codigoestudiante").reset();
+                            
                             if(data !== null && data.res === 'ok'){
                                 window.localStorage.idPagoMatricula = data.id;
                                 
@@ -441,9 +441,9 @@
                             //console.log('Ocurrio un error inesperado. Intenta nuevamente');
                         }
                     }).always(function(){
-                        /*document.getElementById("btn_consultarnotas").disabled = false;
-
-                        $.unblockUI();*/
+                        //*document.getElementById("btn_consultarnotas").disabled = false;
+                        
+                        $.unblockUI();
                     });
                     
                     break;
@@ -454,18 +454,18 @@
                         data: $('#frm_matriculaestudiante').serialize(),
                         dataType: 'json',
                         beforeSend: function(){
-                            /*document.getElementById("btn_consultarnotas").disabled = true;
-
+                            //document.getElementById("btn_consultarnotas").disabled = true;
+                            
                             $('body').addClass('menuopen');
-
+                            
                             $.blockUI({
-                                message: "Procesando solicitud..."
-                            });*/
+                                message: "Matriculando estudiante..."
+                            });
                         },
                         success: function(data) {
-                            /*$('body').removeClass('menuopen');
-                            document.getElementById("frm_codigoestudiante").reset();*/
-
+                            $('body').removeClass('menuopen');
+                            //document.getElementById("frm_codigoestudiante").reset();
+                            
                             if(data !== null && data.res === 'ok'){
                                 window.localStorage.idPagoMatricula = data.id;
                                 
@@ -480,9 +480,9 @@
                             //console.log('Ocurrio un error inesperado. Intenta nuevamente');
                         }
                     }).always(function(){
-                        /*document.getElementById("btn_consultarnotas").disabled = false;
-
-                        $.unblockUI();*/
+                        //document.getElementById("btn_consultarnotas").disabled = false;
+                        
+                        $.unblockUI();
                     });
                     
                     break;

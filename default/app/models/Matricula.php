@@ -17,6 +17,10 @@ class Matricula extends ActiveRecord {
                 "order: numero_matricula desc limit 1");
     }
     
+    /*public function cargarDatosValidacion($id) {
+        
+    }*/
+    
     public function cargarDatosMatriculaInactiva($id) {
         return $this->find("columns: matricula.*,alumno.*,programa.*",
                 "join: join alumno on matricula.id_alumno = alumno.id_alumno
@@ -38,5 +42,25 @@ class Matricula extends ActiveRecord {
     
     public function ultimoNumero() {
         return $this->find("columns: numero_matricula as resultado", "order: numero_matricula desc limit 1");
+    }
+    
+    public function alumnos() {
+        return $this->find("columns: matricula.id_alumno,nombre_alumno,apellido_alumno,programa.id_programa",
+                "join: join alumno on matricula.id_alumno = alumno.id_alumno
+                    join alumnoprograma on alumno.id_alumno = alumnoprograma.id_alumno
+                    join programa on alumnoprograma.id_programa = programa.id_programa",
+                "conditions: id_semestre = 3 and id_estadomatricula = 2",
+                "order: apellido_alumno");
+    }
+    
+    public function programas() {
+        return $this->find("columns: programa.id_programa,nombre_programa",
+                "join: join alumno on matricula.id_alumno = alumno.id_alumno
+                    join alumnoprograma on alumno.id_alumno = alumnoprograma.id_alumno
+                    join programa on alumnoprograma.id_programa = programa.id_programa",
+                "conditions: id_semestre = 3
+                    and id_estadomatricula = 2
+                    group by programa.id_programa",
+                "order: programa.id_programa");
     }
 }

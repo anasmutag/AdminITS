@@ -79,17 +79,17 @@
             data: $('#frm_consultadocumentopagomatricula').serialize(),
             dataType: 'json',
             beforeSend: function(){
-                /*document.getElementById("btn_consultarnotas").disabled = true;*/
+                //document.getElementById("btn_consultarnotas").disabled = true;
 
-                /*$('body').addClass('menuopen');
+                $('body').addClass('menuopen');
 
                 $.blockUI({
                     message: "Procesando solicitud..."
-                });*/
+                });
             },
             success: function(data) {
-                /*$('body').removeClass('menuopen');
-                document.getElementById("frm_codigoestudiante").reset();*/
+                $('body').removeClass('menuopen');
+                //document.getElementById("frm_codigoestudiante").reset();
 
                 if(data !== null && data.res === 'ok'){
                     window.localStorage.idPagoMatricula = identificacion;
@@ -106,9 +106,9 @@
                 console.log('Ocurrio un error inesperado. Intenta nuevamente');
             }
         }).always(function(){
-            /*document.getElementById("btn_consultarnotas").disabled = false;*/
+            //document.getElementById("btn_consultarnotas").disabled = false;
 
-            //$.unblockUI();
+            $.unblockUI();
         });
     });
     
@@ -131,17 +131,17 @@
             },
             dataType: 'json',
             beforeSend: function(){
-                /*document.getElementById("btn_consultarnotas").disabled = true;*/
+                //document.getElementById("btn_consultarnotas").disabled = true;
 
-                /*$('body').addClass('menuopen');
+                $('body').addClass('menuopen');
 
                 $.blockUI({
-                    message: "Procesando solicitud..."
-                });*/
+                    message: "Registrando pago..."
+                });
             },
             success: function(data) {
-                /*$('body').removeClass('menuopen');
-                document.getElementById("frm_codigoestudiante").reset();*/
+                $('body').removeClass('menuopen');
+                //document.getElementById("frm_codigoestudiante").reset();
 
                 if(data !== null && data.res === 'ok'){
                     document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + window.localStorage.idPagoMatricula;
@@ -153,9 +153,9 @@
                 console.log('Ocurrio un error inesperado. Intenta nuevamente');
             }
         }).always(function(){
-            /*document.getElementById("btn_consultarnotas").disabled = false;*/
+            //document.getElementById("btn_consultarnotas").disabled = false;
 
-            //$.unblockUI();
+            $.unblockUI();
         });
     });
     
@@ -172,18 +172,18 @@
             },
             dataType: 'json',
             beforeSend: function(){
-                /*document.getElementById("btn_consultarnotas").disabled = true;*/
-
-                /*$('body').addClass('menuopen');
-
+                //document.getElementById("btn_consultarnotas").disabled = true;
+                
+                $('body').addClass('menuopen');
+                
                 $.blockUI({
-                    message: "Procesando solicitud..."
-                });*/
+                    message: "Registrando pago..."
+                });
             },
             success: function(data) {
-                /*$('body').removeClass('menuopen');
-                document.getElementById("frm_codigoestudiante").reset();*/
-
+                $('body').removeClass('menuopen');
+                //document.getElementById("frm_codigoestudiante").reset();
+                
                 if(data !== null && data.res === 'ok'){
                     document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + window.localStorage.idPagoMatricula;
                 }else{
@@ -194,9 +194,9 @@
                 console.log('Ocurrio un error inesperado. Intenta nuevamente');
             }
         }).always(function(){
-            /*document.getElementById("btn_consultarnotas").disabled = false;*/
-
-            //$.unblockUI();
+            //document.getElementById("btn_consultarnotas").disabled = false;
+            
+            $.unblockUI();
         });
     });
 </script>
