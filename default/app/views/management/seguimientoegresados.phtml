@@ -1,0 +1,59 @@
+<?//= json_encode($programas)?>
+
+<div>
+    <span>Programa</span>
+    <select id="slt_programasegresados">
+        <option value="0">Seleccionar Programa</option>
+        <? foreach($programas as $programa): ?>
+            <option value="<?= $programa->id_programa?>"><?= $programa->nombre_programa?></option>
+        <? endforeach; ?>
+    </select>
+</div>
+<div>
+    <span>Egresados</span>
+    <select id="slt_egresadosprograma">
+        <option value="0">Seleccionar egresado</option>
+    </select>
+</div>
+
+<script type="text/javascript">
+    $('#slt_programasegresados').change(function() {
+        if($(this).val().length > 0){
+            var programa = $(this).val();
+            
+            $.ajax({
+                type: 'POST',
+                url: "<?= PUBLIC_PATH?>management/cargaregresadosprograma/",
+                data: {
+                    programa: programa
+                },
+                dataType: 'json',
+                beforeSend: function(){
+                    //document.getElementById("btn_consultarnotas").disabled = true;
+                    
+                    $('body').addClass('menuopen');
+                    
+                    $.blockUI({
+                        message: "Cargando datos..."
+                    });
+                },
+                success: function(data){
+                    $('body').removeClass('menuopen');
+                    //document.getElementById("frm_codigoestudiante").reset();
+                    
+                    $('#slt_egresadosprograma').empty();
+                    $('#slt_egresadosprograma').append('<option value="0">Seleccionar materia</option>');
+                    
+                    for(var i = 0; i < data.length; i++){
+                        $('#slt_egresadosprograma').append('<option value="' + data[i].id_egresado + '">' + data[i].nombre_egresado + ' ' + data[i].apellido_egresado + '</option>');
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError){ }
+            }).always(function(){
+                //*document.getElementById("btn_consultarnotas").disabled = false;
+                
+                $.unblockUI();
+            });
+        }
+    });
+</script>

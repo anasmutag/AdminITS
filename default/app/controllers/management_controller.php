@@ -1,6 +1,6 @@
 <?php
 
-Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota', 'Egresado', 'Egresadoprograma');
+Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota', 'Egresado', 'Egresadoprograma', 'Acta');
 
 class ManagementController extends AppController {
     function administracion() {
@@ -76,6 +76,25 @@ class ManagementController extends AppController {
         }
     }
     
+    public function formularioacta() {
+        View::template(NULL);
+        
+        $alumno = new Alumno();
+        
+        $tipo = Input::request('tipo');
+        $documento = filter_var(Input::request('documento'), FILTER_SANITIZE_STRING);
+        
+        $this->tipo = $tipo;
+        $this->documento = $documento;
+        $this->datos = $alumno->cargarDatosAlumnoActa($documento);
+        
+        if($tipo == 2){
+            $acta = new Acta();
+            
+            $this->datosacta = $acta->cargarDatosActaAlumno($documento);
+        }
+    }
+    
     public function obtenerRegiones($idpais = '0') {
         View::select(NULL, NULL);
         
@@ -106,6 +125,44 @@ class ManagementController extends AppController {
             $arr['res'] = 'ok';
         }else{
             $arr['msg'] = 'El número de documento no se encuentra registrado en nuestro sistema';
+        }
+        
+        exit(json_encode($arr));
+    }
+    
+    public function consultarDatosAlumnoActa() {
+        View::select(NULL, NULL);
+        
+        $egresado = new Egresado();
+        
+        $arr['res'] = 'fail';
+        $arr['msg'] = '';
+        
+        $documento = Input::request('documento');
+        
+        if($egresado->validarDocumentoAlumno($documento)){
+            $arr['res'] = 'ok';
+        }else{
+            $arr['msg'] = 'El número de documento del estudiante no se encuentra registrado como egresado';
+        }
+        
+        exit(json_encode($arr));
+    }
+    
+    public function consultarDatosActaAlumno() {
+        View::select(NULL, NULL);
+        
+        $acta = new Acta();
+        
+        $arr['res'] = 'fail';
+        $arr['msg'] = '';
+        
+        $documento = Input::request('documento');
+        
+        if($acta->validarDocumentoAlumno($documento)){
+            $arr['res'] = 'ok';
+        }else{
+            $arr['msg'] = 'El número de documento del estudiante no tiene una acta de grado asociada';
         }
         
         exit(json_encode($arr));
@@ -617,74 +674,171 @@ class ManagementController extends AppController {
         $this->egresados = $egresados;
     }
     
+    public function seguimientoegresados() {
+        if(Auth::is_valid()){
+            View::template('general_template');
+            
+            $programa = new Programa();
+            
+            $this->programas = $programa->programas();
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
     public function registraregresados() {
-        View::select(NULL, NULL);
-        
-        $graduated = new Egresado();
-        
-        $egresados = json_decode(stripslashes(Input::request('egresados')));
-        $banegresados = 1;
-        
-        $arr['res'] = 'fail';
-        $arr['msg'] = '';
-        
-        $graduated->begin();
-        
-        foreach ($egresados as $e) {
-            $alumno = new Alumno();
-            $egresado = new Egresado();
+        if(Auth::is_valid()){
+            View::select(NULL, NULL);
             
-            $noegresado = $alumno->cargarDatosAlumno($e->idalumno);
+            $graduated = new Egresado();
             
-            $egresado->identificacion_egresado = $noegresado->identificacion_alumno;
-            $egresado->lugar_expedicion_identificacion_egresado = $noegresado->lugar_expedicion_identificacion_alumno;
-            $egresado->nombre_egresado = $noegresado->nombre_alumno;
-            $egresado->apellido_egresado = $noegresado->apellido_alumno;
-            $egresado->fecha_nacimiento_egresado = $noegresado->fecha_nacimiento_alumno;
-            $egresado->lugar_nacimiento_egresado = $noegresado->lugar_nacimiento_alumno;
-            $egresado->direccion_egresado = $noegresado->direccion_alumno;
-            $egresado->telefono_egresado = $noegresado->telefono_alumno;
-            $egresado->correo_electronico_egresado = $noegresado->correo_electronico_alumno;
-            $egresado->contrasena_egresado = $noegresado->contrasena_alumno;
-            $egresado->ocupacion_egresado = $noegresado->ocupacion_alumno;
-            $egresado->empresa_egresado = $noegresado->empresa_alumno;
-            $egresado->direccion_empresa_egresado = $noegresado->direccion_empresa_alumno;
-            $egresado->telefono_empresa_egresado = $noegresado->telefono_empresa_alumno;
+            $egresados = json_decode(stripslashes(Input::request('egresados')));
+            $banegresados = 1;
             
-            if($egresado->save()){
-                $egresadoprograma = new Egresadoprograma();
+            $arr['res'] = 'fail';
+            $arr['msg'] = '';
+            
+            $graduated->begin();
+            
+            foreach ($egresados as $e) {
+                $alumno = new Alumno();
+                $egresado = new Egresado();
                 
-                $egresadoprograma->id_egresado = $egresado->id_egresado;
-                $egresadoprograma->id_programa = $e->idprograma;
+                $noegresado = $alumno->cargarDatosAlumno($e->idalumno);
                 
-                if($egresadoprograma->save()){
-                    $estudiante = new Alumno();
+                $egresado->identificacion_egresado = $noegresado->identificacion_alumno;
+                $egresado->lugar_expedicion_identificacion_egresado = $noegresado->lugar_expedicion_identificacion_alumno;
+                $egresado->nombre_egresado = $noegresado->nombre_alumno;
+                $egresado->apellido_egresado = $noegresado->apellido_alumno;
+                $egresado->fecha_nacimiento_egresado = $noegresado->fecha_nacimiento_alumno;
+                $egresado->lugar_nacimiento_egresado = $noegresado->lugar_nacimiento_alumno;
+                $egresado->direccion_egresado = $noegresado->direccion_alumno;
+                $egresado->telefono_egresado = $noegresado->telefono_alumno;
+                $egresado->correo_electronico_egresado = $noegresado->correo_electronico_alumno;
+                $egresado->contrasena_egresado = $noegresado->contrasena_alumno;
+                $egresado->ocupacion_egresado = $noegresado->ocupacion_alumno;
+                $egresado->empresa_egresado = $noegresado->empresa_alumno;
+                $egresado->direccion_empresa_egresado = $noegresado->direccion_empresa_alumno;
+                $egresado->telefono_empresa_egresado = $noegresado->telefono_empresa_alumno;
+                
+                if($egresado->save()){
+                    $egresadoprograma = new Egresadoprograma();
                     
-                    $estudiante->cargarDatosAlumno($e->idalumno);
+                    $egresadoprograma->id_egresado = $egresado->id_egresado;
+                    $egresadoprograma->id_programa = $e->idprograma;
                     
-                    $estudiante->id_estadoegresado = 1;
-                    
-                    if(!$estudiante->update()){
+                    if($egresadoprograma->save()){
+                        $estudiante = new Alumno();
+                        
+                        $estudiante->cargarDatosAlumno($e->idalumno);
+                        
+                        $estudiante->id_estadoegresado = 1;
+                        
+                        if(!$estudiante->update()){
+                            $banegresados = 0;
+                        }
+                    }else{
                         $banegresados = 0;
                     }
                 }else{
                     $banegresados = 0;
                 }
-            }else{
-                $banegresados = 0;
             }
-        }
-        
-        if($banegresados === 1){
-            $arr['res'] = 'ok';
             
-            $graduated->commit();
+            if($banegresados === 1){
+                $arr['res'] = 'ok';
+                
+                $graduated->commit();
+            }else{
+                $arr['msg'] = 'El registro de egresados no fue exitoso. Intentar nuevamente';
+                
+                $graduated->rollback();
+            }
+            
+            exit(json_encode($arr));
         }else{
-            $arr['msg'] = 'El registro de egresados no fue exitoso. Intentar nuevamente';
-            
-            $graduated->rollback();
+            Router::redirect("/");
         }
-        
-        exit(json_encode($arr));
+    }
+    
+    public function cargaregresadosprograma() {
+        if(Auth::is_valid()){
+            View::select(NULL, NULL);
+            
+            $egresado = new Egresado();
+            
+            $programa = filter_var(Input::request('programa'), FILTER_SANITIZE_STRING);
+            
+            echo json_encode($egresado->cargarEgresadosPrograma($programa));
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function actas() {
+        if(Auth::is_valid()){
+            View::template('general_template');
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function registroacta() {
+        if(Auth::is_valid()){
+            View::template('general_template');
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function consultaacta() {
+        if(Auth::is_valid()){
+            View::template('general_template');
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function registraracta() {
+        if(Auth::is_valid()){
+            View::select(NULL, NULL);
+            
+            $acta = new Acta();
+            
+            $alumno = Input::request('alumno');
+            $fechaacta = filter_var(Input::request('fechaacta'), FILTER_SANITIZE_STRING);
+            $numacta = filter_var(Input::request('numeroacta'), FILTER_SANITIZE_STRING);
+            $numlibro = filter_var(Input::request('numerolibro'), FILTER_SANITIZE_STRING);
+            $numfolio = filter_var(Input::request('numerofolio'), FILTER_SANITIZE_STRING);
+            $items = filter_var(Input::request('items'), FILTER_SANITIZE_STRING);
+            $expedicionacta = filter_var(Input::request('expedicionacta'), FILTER_SANITIZE_STRING);
+            
+            $arr['res'] = 'fail';
+            $arr['msg'] = '';
+            
+            $acta->begin();
+            
+            $acta->fecha_acta = $fechaacta;
+            $acta->numero_acta = $numacta;
+            $acta->libro_acta = $numlibro;
+            $acta->folio_acta = $numfolio;
+            $acta->item_acta = $items;
+            $acta->lugar_expedicion_acta = $expedicionacta;
+            $acta->id_alumno = $alumno;
+            
+            if($acta->save()){
+                $arr['res'] = 'ok';
+                
+                $acta->commit();
+            }else{
+                $arr['msg'] = 'Ocurrio un error en el registro del acta. Intentar nuevamente';
+                
+                $acta->rollback();
+            }
+            
+            exit(json_encode($arr));
+        }else{
+            Router::redirect("/");
+        }
     }
 }

@@ -1,0 +1,218 @@
+<form id="frm_registroacta" class="formulario_admin">
+    <input type="hidden" name="alumno" value="<?= $datos[0]->id_alumno?>">
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Número de Documento</span>
+            <input class="entrada_datoformularioadmin" type="text" value="<?= $documento?>" readonly="readonly">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Nombre(s) y Apellidos</span>
+            <input class="entrada_datoformularioadmin" type="text" value="<?= $datos[0]->nombre_alumno . ' ' . $datos[0]->apellido_alumno?>" readonly="readonly">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Programa</span>
+            <input class="entrada_datoformularioadmin" type="text" value="<?= $datos[0]->nombre_programa?>" readonly="readonly">
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Fecha Acta</span>
+            <? if($tipo == 1): ?>
+                <input id="txt_fechaacta" class="entrada_datoformularioadmin" type="text" name="fechaacta" placeholder="YYYY-MM-DD" required="required">
+            <? else: ?>
+                <input class="entrada_datoformularioadmin" type="text" value="<?= $datosacta[0]->fecha_acta?>" readonly="readonly">
+            <? endif; ?>
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Número de Acta</span>
+            <? if($tipo == 1): ?>
+                <input id="num_numeroacta" class="entrada_datoformularioadmin" type="number" name="numeroacta" min="1" required="required">
+            <? else: ?>
+                <input class="entrada_datoformularioadmin" type="text" value="<?= $datosacta[0]->numero_acta?>" readonly="readonly">
+            <? endif; ?>
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Número de Libro</span>
+            <? if($tipo == 1): ?>
+                <input id="num_numerolibro" class="entrada_datoformularioadmin" type="number" name="numerolibro" min="1" required="required">
+            <? else: ?>
+                <input class="entrada_datoformularioadmin" type="text" value="<?= $datosacta[0]->libro_acta?>" readonly="readonly">
+            <? endif; ?>
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Número de Folio</span>
+            <? if($tipo == 1): ?>
+                <input id="num_numerofolio" class="entrada_datoformularioadmin" type="number" name="numerofolio" min="1" required="required">
+            <? else: ?>
+                <input class="entrada_datoformularioadmin" type="text" value="<?=$datosacta[0]->folio_acta?>" readonly="readonly">
+            <? endif; ?>
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <span class="etiqueta_textoelementoformularioadmin">Items</span>
+            <? if($tipo == 1): ?>
+                <input id="num_items" class="entrada_datoformularioadmin" type="number" name="items" min="1" required="required">
+            <? else: ?>
+                <input class="entrada_datoformularioadmin" type="text" value="<?= $datosacta[0]->item_acta?>" readonly="readonly">
+            <? endif; ?>
+        </div>
+    </div>
+    <? if($tipo == 1): ?>
+        <span class="etiqueta_encabezadoelementoformularioadmin">Lugar de Expedición</span>
+    <? endif; ?>
+    <div class="contendor_elementoformularioadmin">
+        <div>
+            <? if($tipo == 1): ?>
+                <input type="radio" name="expedicionacta" value="Pasto" checked="checked">
+                <span class="etiqueta_textoradioformularioadmin">Pasto</span>
+                <input type="radio" name="expedicionacta" value="Ipiales">
+                <span class="etiqueta_textoradioformularioadmin">Ipiales</span>
+            <? else: ?>
+                <span class="etiqueta_textoelementoformularioadmin">Lugar de Expedición</span>
+                <input class="entrada_datoformularioadmin" type="text" value="<?= $datosacta[0]->lugar_expedicion_acta?>" readonly="readonly">
+            <? endif; ?>
+        </div>
+    </div>
+    <div class="contendor_elementoformularioadmin">
+        <? if($tipo == 1): ?>
+            <input id="btn_registraracta" class="boton_formularioadmin" type="button" value="Registrar">
+        <? else: ?>
+            <input class="boton_formularioadmin boton_nuevabusqueda" type="button" value="Nueva Busqueda" onclick="location.reload();">
+        <? endif; ?>
+    </div>
+</form>
+<div id="dv_dialogoconfirmacionregistroacta">
+    <span>Registro de acta extoso. Aceptar para continuar con el registro de actas o salir del sistema administrativo</span>
+</div>
+
+<script type="text/javascript">
+    $('#dv_dialogoconfirmacionregistroacta').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Aceptar": function() {
+                window.location = "<?= PUBLIC_PATH?>management/registroacta/";
+            }
+        },
+        close: function (){}
+    });
+    
+    $('#txt_fechaacta').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        //yearRange: "1950:+nn",
+        yearRange: "1950:" + new Date().getFullYear(),
+
+        onSelect: function (selectedDateTime){
+            $(this).removeClass('entrada_textonovalido');
+        }
+    });
+    
+    $('#btn_registraracta').on('click', function (){
+        var fechaacta = $('#txt_fechaacta').val(),
+            numacta = $('#num_numeroacta').val(),
+            numlibro = $('#num_numerolibro').val(),
+            numfolio = $('#num_numerofolio').val(),
+            items = $('#num_items').val();
+        
+        if(fechaacta.length > 0 && numacta.length > 0 && numlibro.length > 0 && numfolio.length > 0 && items.length > 0){
+            $.ajax({
+                type: 'POST',
+                url: <?= PUBLIC_PATH?> + 'management/registraracta/',
+                data: $('#frm_registroacta').serialize(),
+                dataType: 'json',
+                beforeSend: function(){
+                    //document.getElementById("btn_consultarnotas").disabled = true;
+                    
+                    $('body').addClass('menuopen');
+                    
+                    $.blockUI({
+                        message: "Registrando acta..."
+                    });
+                },
+                success: function(data) {
+                    $('body').removeClass('menuopen');
+                    //document.getElementById("frm_codigoestudiante").reset();
+                    
+                    if(data !== null && data.res === 'ok'){
+                        $('#dv_dialogoconfirmacionregistroacta').dialog('open');
+                        
+                        console.log(data.res);
+                    }else{
+                        console.log(data.msg);
+                    }
+                },
+                error: function(){
+                    //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                }
+            }).always(function(){
+                //*document.getElementById("btn_consultarnotas").disabled = false;
+                
+                $.unblockUI();
+            });
+        }else{
+            $inputfocus = null;
+            $input = $('#txt_fechaacta');
+            if(fechaacta.length === 0){
+                $input.addClass('entrada_textonovalido');
+                if($inputfocus === null)$inputfocus = $input;
+            }else{
+                $input.removeClass('entrada_textonovalido');
+            }
+            $input = $('#num_numeroacta');
+            if(numacta.length === 0){
+                $input.addClass('entrada_textonovalido');
+                if($inputfocus === null)$inputfocus = $input;
+            }else{
+                $input.removeClass('entrada_textonovalido');
+            }
+            $input = $('#num_numerolibro');
+            if(numlibro.length === 0){
+                $input.addClass('entrada_textonovalido');
+                if($inputfocus === null)$inputfocus = $input;
+            }else{
+                $input.removeClass('entrada_textonovalido');
+            }
+            $input = $('#num_numerofolio');
+            if(numfolio.length === 0){
+                $input.addClass('entrada_textonovalido');
+                if($inputfocus === null)$inputfocus = $input;
+            }else{
+                $input.removeClass('entrada_textonovalido');
+            }
+            $input = $('#num_items');
+            if(items.length === 0){
+                $input.addClass('entrada_textonovalido');
+                if($inputfocus === null)$inputfocus = $input;
+            }else{
+                $input.removeClass('entrada_textonovalido');
+            }
+            
+            if($inputfocus !== null){
+                $('html, body').animate({scrollTop: $inputfocus.position().top+'px'}, 1000);
+                $inputfocus.focus();
+            }
+        }
+    });
+    
+    $("#txt_fechaacta, #num_numeroacta, #num_numerolibro, #num_numerofolio, #num_items").on('keyup', function (){
+        if($(this).val().length > 0){
+            $(this).removeClass('entrada_textonovalido');
+        }else{
+            $(this).addClass('entrada_textonovalido');
+        }
+    });
+</script>

@@ -1,34 +1,43 @@
 <div class="contenedor_formularioadmin contenedor_formulariomatricula">
-    <span class="etiqueta_encabezadoformlarioadmin">Matricular Estudiante</span>
-    <div id="dv_semestrematricula">
-        <div>
-            <input id="rb_semestreuno" type="radio" name="matricula" value="1" checked>
-            <span class="etiqueta_textoradioformularioadmin">Primer Semestre</span>
-            <input id="rb_semestredostres" type="radio" name="matricula" value="2">
-            <span class="etiqueta_textoradioformularioadmin">Segundo y Tercer Semetre</span>
-        </div>
-    </div>
-    <div id="dv_buscardocumento" class="displaynone">
+    <span class="etiqueta_encabezadoformlarioadmin">REGISTRAR ACTA</span>
+    <div id="dv_documentoacta">
         <div>
             <span>Número de Documento</span>
-            <input id="txt_numerodocumentoconsultar" class="entrada_datoformularioadmin" type="text" required="required" onkeypress="return soloNumeros(event);">
+            <input id="txt_numerodocumentoconsultar" class="entrada_datoformularioadmin" type="text" autofocus required="required" onkeypress="return soloNumeros(event);">
         </div>
         <div>
             <input id="btn_consultardocumento" class="boton_buscardocumento" type="button" value="Cargar Datos">
         </div>
     </div>
-    <div id="dv_formulariomatricula"></div>
-    
-    <? //View::partial('management/formulariomatricula', false, array('tipodocumentos'=>$tipodocumentos, 'programas'=>$programas, 'semestres'=>$semestres, 'formapagos'=>$formapagos, 'paises'=>$paises, 'regiones'=>$regiones)); ?>
+    <div id="dv_formularioacta" class="displaynone"></div>
+</div>
+<div class="contendor_regresarprincipal">
+    <a href="<?= PUBLIC_PATH?>management/actas" class="etiqueta_regresarprincipal">Regresar</a>
+</div>
+<div id="dv_dialogodocumnetoinexistente">
+    <span>El número de documento no se encuentra registrado en nuestra base de datos de egresados. Click en "Aceptar" para regresar</span>
 </div>
 
 <script type="text/javascript">
-    function cargarForm(bandera, documento){
+    $('#dv_dialogodocumnetoinexistente').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Aceptar": function() {
+                $('#dv_dialogodocumnetoinexistente').dialog('close');
+            }
+        },
+        close: function (){}
+    });
+    
+    function cargarFormActa(documento){
         $.ajax({
             type: 'POST',
-            url: <?= PUBLIC_PATH?> + 'management/formulariomatricula/',
+            url: <?= PUBLIC_PATH?> + 'management/formularioacta/',
             data: {
-                tipoForm: bandera,
+                tipo: 1,
                 documento: documento
             },
             beforeSend: function(){
@@ -44,8 +53,9 @@
                 $('body').removeClass('menuopen');
                 //document.getElementById("frm_codigoestudiante").reset();
                 
-                $('#dv_formulariomatricula').html('');
-                $('#dv_formulariomatricula').html(data);
+                $('#dv_formularioacta').html('');
+                $('#dv_formularioacta').html(data);
+                $('#dv_formularioacta').removeClass('displaynone');
                 
                 rs();
             },
@@ -59,33 +69,13 @@
         });
     }
     
-    cargarForm(0, 0);
-    
-    $('#rb_semestreuno').on('click', function (){
-        $('#dv_buscardocumento').addClass('displaynone');
-        $('#txt_numerodocumentoconsultar').val('');
-        $('#txt_numerodocumentoconsultar').removeClass('entrada_textonovalido');
-        
-        cargarForm(0, 0);
-    });
-    
-    $('#rb_semestredostres').on('click', function (){
-        //cargarForm(1);
-        
-        $('#dv_formulariomatricula').html('');
-        $('#dv_buscardocumento').removeClass('displaynone');
-        $('#txt_numerodocumentoconsultar').focus();
-        
-        rs();
-    });
-    
     $('#btn_consultardocumento').on('click', function (){
         var documento = $('#txt_numerodocumentoconsultar').val();
         
         if(documento.length > 0){
             $.ajax({
                 type: 'POST',
-                url: <?= PUBLIC_PATH?> + 'management/consultarDocumentoEstudiante/',
+                url: <?= PUBLIC_PATH?> + 'management/consultarDatosAlumnoActa/',
                 data: {
                     documento: documento
                 },
@@ -103,17 +93,20 @@
                     $('body').removeClass('menuopen');
                     //document.getElementById("frm_codigoestudiante").reset();
                     
-                    $('#dv_formulariomatricula').html('');
-                    $('#dv_formulariomatricula').html(data);
+                    //$('#dv_formularioacta').html('');
+                    //$('#dv_formularioacta').html(data);
                     
                     if(data !== null && data.res === 'ok'){
                         /*window.location = "<?= PUBLIC_PATH?>management/administracion/";*/
                         
-                        $('#dv_buscardocumento').addClass('displaynone');
+                        $('#dv_documentoacta').addClass('displaynone');
                         $('#txt_numerodocumentoconsultar').val('');
                         
-                        cargarForm(1, documento);
+                        cargarFormActa(documento);
                     }else{
+                        $('#txt_numerodocumentoconsultar').val('').focus();
+                        $('#dv_dialogodocumnetoinexistente').dialog('open');
+                        
                         console.log(data.msg);
                     }
                 },
