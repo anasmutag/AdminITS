@@ -761,15 +761,15 @@ class ManagementController extends AppController {
         }
     }
     
-    public function cargaregresadosprograma() {
+    public function cargaraniosegresadosprograma() {
         if(Auth::is_valid()){
             View::select(NULL, NULL);
             
-            $egresado = new Egresado();
+            $acta = new Acta();
             
             $programa = filter_var(Input::request('programa'), FILTER_SANITIZE_STRING);
             
-            echo json_encode($egresado->cargarEgresadosPrograma($programa));
+            echo json_encode($acta->cargarAniosEgresadosPrograma($programa));
         }else{
             Router::redirect("/");
         }
@@ -840,5 +840,18 @@ class ManagementController extends AppController {
         }else{
             Router::redirect("/");
         }
+    }
+    
+    public function cargaregresados($page = 1) {
+        View::template(NULL);
+        
+        $acta = new Acta();
+        
+        $programa = Input::request('programa');
+        $anio = Input::request('anio');
+        
+        $this->programa = $programa;
+        $this->anio = $anio;
+        $this->egresados = $acta->cargarEgresados($page, $programa, $anio);
     }
 }

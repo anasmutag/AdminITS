@@ -21,6 +21,8 @@
         <?= Tag::js('funciones') ?>
         
         <script type="text/javascript">
+            window.public_path = <?= PUBLIC_PATH?>;
+            
             $(document).ready(function(){
                 hb = $('body').innerHeight();
                 hw = window.innerHeight;

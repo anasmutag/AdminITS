@@ -15,11 +15,4 @@ class Egresado extends ActiveRecord {
                     join programa on egresadoprograma.id_programa = programa.id_programa
                 group by programa.id_programa");
     }
-    
-    public function cargarEgresadosPrograma($programa) {
-        return $this->find("columns: egresado.id_egresado,egresado.nombre_egresado,egresado.apellido_egresado",
-                "join: join egresadoprograma on egresado.id_egresado = egresadoprograma.id_egresado
-                    join programa on egresadoprograma.id_programa = programa.id_programa",
-                "conditions: programa.id_programa = $programa");
-    }
 }

@@ -243,6 +243,130 @@
 #dv_dialogoconfirmacionregistroacta {
     padding: 0 15px;
 }
+#dv_resultadoseguimientoegresados {
+    color: @base;
+    
+    .dimensions;
+    .flexBox;
+    
+    #sp_tituloresultadoseguimientoegresados {
+        margin: 0 0 30px 0;
+        
+        .dimensions;
+        .font(@robotoblack;30px);
+    }
+    #dv_opcionesresultadoseguimientoegresados {
+        .dimensions;
+        .flexBox;
+        .font(@robotomedium;14px);
+        
+        div {
+            margin: 0 0 10px 0;
+            
+            .dimensions;
+            .flexBox;
+            
+            span {
+                margin: 0 10px 0 0;
+                text-align: right;
+                
+                .dimensions(@width:80px);
+            }
+            select {
+                padding: 5px;
+                color: @base;
+                border: 1px solid @base;
+                outline: none;
+                
+                .dimensions(@width:400px);
+                .borderRadius(5px);
+                .font(@robotomedium;14px);
+            }
+            &:nth-last-child(1) {
+                margin-bottom: 30px;
+            }
+        }
+    }
+    .contenedor_resultadoegresados {
+        padding: 15px 0 30px 0;
+        background-color: @blanco;
+        
+        .dimensions(@width:65%);
+        .flexBox;
+        .borderRadius(8px);
+        .boxShadow(0;0;6px;0);
+        
+        #dv_resultadosegresados {
+            margin: 15px 0 30px 0;
+            
+            .dimensions;
+            .flexBox;
+            
+            .contenedor_resultadoegresado {
+                margin: 0 0 5px 0;
+                
+                .dimensions;
+                .flexBox;
+            }
+            .etiqueta_datosegresado {
+                cursor: pointer;
+                
+                .font(@robotoregular;16px);
+                
+                &:hover {
+                    color: @grisnav;
+                }
+            }
+        }
+    }
+}
+#dv_paginacion {
+    padding: 8px 25px;
+    border-top: 1px solid @base;
+    border-bottom: 1px solid @base;
+    
+    .dimensions(@width:auto);
+    .flexBox;
+    
+    .paginator {
+        .dimensions;
+        .flexBox;
+        
+        .etiqueta_opcionpaginacion {
+            margin: 0 2.5px;
+            cursor: pointer;
+            color: @blanco;
+            background-color: @base;
+            border: 1px solid @base;
+            
+            .dimensions(24px;28px);
+            .flexBox;
+            .font(@robotoregular;14px);
+            .borderRadius(5px);
+            
+            &:hover {
+                color: @base;
+                background-color: @blanco;
+            }
+        }
+        .etiqueta_direccionpaginacion {
+            margin: 0 2.5px;
+            cursor: pointer;
+            color: @base;
+            background-color: @blanco;
+            border: 1px solid @blanco;
+            
+            .dimensions(24px;28px);
+            .flexBox;
+            .font(@robotoregular;18px);
+            .borderRadius(5px);
+            
+            &:hover {
+                border-color: @base;
+            }
+        }
+    }
+}
 .displaynone {
     display: none !important;
 }

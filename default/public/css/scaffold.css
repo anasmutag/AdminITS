@@ -38,7 +38,7 @@ display: block;
 border-right:1px solid #D9D9D9;
 padding: 4px;
 }
-.paginator{
+/*.paginator{
 }
 .paginator .nextprev{
   color: #000;
@@ -58,7 +58,7 @@ background: #e8ebf1;
 border:1px solid #e8ebf1;
 padding:.5em;
 margin: .5em .1em;
-}
+}*/
 .actions {
 border-top: dotted 1px grey;
 padding-top: 1em;

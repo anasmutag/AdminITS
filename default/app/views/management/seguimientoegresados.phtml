@@ -1,19 +1,25 @@
 <?//= json_encode($programas)?>
 
-<div>
-    <span>Programa</span>
-    <select id="slt_programasegresados">
-        <option value="0">Seleccionar Programa</option>
-        <? foreach($programas as $programa): ?>
-            <option value="<?= $programa->id_programa?>"><?= $programa->nombre_programa?></option>
-        <? endforeach; ?>
-    </select>
-</div>
-<div>
-    <span>Egresados</span>
-    <select id="slt_egresadosprograma">
-        <option value="0">Seleccionar egresado</option>
-    </select>
+<div id="dv_resultadoseguimientoegresados">
+    <span id="sp_tituloresultadoseguimientoegresados">Seguimiento a Egresados</span>
+    <div id="dv_opcionesresultadoseguimientoegresados">
+        <div>
+            <span>Programa</span>
+            <select id="slt_programasegresados">
+                <option value="0">Seleccionar Programa</option>
+                <? foreach($programas as $programa): ?>
+                    <option value="<?= $programa->id_programa?>"><?= $programa->nombre_programa?></option>
+                <? endforeach; ?>
+            </select>
+        </div>
+        <div>
+            <span>Año Egreso</span>
+            <select id="slt_aniosegresados">
+                <option value="0">Seleccionar Año</option>
+            </select>
+        </div>
+    </div>
+    <div id="dv_resultadoegresados" class="contenedor_resultadoegresados displaynone"></div>
 </div>
 
 <script type="text/javascript">
@@ -23,7 +29,7 @@
             
             $.ajax({
                 type: 'POST',
-                url: "<?= PUBLIC_PATH?>management/cargaregresadosprograma/",
+                url: "<?= PUBLIC_PATH?>management/cargaraniosegresadosprograma/",
                 data: {
                     programa: programa
                 },
@@ -41,16 +47,55 @@
                     $('body').removeClass('menuopen');
                     //document.getElementById("frm_codigoestudiante").reset();
                     
-                    $('#slt_egresadosprograma').empty();
-                    $('#slt_egresadosprograma').append('<option value="0">Seleccionar materia</option>');
+                    $('#slt_aniosegresados').empty();
+                    $('#slt_aniosegresados').append('<option value="0">Seleccionar Año</option>');
+                    $('#slt_aniosegresados').append('<option value="1">Todos</option>');
                     
                     for(var i = 0; i < data.length; i++){
-                        $('#slt_egresadosprograma').append('<option value="' + data[i].id_egresado + '">' + data[i].nombre_egresado + ' ' + data[i].apellido_egresado + '</option>');
+                        $('#slt_aniosegresados').append('<option value="' + data[i].anio + '">' + data[i].anio + '</option>');
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError){ }
             }).always(function(){
-                //*document.getElementById("btn_consultarnotas").disabled = false;
+                //document.getElementById("btn_consultarnotas").disabled = false;
+                
+                $.unblockUI();
+            });
+        }
+    });
+    
+    $('#slt_aniosegresados').change(function() {
+        if($(this).val().length > 0){
+            var programa = $('#slt_programasegresados').val(),
+                anio = $(this).val();
+            
+            $.ajax({
+                type: 'POST',
+                url: "<?= PUBLIC_PATH?>management/cargaregresados/",
+                data: {
+                    programa: programa,
+                    anio: anio
+                },
+                beforeSend: function(){
+                    //document.getElementById("btn_consultarnotas").disabled = true;
+                    
+                    $('body').addClass('menuopen');
+                    
+                    $.blockUI({
+                        message: "Cargando datos..."
+                    });
+                },
+                success: function(data){
+                    $('body').removeClass('menuopen');
+                    //document.getElementById("frm_codigoestudiante").reset();
+                    
+                    $('#dv_resultadoegresados').html('');
+                    $('#dv_resultadoegresados').html(data);
+                    $('#dv_resultadoegresados').removeClass('displaynone');
+                },
+                error: function (xhr, ajaxOptions, thrownError){ }
+            }).always(function(){
+                //document.getElementById("btn_consultarnotas").disabled = false;
                 
                 $.unblockUI();
             });

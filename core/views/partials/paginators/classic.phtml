@@ -52,18 +52,34 @@ if ($page->current <= $half) {
 ?>
 
 <div class="paginator">
-    <?php if($page->prev==1) echo Html::link("$url/", 'Anterior', 'title="Ir a la pág. anterior" class="nextprev" rel="prev"'); // Se coloca el enlace sin número de página para la pagina 1
-        elseif($page->prev) echo Html::link("$url/$page->prev/", 'Anterior', 'title="Ir a la pág. anterior" class="nextprev" rel="prev"') ?>
-
-    <?php if($start==1){ //se coloca el link sin número de página para la página 1
+    <? /*if($page->prev==1) echo Html::link("$url/", 'Anterior', 'title="Ir a la pág. anterior" class="nextprev" rel="prev"'); // Se coloca el enlace sin número de página para la pagina 1
+        elseif($page->prev) echo Html::link("$url/$page->prev/", 'Anterior', 'title="Ir a la pág. anterior" class="nextprev" rel="prev"') */?>
+    <? if($page->prev): ?>
+        <span class="etiqueta_direccionpaginacion" onclick="cargaregresados(<?= $page->prev?>, <?= $programa?>, <?= $anio?>);"><</span>
+    <? endif; ?>
+    
+    <? if($start == 1): //se coloca el link sin número de página para la página 1
         $start = 2;
         $show -= 1;
-        echo $page->current==1 ? "<strong>1</strong>" : Html::link("$url/", '1');
-    }?>
+        
+        if($page->current == 1): ?>
+            <span class="etiqueta_opcionpaginacion">1</span>
+        <? else: ?>
+            <span class="etiqueta_opcionpaginacion" onclick="cargaregresados(1, <?= $programa?>, <?= $anio?>);">1</span>
+        <? endif;
+    endif; ?>
 
-    <?php for($i=$start; $i<=$page->total && $i<($start + $show); $i++): ?>
-        <?php echo $i==$page->current ? "<strong>$i</strong>" : Html::link("$url/$i/", $i) ?>
-    <?php endfor ?>
+    <? for($i=$start; $i<=$page->total && $i<($start + $show); $i++): ?>
+        <? /*echo $i==$page->current ? "<strong>$i</strong>" : Html::link("$url/$i/", $i)*/ ?>
+        <? if($i == $page->current): ?>
+            <span class="etiqueta_opcionpaginacion"><?= $i?></span>
+        <? else: ?>
+            <span class="etiqueta_opcionpaginacion" onclick="cargaregresados(<?= $i?>, <?= $programa?>, <?= $anio?>);"><?= $i?></span>
+        <? endif;
+    endfor; ?>
 
-    <?php if($page->next) echo Html::link("$url/$page->next/", 'Siguiente', 'title="Ir a la pág. siguiente" class="nextprev" rel="next"') ?>
+    <? //if($page->next) echo Html::link("$url/$page->next/", 'Siguiente', 'title="Ir a la pág. siguiente" class="nextprev" rel="next"') ?>
+    <?if($page->next):?>
+        <span class="etiqueta_direccionpaginacion" onclick="cargaregresados(<?= $page->next?>, <?= $programa?>, <?= $anio?>);">></span>
+    <?endif;?>
 </div>

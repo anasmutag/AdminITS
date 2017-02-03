@@ -67,3 +67,32 @@ function validar_email(email){
         return false;
     }
 }
+
+function cargaregresados(page, programa, anio){
+    $.ajax({
+        type: 'POST',
+        url: window.public_path + "management/cargaregresados/" + page,
+        data: {
+            programa: programa,
+            anio: anio
+        },
+        beforeSend: function(){
+            $('body').addClass('menuopen');
+            
+            $.blockUI({
+                message: "Cargando datos..."
+            });
+        },
+        success: function(data){
+            $('body').removeClass('menuopen');
+            
+            $('#dv_resultadoegresados').html('');
+            $('#dv_resultadoegresados').html(data);
+        },
+        error: function(){
+            console.log('Error');
+        }
+    }).always(function(){
+        $.unblockUI();
+    });
+}
