@@ -240,7 +240,7 @@
         }
     }
 }
-#dv_dialogoconfirmacionregistroacta {
+#dv_dialogoconfirmacionregistroacta, #dv_dialogoconfirmacionactualizacionegresado, #dv_dialogoconfirmacionregistroseguimiento {
     padding: 0 15px;
 }
 #dv_resultadoseguimientoegresados {
@@ -266,13 +266,26 @@
             .dimensions;
             .flexBox;
             
-            span {
+            span, .etiqueta_datoegresado {
                 margin: 0 10px 0 0;
                 text-align: right;
                 
                 .dimensions(@width:80px);
             }
-            select {
+            .etiqueta_datoegresado {
+                .dimensions(@width:180px);
+            }
+            .etiqueta_secciondatosegresado {
+                margin: 0;
+                text-align: center;
+                
+                .dimensions;
+                .font(@robotoblack;16px);
+            }
+            .etiqueta_llamadaseguimientoegresado {
+                .dimensions(@width:auto);
+            }
+            select, .texto_datoegresado {
                 padding: 5px;
                 color: @base;
                 border: 1px solid @base;
@@ -282,9 +295,30 @@
                 .borderRadius(5px);
                 .font(@robotomedium;14px);
             }
-            &:nth-last-child(1) {
-                margin-bottom: 30px;
+            .texto_datoegresado {
+                padding: 5px 8px;
             }
+            .texto_seguimientoegresado {
+                resize: none;
+            }
+            .caja_llamadaseguimientoegresado {
+                .dimensions(18px;18px);
+            }
+            .boton_actualizardatosegresado, .boton_seguimientoegresado {
+                margin: 15px 0;
+                
+                .button(@width:160px);
+                
+                &:hover {
+                    .hoverButton(@base);
+                }
+            }
+            .boton_seguimientoegresado {
+                width: 220px;
+            }
+        }
+        &:nth-last-child(1) div {
+            margin-bottom: 30px;
         }
     }
     .contenedor_resultadoegresados {
@@ -308,8 +342,10 @@
                 .dimensions;
                 .flexBox;
             }
-            .etiqueta_datosegresado {
+            .enlace_datosegresado {
+                color: @base;
                 cursor: pointer;
+                text-decoration: none;
                 
                 .font(@robotoregular;16px);
                 

@@ -1,6 +1,6 @@
 <?php
 
-Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota', 'Egresado', 'Egresadoprograma', 'Acta');
+Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota', 'Egresado', 'Egresadoprograma', 'Acta', 'Seguimientoegresado');
 
 class ManagementController extends AppController {
     function administracion() {
@@ -853,5 +853,110 @@ class ManagementController extends AppController {
         $this->programa = $programa;
         $this->anio = $anio;
         $this->egresados = $acta->cargarEgresados($page, $programa, $anio);
+    }
+    
+    public function egresado($id) {
+        if(Auth::is_valid()){
+            View::template('general_template');
+            
+            $egresado = new Egresado();
+            $seguimientoegresado = new Seguimientoegresado();
+            
+            $documento = $id;
+            
+            $this->documento = $documento;
+            $this->datosegresado = $egresado->cargarDatosEgresado($documento);
+            $this->seguimiento = $seguimientoegresado->cargarUltimoSeguimientoEgresado(123);
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function actulizardatosegresado() {
+        if(Auth::is_valid()){
+            View::select(NULL, NULL);
+            
+            $egresado = new Egresado();
+            
+            $idegresado = filter_var(Input::request('egresado'), FILTER_SANITIZE_STRING);
+            $correo = filter_var(Input::request('correo'), FILTER_SANITIZE_STRING);
+            $telefono = filter_var(Input::request('telefono'), FILTER_SANITIZE_STRING);
+            $direccion = filter_var(Input::request('direccion'), FILTER_SANITIZE_STRING);
+            $empresa = filter_var(Input::request('empresa'), FILTER_SANITIZE_STRING);
+            $ocupacion = filter_var(Input::request('ocupacion'), FILTER_SANITIZE_STRING);
+            $dirempresa = filter_var(Input::request('dirempresa'), FILTER_SANITIZE_STRING);
+            $telempresa = filter_var(Input::request('telempresa'), FILTER_SANITIZE_STRING);
+            
+            $arr['res'] = 'fail';
+            $arr['msg'] = '';
+            
+            $egresado->begin();
+            
+            $egresado->cargarDatosEgresadoActualizar($idegresado);
+            $egresado->correo_electronico_egresado = $correo;
+            $egresado->direccion_egresado = $direccion;
+            $egresado->telefono_egresado = $telefono;
+            $egresado->ocupacion_egresado = $ocupacion;
+            $egresado->empresa_egresado = $empresa;
+            $egresado->direccion_empresa_egresado = $dirempresa;
+            $egresado->telefono_empresa_egresado = $telempresa;
+            
+            if($egresado->update()){
+                $arr['res'] = 'ok';
+                
+                $egresado->commit();
+            }else{
+                $arr['msg'] = 'Ocurrio un error en actulización de los datos del egresado. Intentar nuevamente';
+                
+                $egresado->rollback();
+            }
+            
+            exit(json_encode($arr));
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function registrarseguimientoegresado() {
+        if(Auth::is_valid()){
+            View::select(NULL, NULL);
+            
+            $seguimientoegresado = new Seguimientoegresado();
+            
+            $egresado = filter_var(Input::request('egresado'), FILTER_SANITIZE_STRING);
+            $observacion = filter_var(Input::request('observacion'), FILTER_SANITIZE_STRING);
+            $llamada = filter_var(Input::request('llamada'), FILTER_SANITIZE_STRING);
+            
+            $arr['res'] = 'fail';
+            $arr['msg'] = '';
+            
+            $seguimientoegresado->begin();
+            
+            if($llamada > 0){
+                $seguimientoegresado->llamada_seguimientoegresado = 1;
+            }else{
+                $seguimientoegresado->llamada_seguimientoegresado = '0';
+            }
+            
+            if(strlen($observacion) > 0){
+                $seguimientoegresado->observacion_seguimientoegresado = $observacion;
+            }
+            
+            $seguimientoegresado->id_egresado = $egresado;
+            
+            if($seguimientoegresado->save()){
+                $arr['res'] = 'ok';
+                
+                $seguimientoegresado->commit();
+            }else{
+                $arr['msg'] = 'Ocurrio un error en el registro del seguimiento a egresado. Intentar nuevamente';
+                
+                $seguimientoegresado->rollback();
+            }
+            
+            exit(json_encode($arr));
+        }else{
+            Router::redirect("/");
+        }
     }
 }

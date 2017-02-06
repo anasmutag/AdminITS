@@ -1596,7 +1596,9 @@
 #dv_verificarregistroegresado .contenedor_verificarregistroegresado:nth-of-type(1) .contendor_pazsalvoestudiantes {
   border-right: 1px solid #00529B;
 }
-#dv_dialogoconfirmacionregistroacta {
+#dv_dialogoconfirmacionregistroacta,
+#dv_dialogoconfirmacionactualizacionegresado,
+#dv_dialogoconfirmacionregistroseguimiento {
   padding: 0 15px;
 }
 #dv_resultadoseguimientoegresados {
@@ -1715,13 +1717,31 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div span {
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div span,
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div .etiqueta_datoegresado {
   margin: 0 10px 0 0;
   text-align: right;
   width: 80px;
   height: auto;
 }
-#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div select {
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div .etiqueta_datoegresado {
+  width: 180px;
+  height: auto;
+}
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div .etiqueta_secciondatosegresado {
+  margin: 0;
+  text-align: center;
+  width: 100%;
+  height: auto;
+  font-family: 'Roboto-Black';
+  font-size: 16px;
+}
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div .etiqueta_llamadaseguimientoegresado {
+  width: auto;
+  height: auto;
+}
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div select,
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div .texto_datoegresado {
   padding: 5px;
   color: #00529B;
   border: 1px solid #00529B;
@@ -1737,7 +1757,45 @@
   font-family: 'RobotoMedium';
   font-size: 14px;
 }
-#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div:nth-last-child(1) {
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div .texto_datoegresado {
+  padding: 5px 8px;
+}
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div .texto_seguimientoegresado {
+  resize: none;
+}
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div .caja_llamadaseguimientoegresado {
+  width: 18px;
+  height: 18px;
+}
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div .boton_actualizardatosegresado,
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div .boton_seguimientoegresado {
+  margin: 15px 0;
+  width: 160px;
+  min-width: 100px;
+  height: 35px;
+  min-height: 35px;
+  font-family: 'RobotoRegular';
+  font-size: 18px;
+  color: #ffffff;
+  border: 2px solid #00529B;
+  background-color: #00529B;
+  padding: 0;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div .boton_actualizardatosegresado:hover,
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div .boton_seguimientoegresado:hover {
+  color: #00529B;
+  background-color: #ffffff;
+}
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados div .boton_seguimientoegresado {
+  width: 220px;
+}
+#dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados:nth-last-child(1) div {
   margin-bottom: 30px;
 }
 #dv_resultadoseguimientoegresados .contenedor_resultadoegresados {
@@ -1858,12 +1916,14 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_resultadoseguimientoegresados .contenedor_resultadoegresados #dv_resultadosegresados .etiqueta_datosegresado {
+#dv_resultadoseguimientoegresados .contenedor_resultadoegresados #dv_resultadosegresados .enlace_datosegresado {
+  color: #00529B;
   cursor: pointer;
+  text-decoration: none;
   font-family: 'RobotoRegular';
   font-size: 16px;
 }
-#dv_resultadoseguimientoegresados .contenedor_resultadoegresados #dv_resultadosegresados .etiqueta_datosegresado:hover {
+#dv_resultadoseguimientoegresados .contenedor_resultadoegresados #dv_resultadosegresados .enlace_datosegresado:hover {
   color: #bcafa9;
 }
 #dv_paginacion {
