@@ -866,7 +866,7 @@ class ManagementController extends AppController {
             
             $this->documento = $documento;
             $this->datosegresado = $egresado->cargarDatosEgresado($documento);
-            $this->seguimiento = $seguimientoegresado->cargarUltimoSeguimientoEgresado(123);
+            $this->seguimiento = $seguimientoegresado->cargarUltimoSeguimientoEgresado($documento);
         }else{
             Router::redirect("/");
         }
