@@ -1,5 +1,5 @@
 <div id="dv_pagomatricula" class="contenedor_formularioadmin contenedor_formulariomatricula">
-    <span class="etiqueta_encabezadoformlarioadmin">Pago de Matricula</span>
+    <span class="etiqueta_encabezadoformlarioadmin">PAGO DE MATRICULA</span>
     <div class="contendor_pagomatricula">
         <? if($idAlumno===0): ?>
             <form id="frm_consultadocumentopagomatricula">
@@ -21,7 +21,7 @@
                         <label>Número de Matricula: <?= $numeroMatricula?></label>
                         <label>Matricula realizada el <?= $fechaMatricula?></label>
                         <label>Tipo de Pago: CONTADO</label>
-                        <label>Valor a Pagar: <?= '1.000.000'?></label>
+                        <label>Valor a Pagar: <?= $valorsemestre?></label>
                         
                         <? break;
                     case 2: ?>
@@ -31,17 +31,17 @@
                         <label>Número de Matricula: <?= $numeroMatricula?></label>
                         <label>Matricula realizada el <?= $fechaMatricula?></label>
                         <label>Tipo de Pago: A CUOTAS</label>
-                        <label>Total a Pagar: <?= '1.000.000'?></label>
+                        <label>Total a Pagar: <?= $valorsemestre?></label>
                         <label>Número de Cuotas: <?= $numeroCuotas?></label>
                         <div id="dv_cuotaspagomatricula">
                             <? for($i = 0; $i < $numeroCuotas; $i++): ?>
                                 <div class="contendor_cuotapagomatricula">
-                                    <label class="etiqueta_textocuota">Valor Cuota No. <?= $i + 1?>: <?= number_format(1000000/$numeroCuotas, 0, '',  '.')?></label>
+                                    <label class="etiqueta_textocuota">Valor Cuota No. <?= $i + 1?>: <?= number_format($valorsemestre/$numeroCuotas, 0, '',  '.')?></label>
                                     
                                     <? if($i<$cuotasPagadas): ?>
                                         <label class="etiqueta_cuotapagada">Cuota Pagada</label>
                                     <? elseif($i==$cuotasPagadas): ?>
-                                        <input class="boton_registrarPagoCuotaMatricula boton_pagarcuota" data-valor="<?= (1000000/$numeroCuotas)?>" type="button" value="Pagar Cuota">
+                                        <input class="boton_registrarPagoCuotaMatricula boton_pagarcuota" data-valor="<?= ($valorsemestre/$numeroCuotas)?>" type="button" value="Pagar Cuota">
                                     <? elseif($i>$cuotasPagadas): ?>
                                         <input class="boton_pagarcuotadisabled" type="button" value="Pagar Cuota" disabled="disabled">
                                     <? endif; ?>
@@ -119,7 +119,7 @@
     });
     
     $('#btn_registrarpagocontadomatricula').on('click', function (){
-        var valormatricula = 1000000,
+        var valormatricula = <?= $valorsemestre?>,
             idmatricula = <?= $idMatricula?>;
         
         $.ajax({

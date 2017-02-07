@@ -4,10 +4,10 @@ Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa
 
 class ManagementController extends AppController {
     function administracion() {
-        //View::template('general_template');
-        
         if(Auth::is_valid()){
             View::template('general_template');
+            
+            $this->usuario = Auth::get('nombre_usuario') . ' ' . Auth::get('apellido_usuario');
         }else{
             Router::redirect("/");
         }
@@ -180,14 +180,14 @@ class ManagementController extends AppController {
             $sede = filter_var(Input::request('sedematricula'), FILTER_SANITIZE_STRING);
             $tipoDocumento = filter_var(Input::request('tipodocumento'), FILTER_SANITIZE_STRING);
             $documento = filter_var(Input::request('numerodocumento'), FILTER_SANITIZE_STRING);
-            $pais = filter_var(Input::request('paisE'), FILTER_SANITIZE_STRING);
-            $region = filter_var(Input::request('regionE'), FILTER_SANITIZE_STRING);
+            //$pais = filter_var(Input::request('paisE'), FILTER_SANITIZE_STRING);
+            //$region = filter_var(Input::request('regionE'), FILTER_SANITIZE_STRING);
             $localidad = filter_var(Input::request('localidadE'), FILTER_SANITIZE_STRING);
             $nombre = filter_var(Input::request('nombre'), FILTER_SANITIZE_STRING);
             $apellido = filter_var(Input::request('apellido'), FILTER_SANITIZE_STRING);
             $fechaNacimiento = filter_var(Input::request('fechanacimiento'), FILTER_SANITIZE_STRING);
-            $paisNacimiento = filter_var(Input::request('paisN'), FILTER_SANITIZE_STRING);
-            $regionNacimiento = filter_var(Input::request('regionN'), FILTER_SANITIZE_STRING);
+            //$paisNacimiento = filter_var(Input::request('paisN'), FILTER_SANITIZE_STRING);
+            //$regionNacimiento = filter_var(Input::request('regionN'), FILTER_SANITIZE_STRING);
             $localidadNacimiento = filter_var(Input::request('localidadN'), FILTER_SANITIZE_STRING);
             $direccion = filter_var(Input::request('direccion'), FILTER_SANITIZE_STRING);
             $telefono = filter_var(Input::request('telefono'), FILTER_SANITIZE_STRING);
@@ -201,7 +201,7 @@ class ManagementController extends AppController {
             $telefonoEmpresa = filter_var(Input::request('telefonoE'), FILTER_SANITIZE_STRING);
             $programa = filter_var(Input::request('programa'), FILTER_SANITIZE_STRING);
             $periodo = filter_var(Input::request('periodomatricula'), FILTER_SANITIZE_STRING);
-            $codigoEstudiante = filter_var(Input::request('codigoestudiantil'), FILTER_SANITIZE_STRING);
+            //$codigoEstudiante = filter_var(Input::request('codigoestudiantil'), FILTER_SANITIZE_STRING);
             $numeroMatricula = filter_var(Input::request('numeromatricula'), FILTER_SANITIZE_STRING);
             $fechaMatricula = filter_var(Input::request('fechamatricula'), FILTER_SANITIZE_STRING);
             $formaPago = filter_var(Input::request('formapago'), FILTER_SANITIZE_STRING);
@@ -311,7 +311,7 @@ class ManagementController extends AppController {
             $direccionEmpresa = filter_var(Input::request('direccionE'), FILTER_SANITIZE_STRING);
             $telefonoEmpresa = filter_var(Input::request('telefonoE'), FILTER_SANITIZE_STRING);
             $periodo = filter_var(Input::request('periodomatricula'), FILTER_SANITIZE_STRING);
-            $codigoEstudiante = filter_var(Input::request('codigoestudiantil'), FILTER_SANITIZE_STRING);
+            //$codigoEstudiante = filter_var(Input::request('codigoestudiantil'), FILTER_SANITIZE_STRING);
             $numeroMatricula = filter_var(Input::request('numeromatricula'), FILTER_SANITIZE_STRING);
             $fechaMatricula = filter_var(Input::request('fechamatricula'), FILTER_SANITIZE_STRING);
             $formaPago = filter_var(Input::request('formapago'), FILTER_SANITIZE_STRING);
@@ -409,6 +409,7 @@ class ManagementController extends AppController {
                 $this->id = $datos[0]->identificacion_alumno;
                 $this->nombre = $datos[0]->nombre_alumno . ' ' . $datos[0]->apellido_alumno;
                 $this->programa = $datos[0]->nombre_programa;
+                $this->valorsemestre = $datos[0]->valor_semestre_programa;
                 $this->tipoPago = $datos[0]->formapago;
                 
                 if($numerocuotas === $cuotaspagadas){
@@ -418,6 +419,7 @@ class ManagementController extends AppController {
                 }
             }else{
                 $this->idMatricula = 0;
+                $this->valorsemestre = 0;
             }
         }else{
             Router::redirect("/");

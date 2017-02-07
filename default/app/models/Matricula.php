@@ -6,7 +6,7 @@ class Matricula extends ActiveRecord {
     }
     
     public function cargarDatosMatricula($id) {
-        return $this->find("columns: matricula.id_matricula,numero_matricula,fecha_matricula,numero_cuotas_matricula,numero_cuotaspagadas_matricula,abreviatura_tipodocumento,identificacion_alumno,nombre_alumno,apellido_alumno,nombre_programa,nombre_semestre,formapago.id_formapago as formapago,nombre_formapago",
+        return $this->find("columns: matricula.id_matricula,numero_matricula,fecha_matricula,numero_cuotas_matricula,numero_cuotaspagadas_matricula,abreviatura_tipodocumento,identificacion_alumno,nombre_alumno,apellido_alumno,nombre_programa,valor_semestre_programa,nombre_semestre,formapago.id_formapago as formapago,nombre_formapago",
                 "join: join alumno on matricula.id_alumno = alumno.id_alumno
                     join tipodocumento on alumno.id_tipodocumento = tipodocumento.id_tipodocumento
                     join alumnoprograma on alumno.id_alumno = alumnoprograma.id_alumno

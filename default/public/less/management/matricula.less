@@ -1,6 +1,21 @@
 @import "../variables.less";
 @import "../funciones.less";
 
+#dv_iniciosistemaadministrativo {
+    color: @base;
+    
+    .dimensions;
+    .flexBox;
+    .font(@robotoblack;40px);
+    
+    span {
+        .dimensions;
+        .flexBox;
+    }
+    #sp_mensajeiniciosistemaadministrativo {
+        .font(@robotoregular;28px);
+    }
+}
 .contenedor_formularioadmin {
     /*min-height: 200px;
     position: relative;
@@ -146,7 +161,10 @@
         }
     }
 }
-#dv_buscardocumento, #dv_documentoacta {
+#dv_buscardocumento {
+    margin: 35px 0 0 0;
+}
+#dv_documentoacta {
     margin: 55px 0 0 0;
 }
 #dv_formularioacta {

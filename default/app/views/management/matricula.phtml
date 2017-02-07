@@ -1,5 +1,5 @@
 <div class="contenedor_formularioadmin contenedor_formulariomatricula">
-    <span class="etiqueta_encabezadoformlarioadmin">Matricular Estudiante</span>
+    <span class="etiqueta_encabezadoformlarioadmin">MATRICULAR ESTUDIANTE</span>
     <div id="dv_semestrematricula">
         <div>
             <input id="rb_semestreuno" type="radio" name="matricula" value="1" checked>
@@ -93,14 +93,14 @@
                 beforeSend: function(){
                     //document.getElementById("btn_consultarnotas").disabled = true;
                     
-                    $('body').addClass('menuopen');
+                    /*$('body').addClass('menuopen');
                     
                     $.blockUI({
                         message: "Validando datos..."
-                    });
+                    });*/
                 },
                 success: function(data) {
-                    $('body').removeClass('menuopen');
+                    //$('body').removeClass('menuopen');
                     //document.getElementById("frm_codigoestudiante").reset();
                     
                     $('#dv_formulariomatricula').html('');
@@ -123,7 +123,7 @@
             }).always(function(){
                 //document.getElementById("btn_consultarnotas").disabled = false;
                 
-                $.unblockUI();
+                //$.unblockUI();
             });
         }else{
             $input = $('#txt_numerodocumentoconsultar');
