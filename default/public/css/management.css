@@ -1677,7 +1677,8 @@
 }
 #dv_dialogoconfirmacionregistroacta,
 #dv_dialogoconfirmacionactualizacionegresado,
-#dv_dialogoconfirmacionregistroseguimiento {
+#dv_dialogoconfirmacionregistroseguimiento,
+#dv_dialogoconfirmacioncierresemestre {
   padding: 0 15px;
 }
 #dv_resultadoseguimientoegresados {
