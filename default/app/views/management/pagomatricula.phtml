@@ -21,7 +21,7 @@
                         <label>Número de Matricula: <?= $numeroMatricula?></label>
                         <label>Matricula realizada el <?= $fechaMatricula?></label>
                         <label>Tipo de Pago: CONTADO</label>
-                        <label>Valor a Pagar: <?= $valorsemestre?></label>
+                        <label>Valor a Pagar: <?= number_format($valorsemestre, 0, '', '.')?></label>
                         
                         <? break;
                     case 2: ?>
@@ -31,7 +31,7 @@
                         <label>Número de Matricula: <?= $numeroMatricula?></label>
                         <label>Matricula realizada el <?= $fechaMatricula?></label>
                         <label>Tipo de Pago: A CUOTAS</label>
-                        <label>Total a Pagar: <?= $valorsemestre?></label>
+                        <label>Total a Pagar: <?= number_format($valorsemestre, 0, '', '.')?></label>
                         <label>Número de Cuotas: <?= $numeroCuotas?></label>
                         <div id="dv_cuotaspagomatricula">
                             <? for($i = 0; $i < $numeroCuotas; $i++): ?>
@@ -55,13 +55,30 @@
                         break;
                 endswitch; ?>
             </div>
+            <? if($valorsemestre > 0): ?>
+                <? if(!$estadosaldo): ?>
+                    <div id="dv_saldopagomatricula">
+                        <label id="lbl_saldopagomatricula">Saldo:&nbsp;<?= number_format(($valorsemestre - (($valorsemestre/$numeroCuotas) * $cuotasPagadas)), 0, '', '.')?></label>
+                    </div>
+                <? endif; ?>
+            <? else: ?>
+                <div id="dv_saldopagomatricula">
+                    <label class="etiqueta_becamatricula">Estudiante Becado</label>
+                    <label class="etiqueta_becamatricula">Valor Semestre Programa:&nbsp;<?= number_format($valorsemestreprograma, 0, '', '.')?></label>
+                </div>
+            <? endif; ?>
             <div id="dv_accionespagomatricula">
-                <? if($saldo): ?>
-                    <label class="etiqueta_matriculapagada">Total del valor de matricula pagado</label>
-                <? else: ?>
-                    <? if($tipoPago == 1): ?>
-                        <input id="btn_registrarpagocontadomatricula" class="boton_accionpagomatricula" type="button" value="Registrar Pago">
-                    <? endif; ?>
+                <? if($valorsemestre > 0):
+                    if($estadosaldo): ?>
+                        <label class="etiqueta_matriculapagada">Total del valor de matricula pagado</label>
+                    <? else: ?>
+                        <? if($tipoPago == 1): ?>
+                            <input id="btn_registrarpagocontadomatricula" class="boton_accionpagomatricula" type="button" value="Registrar Pago">
+                        <? endif; ?>
+                        <input id="btn_cancelarpagomatricula" class="boton_accionpagomatricula" type="button" value="Cancelar Pago">
+                    <? endif;
+                else: ?>
+                    <input id="btn_registrarpagobeca" class="boton_accionpagomatricula boton_accionpagobeca" type="button" value="Registrar Pago Beca">
                     <input id="btn_cancelarpagomatricula" class="boton_accionpagomatricula" type="button" value="Cancelar Pago">
                 <? endif; ?>
             </div>
@@ -125,6 +142,47 @@
         $.ajax({
             type: 'POST',
             url: <?= PUBLIC_PATH?> + 'management/registrarpagocontado/',
+            data: {
+                valor: valormatricula,
+                idMatricula: idmatricula
+            },
+            dataType: 'json',
+            beforeSend: function(){
+                //document.getElementById("btn_consultarnotas").disabled = true;
+
+                $('body').addClass('menuopen');
+
+                $.blockUI({
+                    message: "Registrando pago..."
+                });
+            },
+            success: function(data) {
+                $('body').removeClass('menuopen');
+                //document.getElementById("frm_codigoestudiante").reset();
+
+                if(data !== null && data.res === 'ok'){
+                    document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + window.localStorage.idPagoMatricula;
+                }else{
+                    console.log(data.msg);
+                }
+            },
+            error: function(){
+                console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }
+        }).always(function(){
+            //document.getElementById("btn_consultarnotas").disabled = false;
+
+            $.unblockUI();
+        });
+    });
+    
+    $('#btn_registrarpagobeca').on('click', function (){
+        var valormatricula = <?= $valorsemestreprograma?>,
+            idmatricula = <?= $idMatricula?>;
+        
+        $.ajax({
+            type: 'POST',
+            url: <?= PUBLIC_PATH?> + 'management/registrarpagobeca/',
             data: {
                 valor: valormatricula,
                 idMatricula: idmatricula

@@ -123,7 +123,7 @@
         .flexBox;
     }
 }
-#dv_buscardocumento, #dv_documentoacta {
+#dv_buscardocumento, #dv_documentoacta, #dv_documentomatricula {
     .dimensions;
     .flexBox;
     
@@ -164,8 +164,11 @@
 #dv_buscardocumento {
     margin: 35px 0 0 0;
 }
-#dv_documentoacta {
+#dv_documentoacta, #dv_documentomatricula {
     margin: 55px 0 0 0;
+}
+#dv_contenidomatricula {
+    padding: 0 35px;
 }
 #dv_formularioacta {
     margin: 55px 0 0 0;
@@ -246,13 +249,16 @@
                         
                         .flexBox(@justify-content:flex-end);
                     }
-                    .etiqueta_cuotapagada {
-                        .flexBox;
-                    }
                     .etiqueta_cuotapagada, .boton_pagarcuotadisabled {
                         margin: 0;
                         
                         .button(@width:125px;@font-size:16px;@border-color:@grisnav;@background-color:@grisnav);
+                    }
+                    .etiqueta_cuotapagada {
+                        border-color: @ok;
+                        background-color: @ok;
+                        
+                        .flexBox;
                     }
                     .boton_pagarcuota {
                         .button(@width:125px;@font-size:16px);
@@ -271,6 +277,24 @@
                 }
             }
         }
+        #dv_saldopagomatricula {
+            margin: 0 0 35px 0;
+            
+            .dimensions;
+            .flexBox;
+            
+            #lbl_saldopagomatricula {
+                font-size: 18px;
+                color: @error;
+            }
+            .etiqueta_becamatricula {
+                font-size: 18px;
+                color: @ok;
+                
+                .dimensions;
+                .flexBox;
+            }
+        }
         #dv_accionespagomatricula {
             margin: 0 0 40px 0;
             
@@ -285,6 +309,9 @@
                 &:hover {
                     .hoverButton(@base);
                 }
+            }
+            .boton_accionpagobeca {
+                width: 180px;
             }
             .etiqueta_matriculapagada {
                 margin: 0;

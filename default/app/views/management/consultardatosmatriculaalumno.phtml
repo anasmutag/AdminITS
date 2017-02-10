@@ -1,0 +1,5 @@
+<? if($estado === 1):
+    View::partial('matricula', false, array('estado' => $estado, 'datosmatricula' => $datosmatricula));
+else:
+    View::partial('matricula', false, array('estado' => $estado));
+endif; ?>

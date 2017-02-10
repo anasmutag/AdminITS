@@ -18,6 +18,12 @@
                 <option value="0">Seleccionar Año</option>
             </select>
         </div>
+        <div>
+            <span>Periodo</span>
+            <select id="slt_periodoegresados">
+                <option value="0">Seleccionar Periodo Académico</option>
+            </select>
+        </div>
     </div>
     <div id="dv_resultadoegresados" class="contenedor_resultadoegresados displaynone"></div>
 </div>
@@ -47,6 +53,9 @@
                     $('body').removeClass('menuopen');
                     //document.getElementById("frm_codigoestudiante").reset();
                     
+                    $('#dv_resultadoegresados').html('').addClass('displaynone');
+                    $('#slt_periodoegresados').empty();
+                    $('#slt_periodoegresados').append('<option value="0">Seleccionar Periodo Académico</option>');
                     $('#slt_aniosegresados').empty();
                     $('#slt_aniosegresados').append('<option value="0">Seleccionar Año</option>');
                     $('#slt_aniosegresados').append('<option value="1">Todos</option>');
@@ -65,16 +74,32 @@
     });
     
     $('#slt_aniosegresados').change(function() {
+        if($(this).val() > 0){
+            $('#dv_resultadoegresados').html('').addClass('displaynone');
+            $('#slt_periodoegresados').empty();
+            $('#slt_periodoegresados').append('<option value="0">Seleccionar Periodo Académico</option>');
+            $('#slt_periodoegresados').append('<option value="1">Periodo A</option>');
+            $('#slt_periodoegresados').append('<option value="2">Periodo B</option>');
+        }else{
+            $('#dv_resultadoegresados').html('').addClass('displaynone');
+            $('#slt_periodoegresados').empty();
+            $('#slt_periodoegresados').append('<option value="0">Seleccionar Periodo Académico</option>');
+        }
+    });
+    
+    $('#slt_periodoegresados').change(function() {
         if($(this).val().length > 0){
             var programa = $('#slt_programasegresados').val(),
-                anio = $(this).val();
+                anio = $('#slt_aniosegresados').val(),
+                periodo = $(this).val();
             
             $.ajax({
                 type: 'POST',
                 url: "<?= PUBLIC_PATH?>management/cargaregresados/",
                 data: {
                     programa: programa,
-                    anio: anio
+                    anio: anio,
+                    periodo: periodo
                 },
                 beforeSend: function(){
                     //document.getElementById("btn_consultarnotas").disabled = true;

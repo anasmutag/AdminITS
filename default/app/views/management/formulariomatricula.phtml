@@ -168,7 +168,7 @@
             <select id="slt_programa" class="entrada_datoformularioadmin" name="programa" <?= ($bandera==1)?'disabled':'';?>>
                 <option value="0">Seleccionar programa</option>
                 <?foreach($programas as $programa):?>
-                    <option value="<?= $programa->id_programa?>"  <?= ($bandera==1&&$datos[0]->id_programa==$programa->id_programa)?'selected':'';?>><?= $programa->nombre_programa?></option>
+                    <option data-valor="<?= $programa->valor_semestre_programa?>" value="<?= $programa->id_programa?>" <?= ($bandera==1&&$datos[0]->id_programa==$programa->id_programa)?'selected':'';?>><?= $programa->nombre_programa?></option>
                 <?endforeach;?>
             </select>
         </div>
@@ -215,17 +215,34 @@
     <span class="etiqueta_encabezadoelementoformularioadmin">Datos Pago</span>
     <div class="contendor_elementoformularioadmin">
         <div>
-            <span class="etiqueta_textoelementoformularioadmin etiqueta_espacioelementoformularioadmin">Forma de Pago</span>
-            <?foreach($formapagos as $formapago):?>
-                <input id="rb_fp<?= $formapago->nombre_formapago?>" type="radio" name="formapago" value="<?= $formapago->id_formapago?>" <?= ($formapago===reset($formapagos))?'checked':'';?>>
-                <span class="etiqueta_textoradioformularioadmin"><?= $formapago->nombre_formapago?></span>
-            <?endforeach;?>
+            <span class="etiqueta_textoelementoformularioadmin etiqueta_bacaelementoformularioadmin">¿Beca?</span>
+            <input id="rb_becatrue" type="radio" name="beca" value="1">
+            <span class="etiqueta_textoradioformularioadmin">Si</span>
+            <input id="rb_becafalse" type="radio" name="beca" value="2" checked="checked">
+            <span class="etiqueta_textoradioformularioadmin">No</span>
         </div>
     </div>
-    <div id="dv_numerocuotas" class="contendor_elementoformularioadmin displaynone">
-        <div>
-            <span class="etiqueta_textoelementoformularioadmin">Número de Cuotas</span>
-            <input id="num_numerocuotas" class="entrada_datoformularioadmin" type="number" name="numerocuotas" value="1" min="2" required="required">
+    <div id="dv_datospagomatricula" class="contendor_elementoformularioadmin">
+        <div class="contendor_elementoformularioadmin">
+            <div>
+                <span class="etiqueta_textoelementoformularioadmin etiqueta_valormatricula">Valor Matrícula (Semestre)</span>
+                <input id="txt_valormatricula" class="entrada_datoformularioadmin entrada_valormatricula" type="number" name="valormatricula" min="0" step="50000" value="<?= ($bandera==1)?$datos[0]->valor_matricula:'0';?>" required="required">
+            </div>
+        </div>
+        <div class="contendor_elementoformularioadmin">
+            <div>
+                <span class="etiqueta_textoelementoformularioadmin etiqueta_espacioelementoformularioadmin">Forma de Pago</span>
+                <?foreach($formapagos as $formapago):?>
+                    <input id="rb_fp<?= $formapago->nombre_formapago?>" type="radio" name="formapago" value="<?= $formapago->id_formapago?>" <?= ($formapago===reset($formapagos))?'checked':'';?>>
+                    <span class="etiqueta_textoradioformularioadmin"><?= $formapago->nombre_formapago?></span>
+                <?endforeach;?>
+            </div>
+        </div>
+        <div id="dv_numerocuotas" class="contendor_elementoformularioadmin displaynone">
+            <div>
+                <span class="etiqueta_textoelementoformularioadmin">Número de Cuotas</span>
+                <input id="num_numerocuotas" class="entrada_datoformularioadmin" type="number" name="numerocuotas" value="1" min="2" required="required">
+            </div>
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
@@ -267,6 +284,22 @@
     $('#rb_fpCuotas').on('click', function (){
         $('#dv_numerocuotas').removeClass('displaynone');
         $('#num_numerocuotas').val(2);
+    });
+    
+    $('#rb_becatrue').on('click', function (){
+        $('#dv_datospagomatricula').addClass('displaynone');
+        $('#txt_valormatricula').val('0');
+        document.getElementById('rb_fpContado').checked = true;
+        $('#dv_numerocuotas').addClass('displaynone');
+        $('#num_numerocuotas').val(1);
+    });
+    
+    $('#rb_becafalse').on('click', function (){
+        $('#dv_datospagomatricula').removeClass('displaynone');
+        $('#txt_valormatricula').val('0');
+        document.getElementById('rb_fpContado').checked = true;
+        $('#dv_numerocuotas').addClass('displaynone');
+        $('#num_numerocuotas').val(1);
     });
     
     $('.combo_paises').change(function(){
@@ -373,7 +406,8 @@
             //periodo = convertiranumero(document.querySelector('input[name="periodomatricula"]:checked').value),
             codigoEstudiante = $('#txt_codigoestudiantil').val(),
             numeroMatricula = $('#txt_numeromatricula').val(),
-            fechaMatricula = $('#txt_fechamatricula').val();
+            fechaMatricula = $('#txt_fechamatricula').val(),
+            valorMatricula = $('#txt_valormatricula').val();
             //formaPago = convertiranumero(document.querySelector('input[name="formapago"]:checked').value),
             //numeroCuotas = $('#num_numerocuotas').val();
         
@@ -382,7 +416,7 @@
             && convertiranumero(regionNacimiento) > 0 && convertiranumero(localidadNacimiento) > 0 && direccion.length > 0
             && telefono.length > 0 && correoElectronico.length > 0 && validar_email(correoElectronico)
             && convertiranumero(programa) > 0 && codigoEstudiante.length > 0
-            && numeroMatricula.length > 0 && fechaMatricula.length > 0){
+            && numeroMatricula.length > 0 && fechaMatricula.length > 0 && valorMatricula.length > 0){
         
             switch(matricula){
                 case 1:
@@ -466,12 +500,12 @@
             }
         }else{
             //validarcampos(documento, convertiranumero(region), convertiranumero(localidad), nombre, apellido, fechaNacimiento, convertiranumero(regionNacimiento), convertiranumero(localidadNacimiento), direccion, telefono, correoElectronico, nombreAcudiente, apellidoAcudiente, telefonoAcudiente, empresa, cargo, direccionEmpresa, telefonoEmpresa, convertiranumero(programa), codigoEstudiante, numeroMatricula, fechaMatricula);
-            validarcampos(documento, convertiranumero(region), convertiranumero(localidad), nombre, apellido, fechaNacimiento, convertiranumero(regionNacimiento), convertiranumero(localidadNacimiento), direccion, telefono, correoElectronico, convertiranumero(programa), codigoEstudiante, numeroMatricula, fechaMatricula);
+            validarcampos(documento, convertiranumero(region), convertiranumero(localidad), nombre, apellido, fechaNacimiento, convertiranumero(regionNacimiento), convertiranumero(localidadNacimiento), direccion, telefono, correoElectronico, convertiranumero(programa), codigoEstudiante, numeroMatricula, fechaMatricula, valorMatricula);
         }
     });
     
     //nombreAcudiente, apellidoAcudiente, telefonoAcudiente, empresa, cargo, direccionEmpresa, telefonoEmpresa
-    function validarcampos(documento, region, localidad, nombre, apellido, fechaNacimiento, regionNacimiento, localidadNacimiento, direccion, telefono, correoElectronico, programa, codigoEstudiante, numeroMatricula, fechaMatricula){
+    function validarcampos(documento, region, localidad, nombre, apellido, fechaNacimiento, regionNacimiento, localidadNacimiento, direccion, telefono, correoElectronico, programa, codigoEstudiante, numeroMatricula, fechaMatricula, valorMatricula){
         $inputfocus = null;
         $input = $('#txt_numerodocumento');
         if(documento.length === 0){
@@ -627,6 +661,13 @@
         }else{
             $input.removeClass('entrada_textonovalido');
         }
+        $input = $('#txt_valormatricula');
+        if(valorMatricula.length === 0){
+            $input.addClass('entrada_textonovalido');
+            if($inputfocus === null)$inputfocus = $input;
+        }else{
+            $input.removeClass('entrada_textonovalido');
+        }
 
         if($inputfocus !== null){
             $('html, body').animate({scrollTop: $inputfocus.position().top+'px'}, 1000);
@@ -646,7 +687,7 @@
     
     //#txt_empresa, #txt_cargo, #txt_direccionE, #txt_telefonoE
     //#txt_nombreA, #txt_apellidoA, #txt_telefonoA
-    $("#txt_nombre, #txt_apellido, #txt_fechanacimiento, #txt_direccion, #txt_telefono, #txt_correoelectronico, #num_numerocuotas").on('keyup', function (){
+    $("#txt_nombre, #txt_apellido, #txt_fechanacimiento, #txt_direccion, #txt_telefono, #txt_correoelectronico, #num_numerocuotas, #txt_valormatricula").on('keyup', function (){
         if($(this).val().length > 0){
             $(this).removeClass('entrada_textonovalido');
         }else{
@@ -691,8 +732,12 @@
     $('#slt_programa').change(function(event){
         if(convertiranumero($('#slt_programa option:selected').val()) === 0){
             $(this).addClass('entrada_textonovalido');
+            $('#txt_valormatricula').val('0');
         }else{
+            var valor = $('#slt_programa option:selected').data('valor');
+            
             $(this).removeClass('entrada_textonovalido');
+            $('#txt_valormatricula').val(valor);
         }
     });
 </script>

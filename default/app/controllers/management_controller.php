@@ -3,7 +3,7 @@
 Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota', 'Egresado', 'Egresadoprograma', 'Acta', 'Seguimientoegresado');
 
 class ManagementController extends AppController {
-    function administracion() {
+    public function administracion() {
         if(Auth::is_valid()){
             View::template('general_template');
             
@@ -13,29 +13,31 @@ class ManagementController extends AppController {
         }
     }
     
-    function matricula() {
+    public function matricula() {
         if(Auth::is_valid()){
             View::template('general_template');
-            
-            /*$tipodocumento = new Tipodocumento();
-            $programa = new Programa();
-            $semestre = new Semestre();
-            $formapago = new Formapago();
-            $pais = new Pais();
-            $region = new Region();
-            
-            $this->tipodocumentos = $tipodocumento->tipoDocumentos();
-            $this->programas = $programa->programas();
-            $this->semestres = $semestre->semestres();
-            $this->formapagos = $formapago->formapagos();
-            $this->paises = $pais->paises();
-            $this->regiones = $region->regiones(82);*/
         }else{
             Router::redirect("/");
         }
     }
     
-    function formulariomatricula() {
+    public function matricular() {
+        if(Auth::is_valid()){
+            View::template('general_template');
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function consultamatricula() {
+        if(Auth::is_valid()){
+            View::template(NULL);
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function formulariomatricula() {
         View::template(NULL);
         
         $tipodocumento = new Tipodocumento();
@@ -130,9 +132,26 @@ class ManagementController extends AppController {
         exit(json_encode($arr));
     }
     
+    public function consultardatosmatriculaalumno() {
+        View::template(NULL);
+        
+        $matricula = new Matricula();
+        
+        $documento = Input::request('documento');
+        
+        if($matricula->validarIdentificacion($documento)){
+            $this->estado = 1;
+            
+            $this->datosmatricula = $matricula->cargarDatosConsultaMatricula($documento);
+        }else{
+            $this->estado = 0;
+        }
+    }
+    
     public function consultarDatosAlumnoActa() {
         View::select(NULL, NULL);
         
+        $acta = new Acta();
         $egresado = new Egresado();
         
         $arr['res'] = 'fail';
@@ -141,8 +160,14 @@ class ManagementController extends AppController {
         $documento = Input::request('documento');
         
         if($egresado->validarDocumentoAlumno($documento)){
-            $arr['res'] = 'ok';
+            if($acta->validarActaAlumno($documento)){
+                $arr['tipoerror'] = 2;
+                $arr['msg'] = 'El número de documento del estudiante ya tiene un acta registrada en base de datos';
+            }else{
+                $arr['res'] = 'ok';
+            }
         }else{
+            $arr['tipoerror'] = 1;
             $arr['msg'] = 'El número de documento del estudiante no se encuentra registrado como egresado';
         }
         
@@ -204,6 +229,8 @@ class ManagementController extends AppController {
             //$codigoEstudiante = filter_var(Input::request('codigoestudiantil'), FILTER_SANITIZE_STRING);
             $numeroMatricula = filter_var(Input::request('numeromatricula'), FILTER_SANITIZE_STRING);
             $fechaMatricula = filter_var(Input::request('fechamatricula'), FILTER_SANITIZE_STRING);
+            $beca = filter_var(Input::request('beca'), FILTER_SANITIZE_STRING);
+            $valorMatricula = filter_var(Input::request('valormatricula'), FILTER_SANITIZE_STRING);
             $formaPago = filter_var(Input::request('formapago'), FILTER_SANITIZE_STRING);
             $numeroCuotas = filter_var(Input::request('numerocuotas'), FILTER_SANITIZE_STRING);
             /**********/
@@ -241,6 +268,7 @@ class ManagementController extends AppController {
                 if($alumno->save()) {
                     $matricula->numero_matricula = $numeroMatricula;
                     $matricula->fecha_matricula = $fechaMatricula;
+                    $matricula->valor_matricula = $valorMatricula;
                     
                     if(is_null($numeroCuotas)){
                         $matricula->numero_cuotas_matricula = 1;
@@ -402,23 +430,28 @@ class ManagementController extends AppController {
                 
                 $this->idMatricula = $datos[0]->id_matricula;
                 $this->numeroMatricula = $datos[0]->numero_matricula;
-                $this->fechaMatricula = $datos[0]->fecha_matricula;
+                
+                $date = new DateTime($datos[0]->fecha_matricula);
+                $this->fechaMatricula = $date->format('Y-m-d');
+                
                 $this->numeroCuotas = $numerocuotas;
                 $this->cuotasPagadas = $cuotaspagadas;
                 $this->abreviaturaid = $datos[0]->abreviatura_tipodocumento;
                 $this->id = $datos[0]->identificacion_alumno;
                 $this->nombre = $datos[0]->nombre_alumno . ' ' . $datos[0]->apellido_alumno;
                 $this->programa = $datos[0]->nombre_programa;
-                $this->valorsemestre = $datos[0]->valor_semestre_programa;
+                $this->valorsemestreprograma = $datos[0]->valor_semestre_programa;
+                $this->valorsemestre = $datos[0]->valor_matricula;
                 $this->tipoPago = $datos[0]->formapago;
                 
                 if($numerocuotas === $cuotaspagadas){
-                    $this->saldo = 1;
+                    $this->estadosaldo = 1;
                 }else{
-                    $this->saldo = 0;
+                    $this->estadosaldo = 0;
                 }
             }else{
                 $this->idMatricula = 0;
+                $this->valorsemestreprograma = 0;
                 $this->valorsemestre = 0;
             }
         }else{
@@ -491,6 +524,46 @@ class ManagementController extends AppController {
         
         if($pago->save()){
             $matricula->cargarDatosMatriculaActualizar($idmatricula);
+            $matricula->numero_cuotaspagadas_matricula = 1;
+            
+            if($matricula->update()){
+                $arr['res'] = 'ok';
+                
+                $pago->commit();
+            }else{
+                $arr['msg'] = 'Error al registrar el pago del valor de matricula';
+                
+                $pago->rollback();
+            }
+        }else{
+            $arr['msg'] = 'Error al registrar el pago del valor de matricula';
+            
+            $pago->rollback();
+        }
+        
+        exit(json_encode($arr));
+    }
+    
+    public function registrarpagobeca() {
+        View::template(NULL);
+        
+        $pago = new Pago();
+        $matricula = new Matricula();
+        $valor = filter_var(Input::request('valor'), FILTER_SANITIZE_STRING);
+        $idmatricula = filter_var(Input::request('idMatricula'), FILTER_SANITIZE_STRING);
+        
+        $arr['res'] = 'fail';
+        $arr['msg'] = '';
+        
+        $pago->begin();
+        
+        $pago->valor_pago = $valor;
+        $pago->id_matricula = $idmatricula;
+        $pago->id_mediopago = 3;
+        
+        if($pago->save()){
+            $matricula->cargarDatosMatriculaActualizar($idmatricula);
+            $matricula->valor_matricula = $valor;
             $matricula->numero_cuotaspagadas_matricula = 1;
             
             if($matricula->update()){
@@ -847,14 +920,16 @@ class ManagementController extends AppController {
     public function cargaregresados($page = 1) {
         View::template(NULL);
         
-        $acta = new Acta();
+        $matricula = new Matricula();
         
         $programa = Input::request('programa');
         $anio = Input::request('anio');
+        $periodo = Input::request('periodo');
         
         $this->programa = $programa;
         $this->anio = $anio;
-        $this->egresados = $acta->cargarEgresados($page, $programa, $anio);
+        $this->periodo = $periodo;
+        $this->egresados = $matricula->cargarEgresados($page, $programa, $anio, $periodo);
     }
     
     public function egresado($id) {

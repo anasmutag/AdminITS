@@ -15,7 +15,10 @@
     <a href="<?= PUBLIC_PATH?>management/actas" class="etiqueta_regresarprincipal">Regresar</a>
 </div>
 <div id="dv_dialogodocumnetoinexistente">
-    <span>El número de documento no se encuentra registrado en nuestra base de datos de egresados. Click en "Aceptar" para regresar</span>
+    <? Flash::info('El número de documento no se encuentra registrado en nuestra base de datos de egresados. Click en "Aceptar" para regresar')?>
+</div>
+<div id="dv_dialogoactaexistente">
+    <? Flash::info('El número de documento del estudiante ya tiene un acta registrada en base de datos. Consutlar acta')?>
 </div>
 
 <script type="text/javascript">
@@ -27,6 +30,19 @@
         buttons: {
             "Aceptar": function() {
                 $('#dv_dialogodocumnetoinexistente').dialog('close');
+            }
+        },
+        close: function (){}
+    });
+    
+    $('#dv_dialogoactaexistente').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Aceptar": function() {
+                $('#dv_dialogoactaexistente').dialog('close');
             }
         },
         close: function (){}
@@ -104,8 +120,13 @@
                         
                         cargarFormActa(documento);
                     }else{
-                        $('#txt_numerodocumentoconsultar').val('').focus();
-                        $('#dv_dialogodocumnetoinexistente').dialog('open');
+                        if(data.tipoerror === 1){
+                            $('#txt_numerodocumentoconsultar').val('').focus();
+                            $('#dv_dialogodocumnetoinexistente').dialog('open');
+                        }else{
+                            $('#txt_numerodocumentoconsultar').val('').focus();
+                            $('#dv_dialogoactaexistente').dialog('open');
+                        }
                         
                         console.log(data.msg);
                     }

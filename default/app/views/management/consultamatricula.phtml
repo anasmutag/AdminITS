@@ -1,0 +1,76 @@
+<div class="contenedor_formularioadmin contenedor_formulariomatricula">
+    <span class="etiqueta_encabezadoformlarioadmin">CONSULTAR MATRICULA</span>
+    <div id="dv_documentomatricula">
+        <div>
+            <span>Número de Documento</span>
+            <input id="txt_numerodocumentoconsultar" class="entrada_datoformularioadmin" type="text" autofocus required="required" onkeypress="return soloNumeros(event);">
+        </div>
+        <div>
+            <input id="btn_consultardocumento" class="boton_buscardocumento" type="button" value="Buscar">
+        </div>
+    </div>
+    <div id="dv_contenidomatricula" class="displaynone"></div>
+</div>
+<div class="contendor_regresarprincipal">
+    <a href="<?= PUBLIC_PATH?>management/matricula" class="etiqueta_regresarprincipal">Regresar</a>
+</div>
+
+<script type="text/javascript">
+    $('#btn_consultardocumento').on('click', function (){
+        var documento = $('#txt_numerodocumentoconsultar').val();
+        
+        if(documento.length > 0){
+            $.ajax({
+                type: 'POST',
+                url: <?= PUBLIC_PATH?> + 'management/consultardatosmatriculaalumno/',
+                data: {
+                    documento: documento
+                },
+                beforeSend: function(){
+                    //document.getElementById("btn_consultarnotas").disabled = true;
+                    
+                    $('body').addClass('menuopen');
+                    
+                    $.blockUI({
+                        message: "Validando datos..."
+                    });
+                },
+                success: function(data) {
+                    $('body').removeClass('menuopen');
+                    //document.getElementById("frm_codigoestudiante").reset();
+                    
+                    $('#dv_documentomatricula').addClass('displaynone');
+                    $('#txt_numerodocumentoconsultar').val('');
+                    $('#dv_contenidomatricula').html('');
+                    $('#dv_contenidomatricula').html(data);
+                    $('#dv_contenidomatricula').removeClass('displaynone');
+                },
+                error: function(){
+                    console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                }
+            }).always(function(){
+                //document.getElementById("btn_consultarnotas").disabled = false;
+                
+                $.unblockUI();
+            });
+        }else{
+            $input = $('#txt_numerodocumentoconsultar');
+            if(documento.length === 0){
+                $input.addClass('entrada_textonovalido');
+                $input.focus();
+            }else{
+                $input.removeClass('entrada_textonovalido');
+            }
+        }
+    });
+    
+    $('#txt_numerodocumentoconsultar').on('keyup', function() {
+        var txt = $(this).val();
+        
+        if (txt.length <= 0) {
+            $(this).addClass('entrada_textonovalido');
+        } else {
+            $(this).removeClass('entrada_textonovalido');
+        }
+    });
+</script>

@@ -292,7 +292,8 @@
     order: 2;*/
 }
 #dv_buscardocumento,
-#dv_documentoacta {
+#dv_documentoacta,
+#dv_documentomatricula {
   width: 100%;
   height: auto;
   display: -webkit-box;
@@ -328,7 +329,8 @@
     order: 2;*/
 }
 #dv_buscardocumento div,
-#dv_documentoacta div {
+#dv_documentoacta div,
+#dv_documentomatricula div {
   margin: 15px 0;
   padding: 0;
   width: 100%;
@@ -366,14 +368,16 @@
     order: 2;*/
 }
 #dv_buscardocumento div span,
-#dv_documentoacta div span {
+#dv_documentoacta div span,
+#dv_documentomatricula div span {
   margin: 0 10px 0 0;
   text-align: right;
   width: 170px;
   height: auto;
 }
 #dv_buscardocumento div .entrada_datoformularioadmin,
-#dv_documentoacta div .entrada_datoformularioadmin {
+#dv_documentoacta div .entrada_datoformularioadmin,
+#dv_documentomatricula div .entrada_datoformularioadmin {
   padding: 5px 6px;
   color: #00529B;
   border: 1px solid #00529B;
@@ -389,7 +393,8 @@
   font-size: 14px;
 }
 #dv_buscardocumento div .boton_buscardocumento,
-#dv_documentoacta div .boton_buscardocumento {
+#dv_documentoacta div .boton_buscardocumento,
+#dv_documentomatricula div .boton_buscardocumento {
   width: 125px;
   min-width: 100px;
   height: 35px;
@@ -408,19 +413,25 @@
   -webkit-border-radius: 5px;
 }
 #dv_buscardocumento div .boton_buscardocumento:hover,
-#dv_documentoacta div .boton_buscardocumento:hover {
+#dv_documentoacta div .boton_buscardocumento:hover,
+#dv_documentomatricula div .boton_buscardocumento:hover {
   color: #00529B;
   background-color: #ffffff;
 }
 #dv_buscardocumento div:nth-of-type(2),
-#dv_documentoacta div:nth-of-type(2) {
+#dv_documentoacta div:nth-of-type(2),
+#dv_documentomatricula div:nth-of-type(2) {
   margin-bottom: 45px;
 }
 #dv_buscardocumento {
   margin: 35px 0 0 0;
 }
-#dv_documentoacta {
+#dv_documentoacta,
+#dv_documentomatricula {
   margin: 55px 0 0 0;
+}
+#dv_contenidomatricula {
+  padding: 0 35px;
 }
 #dv_formularioacta {
   margin: 55px 0 0 0;
@@ -730,7 +741,29 @@
     -webkit-order: 2;
     order: 2;*/
 }
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada,
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuotadisabled {
+  margin: 0;
+  width: 125px;
+  min-width: 100px;
+  height: 35px;
+  min-height: 35px;
+  font-family: 'RobotoRegular';
+  font-size: 16px;
+  color: #ffffff;
+  border: 2px solid #bcafa9;
+  background-color: #bcafa9;
+  padding: 0;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
 #dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada {
+  border-color: green;
+  background-color: green;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -762,26 +795,6 @@
     -ms-flex-order: 2;
     -webkit-order: 2;
     order: 2;*/
-}
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada,
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuotadisabled {
-  margin: 0;
-  width: 125px;
-  min-width: 100px;
-  height: 35px;
-  min-height: 35px;
-  font-family: 'RobotoRegular';
-  font-size: 16px;
-  color: #ffffff;
-  border: 2px solid #bcafa9;
-  background-color: #bcafa9;
-  padding: 0;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -o-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -khtml-border-radius: 5px;
-  -webkit-border-radius: 5px;
 }
 #dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuota {
   width: 125px;
@@ -826,6 +839,83 @@
 #dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarvalidacion:hover {
   color: #00529B;
   background-color: #ffffff;
+}
+#dv_pagomatricula .contendor_pagomatricula #dv_saldopagomatricula {
+  margin: 0 0 35px 0;
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+}
+#dv_pagomatricula .contendor_pagomatricula #dv_saldopagomatricula #lbl_saldopagomatricula {
+  font-size: 18px;
+  color: #ff0000;
+}
+#dv_pagomatricula .contendor_pagomatricula #dv_saldopagomatricula .etiqueta_becamatricula {
+  font-size: 18px;
+  color: green;
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
 }
 #dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula {
   margin: 0 0 40px 0;
@@ -885,6 +975,9 @@
 #dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula .boton_accionpagomatricula:hover {
   color: #00529B;
   background-color: #ffffff;
+}
+#dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula .boton_accionpagobeca {
+  width: 180px;
 }
 #dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula .etiqueta_matriculapagada {
   margin: 0;
@@ -1172,6 +1265,12 @@
   font-family: 'RobotoBold';
   font-size: 16px;
 }
+.contenedor_formularioadmin .formulario_admin #dv_datospagomatricula {
+  margin: 0;
+}
+.contenedor_formularioadmin .formulario_admin #dv_numerocuotas {
+  margin: 0 0 15px 0;
+}
 .contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin {
   margin: 0 0 15px 0;
   padding: 0;
@@ -1263,6 +1362,13 @@
   width: 170px;
   height: auto;
 }
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div .etiqueta_bacaelementoformularioadmin {
+  width: 70px;
+  margin-right: 30px;
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div .etiqueta_valormatricula {
+  width: 195px;
+}
 .contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div .etiqueta_espacioelementoformularioadmin {
   margin-right: 30px;
 }
@@ -1292,6 +1398,15 @@
   height: auto;
 }
 .contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div .entrada_datocomboformularioadmin:nth-last-of-type(1) {
+  margin: 0;
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div .entrada_valormatricula {
+  width: 30%;
+  -moz-appearance: textfield;
+}
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div .entrada_valormatricula::-webkit-outer-spin-button,
+.contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin div .entrada_valormatricula::-webkit-inner-spin-button {
+  -webkit-appearance: none;
   margin: 0;
 }
 .contenedor_formularioadmin .formulario_admin .contendor_elementoformularioadmin .boton_formularioadmin {
@@ -1678,8 +1793,10 @@
 #dv_dialogoconfirmacionregistroacta,
 #dv_dialogoconfirmacionactualizacionegresado,
 #dv_dialogoconfirmacionregistroseguimiento,
-#dv_dialogoconfirmacioncierresemestre {
-  padding: 0 15px;
+#dv_dialogoconfirmacioncierresemestre,
+#dv_dialogodocumnetoinexistente,
+#dv_dialogoactaexistente {
+  padding: 5px 15px;
 }
 #dv_resultadoseguimientoegresados {
   color: #00529B;

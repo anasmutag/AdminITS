@@ -71,6 +71,12 @@
             .flexBox;
             .font(@robotobold;16px);
         }
+        #dv_datospagomatricula {
+            margin: 0;
+        }
+        #dv_numerocuotas {
+            margin: 0 0 15px 0;
+        }
         .contendor_elementoformularioadmin {
             margin: 0 0 15px 0;
             padding: 0;
@@ -90,6 +96,13 @@
                     text-align: right;
 
                     .dimensions(@width:170px);
+                }
+                .etiqueta_bacaelementoformularioadmin {
+                    width: 70px;
+                    margin-right: 30px;
+                }
+                .etiqueta_valormatricula {
+                    width: 195px;
                 }
                 .etiqueta_espacioelementoformularioadmin {
                     margin-right: 30px;
@@ -114,6 +127,15 @@
                     .dimensions(20%);
                     
                     &:nth-last-of-type(1) {
+                        margin: 0;
+                    }
+                }
+                .entrada_valormatricula {
+                    width: 30%;
+                    -moz-appearance: textfield;
+                    
+                    &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
+                        -webkit-appearance: none;
                         margin: 0;
                     }
                 }
@@ -240,8 +262,8 @@
         }
     }
 }
-#dv_dialogoconfirmacionregistroacta, #dv_dialogoconfirmacionactualizacionegresado, #dv_dialogoconfirmacionregistroseguimiento, #dv_dialogoconfirmacioncierresemestre {
-    padding: 0 15px;
+#dv_dialogoconfirmacionregistroacta, #dv_dialogoconfirmacionactualizacionegresado, #dv_dialogoconfirmacionregistroseguimiento, #dv_dialogoconfirmacioncierresemestre, #dv_dialogodocumnetoinexistente, #dv_dialogoactaexistente {
+    padding: 5px 15px;
 }
 #dv_resultadoseguimientoegresados {
     color: @base;
