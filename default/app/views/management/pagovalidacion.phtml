@@ -38,8 +38,27 @@
         <? endif; ?>
     </div>
 </div>
+<div class="contendor_regresarprincipal">
+    <a href="<?= PUBLIC_PATH?>management/pagos" class="etiqueta_regresarprincipal">Regresar</a>
+</div>
+<div id="dv_dialogodocumentoalumnoinexistente">
+    <? Flash::info("El número de documento no se encuentra registrado en nuestra base de datos de estudiantes") ?>
+</div>
 
 <script type="text/javascript">
+    $('#dv_dialogodocumentoalumnoinexistente').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Aceptar": function() {
+                $('#dv_dialogodocumentoalumnoinexistente').dialog('close');
+            }
+        },
+        close: function (){}
+    });
+    
     $('#btn_consultardocumentopv').on('click', function (){
         var identificacion = $('#txt_documentopagovalidacion').val();
         
@@ -68,6 +87,8 @@
                 }else{
                     document.getElementById("frm_consultadocumentopagovalidacion").reset();
                     $('#txt_documentopagovalidacion').focus();
+                    
+                    $('#dv_dialogodocumentoalumnoinexistente').dialog('open');
                     
                     console.log(data.msg);
                 }

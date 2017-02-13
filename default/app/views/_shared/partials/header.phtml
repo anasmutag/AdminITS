@@ -12,15 +12,7 @@
                 <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
             <li>
-                <a id="lnk_pagos" href="<?= PUBLIC_PATH?>management/pagomatricula">Pago Matricula</a>
-                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
-            </li>
-            <li>
-                <a id="lnk_pagosvalidacion" href="<?= PUBLIC_PATH?>management/pagovalidacion">Pago Validación</a>
-                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
-            </li>
-            <li>
-                <span id="sp_cierresemestre">Cerrar Semestre</span>
+                <a id="lnk_pagos" href="<?= PUBLIC_PATH?>management/pagos">Pagos</a>
                 <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
             <li>
@@ -29,6 +21,14 @@
             </li>
             <li>
                 <a id="lnk_actas" href="<?= PUBLIC_PATH?>management/actas">Actas</a>
+                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
+            </li>
+            <li>
+                <a id="lnk_docentes" href="<?= PUBLIC_PATH?>management/docentes">Docentes</a>
+                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
+            </li>
+            <li>
+                <span id="sp_cierresemestre">Cerrar Semestre</span>
                 <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
             <li>
@@ -45,7 +45,7 @@
 <? endif; ?>
 
 <script type="text/javascript">
-    $('#lnk_pagos, #lnk_pagosvalidacion, #lnk_matricula, #sp_cierresemestre, #lnk_egresados, #lnk_actas, #sp_salir').on('click', function (){
+    $('#lnk_pagos, #lnk_matricula, #sp_cierresemestre, #lnk_egresados, #lnk_actas, #lnk_docentes, #sp_salir').on('click', function (){
         if(!isNaN(window.localStorage.idPagoMatricula)){
             window.localStorage.removeItem('idPagoMatricula');
             window.localStorage.removeItem('idPagoValidacion');

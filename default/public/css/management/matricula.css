@@ -255,7 +255,8 @@
 .contenedor_formularioadmin .formulario_admin .entrada_camponovalido {
   border: 1px solid #ff0000 !important;
 }
-.contenedor_formularioadmin .contendor_pagomatricula {
+.contenedor_formularioadmin .contendor_pagomatricula,
+.contenedor_formularioadmin .contendor_periodosactivosdocente {
   margin: 40px 0 0 0;
   width: 100%;
   height: auto;
@@ -469,7 +470,10 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_pagomatricula .contendor_pagomatricula form {
+#dv_pagomatricula .contendor_pagomatricula form,
+#dv_periodosactivosdocente .contendor_pagomatricula form,
+#dv_pagomatricula .contendor_periodosactivosdocente form,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente form {
   width: 100%;
   height: auto;
   display: -webkit-box;
@@ -504,7 +508,10 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_pagomatricula .contendor_pagomatricula form div {
+#dv_pagomatricula .contendor_pagomatricula form div,
+#dv_periodosactivosdocente .contendor_pagomatricula form div,
+#dv_pagomatricula .contendor_periodosactivosdocente form div,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente form div {
   margin: 15px 0;
   padding: 0;
   width: 100%;
@@ -541,13 +548,19 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_pagomatricula .contendor_pagomatricula form label {
+#dv_pagomatricula .contendor_pagomatricula form label,
+#dv_periodosactivosdocente .contendor_pagomatricula form label,
+#dv_pagomatricula .contendor_periodosactivosdocente form label,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente form label {
   margin: 0 10px 0 0;
   text-align: right;
   width: 170px;
   height: auto;
 }
-#dv_pagomatricula .contendor_pagomatricula form .entrada_datoformularioadmin {
+#dv_pagomatricula .contendor_pagomatricula form .entrada_datoformularioadmin,
+#dv_periodosactivosdocente .contendor_pagomatricula form .entrada_datoformularioadmin,
+#dv_pagomatricula .contendor_periodosactivosdocente form .entrada_datoformularioadmin,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente form .entrada_datoformularioadmin {
   padding: 5px 6px;
   color: #00529B;
   border: 1px solid #00529B;
@@ -562,7 +575,10 @@
   font-family: 'RobotoMedium';
   font-size: 14px;
 }
-#dv_pagomatricula .contendor_pagomatricula form .boton_buscardocumento {
+#dv_pagomatricula .contendor_pagomatricula form .boton_buscardocumento,
+#dv_periodosactivosdocente .contendor_pagomatricula form .boton_buscardocumento,
+#dv_pagomatricula .contendor_periodosactivosdocente form .boton_buscardocumento,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente form .boton_buscardocumento {
   width: 125px;
   min-width: 100px;
   height: 35px;
@@ -580,14 +596,23 @@
   -khtml-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-#dv_pagomatricula .contendor_pagomatricula form .boton_buscardocumento:hover {
+#dv_pagomatricula .contendor_pagomatricula form .boton_buscardocumento:hover,
+#dv_periodosactivosdocente .contendor_pagomatricula form .boton_buscardocumento:hover,
+#dv_pagomatricula .contendor_periodosactivosdocente form .boton_buscardocumento:hover,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente form .boton_buscardocumento:hover {
   color: #00529B;
   background-color: #ffffff;
 }
-#dv_pagomatricula .contendor_pagomatricula form:nth-of-type(2) {
+#dv_pagomatricula .contendor_pagomatricula form:nth-of-type(2),
+#dv_periodosactivosdocente .contendor_pagomatricula form:nth-of-type(2),
+#dv_pagomatricula .contendor_periodosactivosdocente form:nth-of-type(2),
+#dv_periodosactivosdocente .contendor_periodosactivosdocente form:nth-of-type(2) {
   margin-bottom: 45px;
 }
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula {
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula,
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula,
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula {
   width: 100%;
   height: auto;
   display: -webkit-box;
@@ -622,18 +647,30 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula label {
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula label,
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula label,
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula label,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula label {
   margin: 0 0 5px 0;
   width: 100%;
   height: auto;
 }
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula label:nth-child(1) {
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula label:nth-child(1),
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula label:nth-child(1),
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula label:nth-child(1),
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula label:nth-child(1) {
   margin-top: 15px;
 }
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula label:nth-last-child(1) {
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula label:nth-last-child(1),
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula label:nth-last-child(1),
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula label:nth-last-child(1),
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula label:nth-last-child(1) {
   margin-bottom: 35px;
 }
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula {
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula,
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula,
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula {
   margin: 25px 0 25px 0;
   width: 100%;
   height: auto;
@@ -669,7 +706,10 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula {
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula,
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula,
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula {
   margin: 0 0 10px 0;
   width: 100%;
   height: auto;
@@ -705,7 +745,10 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_textocuota {
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_textocuota,
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_textocuota,
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_textocuota,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_textocuota {
   width: 205px;
   margin: 0 15px 0 0;
   display: -webkit-box;
@@ -742,7 +785,13 @@
     order: 2;*/
 }
 #dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada,
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuotadisabled {
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada,
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada,
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuotadisabled,
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuotadisabled,
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuotadisabled,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuotadisabled {
   margin: 0;
   width: 125px;
   min-width: 100px;
@@ -761,7 +810,10 @@
   -khtml-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada {
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada,
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada,
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada {
   border-color: green;
   background-color: green;
   display: -webkit-box;
@@ -796,7 +848,10 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuota {
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuota,
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuota,
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuota,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuota {
   width: 125px;
   min-width: 100px;
   height: 35px;
@@ -814,11 +869,17 @@
   -khtml-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuota:hover {
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuota:hover,
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuota:hover,
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuota:hover,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarcuota:hover {
   color: #00529B;
   background-color: #ffffff;
 }
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarvalidacion {
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarvalidacion,
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarvalidacion,
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarvalidacion,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarvalidacion {
   width: 150px;
   min-width: 100px;
   height: 35px;
@@ -836,11 +897,17 @@
   -khtml-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarvalidacion:hover {
+#dv_pagomatricula .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarvalidacion:hover,
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarvalidacion:hover,
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarvalidacion:hover,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .boton_pagarvalidacion:hover {
   color: #00529B;
   background-color: #ffffff;
 }
-#dv_pagomatricula .contendor_pagomatricula #dv_saldopagomatricula {
+#dv_pagomatricula .contendor_pagomatricula #dv_saldopagomatricula,
+#dv_periodosactivosdocente .contendor_pagomatricula #dv_saldopagomatricula,
+#dv_pagomatricula .contendor_periodosactivosdocente #dv_saldopagomatricula,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente #dv_saldopagomatricula {
   margin: 0 0 35px 0;
   width: 100%;
   height: auto;
@@ -876,11 +943,17 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_pagomatricula .contendor_pagomatricula #dv_saldopagomatricula #lbl_saldopagomatricula {
+#dv_pagomatricula .contendor_pagomatricula #dv_saldopagomatricula #lbl_saldopagomatricula,
+#dv_periodosactivosdocente .contendor_pagomatricula #dv_saldopagomatricula #lbl_saldopagomatricula,
+#dv_pagomatricula .contendor_periodosactivosdocente #dv_saldopagomatricula #lbl_saldopagomatricula,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente #dv_saldopagomatricula #lbl_saldopagomatricula {
   font-size: 18px;
   color: #ff0000;
 }
-#dv_pagomatricula .contendor_pagomatricula #dv_saldopagomatricula .etiqueta_becamatricula {
+#dv_pagomatricula .contendor_pagomatricula #dv_saldopagomatricula .etiqueta_becamatricula,
+#dv_periodosactivosdocente .contendor_pagomatricula #dv_saldopagomatricula .etiqueta_becamatricula,
+#dv_pagomatricula .contendor_periodosactivosdocente #dv_saldopagomatricula .etiqueta_becamatricula,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente #dv_saldopagomatricula .etiqueta_becamatricula {
   font-size: 18px;
   color: green;
   width: 100%;
@@ -917,7 +990,10 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula {
+#dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula,
+#dv_periodosactivosdocente .contendor_pagomatricula #dv_accionespagomatricula,
+#dv_pagomatricula .contendor_periodosactivosdocente #dv_accionespagomatricula,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente #dv_accionespagomatricula {
   margin: 0 0 40px 0;
   width: 100%;
   height: auto;
@@ -953,7 +1029,10 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula .boton_accionpagomatricula {
+#dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula .boton_accionpagomatricula,
+#dv_periodosactivosdocente .contendor_pagomatricula #dv_accionespagomatricula .boton_accionpagomatricula,
+#dv_pagomatricula .contendor_periodosactivosdocente #dv_accionespagomatricula .boton_accionpagomatricula,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente #dv_accionespagomatricula .boton_accionpagomatricula {
   margin: 0 10px;
   width: 140px;
   min-width: 100px;
@@ -972,14 +1051,23 @@
   -khtml-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-#dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula .boton_accionpagomatricula:hover {
+#dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula .boton_accionpagomatricula:hover,
+#dv_periodosactivosdocente .contendor_pagomatricula #dv_accionespagomatricula .boton_accionpagomatricula:hover,
+#dv_pagomatricula .contendor_periodosactivosdocente #dv_accionespagomatricula .boton_accionpagomatricula:hover,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente #dv_accionespagomatricula .boton_accionpagomatricula:hover {
   color: #00529B;
   background-color: #ffffff;
 }
-#dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula .boton_accionpagobeca {
+#dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula .boton_accionpagobeca,
+#dv_periodosactivosdocente .contendor_pagomatricula #dv_accionespagomatricula .boton_accionpagobeca,
+#dv_pagomatricula .contendor_periodosactivosdocente #dv_accionespagomatricula .boton_accionpagobeca,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente #dv_accionespagomatricula .boton_accionpagobeca {
   width: 180px;
 }
-#dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula .etiqueta_matriculapagada {
+#dv_pagomatricula .contendor_pagomatricula #dv_accionespagomatricula .etiqueta_matriculapagada,
+#dv_periodosactivosdocente .contendor_pagomatricula #dv_accionespagomatricula .etiqueta_matriculapagada,
+#dv_pagomatricula .contendor_periodosactivosdocente #dv_accionespagomatricula .etiqueta_matriculapagada,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente #dv_accionespagomatricula .etiqueta_matriculapagada {
   margin: 0;
   display: -webkit-box;
   display: -moz-box;

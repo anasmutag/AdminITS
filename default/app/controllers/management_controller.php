@@ -1,6 +1,6 @@
 <?php
 
-Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota', 'Egresado', 'Egresadoprograma', 'Acta', 'Seguimientoegresado');
+Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota', 'Egresado', 'Egresadoprograma', 'Acta', 'Seguimientoegresado', 'Docente', 'Periododocente');
 
 class ManagementController extends AppController {
     public function administracion() {
@@ -414,6 +414,14 @@ class ManagementController extends AppController {
         }
     }*/
     
+    public function pagos() {
+        if(Auth::is_valid()){
+            View::template('general_template');
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
     public function pagomatricula($idAlumno = 0) {
         if(Auth::is_valid()){
             View::template('general_template');
@@ -440,6 +448,7 @@ class ManagementController extends AppController {
                 $this->id = $datos[0]->identificacion_alumno;
                 $this->nombre = $datos[0]->nombre_alumno . ' ' . $datos[0]->apellido_alumno;
                 $this->programa = $datos[0]->nombre_programa;
+                $this->sede = $datos[0]->id_sede;
                 $this->valorsemestreprograma = $datos[0]->valor_semestre_programa;
                 $this->valorsemestre = $datos[0]->valor_matricula;
                 $this->tipoPago = $datos[0]->formapago;
@@ -1032,6 +1041,48 @@ class ManagementController extends AppController {
             }
             
             exit(json_encode($arr));
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function docentes() {
+        if(Auth::is_valid()){
+            View::template('general_template');
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function consultardocumentodocente() {
+        View::select(NULL, NULL);
+        
+        $docente = new Docente();
+        
+        $documentodocente = filter_var(Input::request('documentodocente'), FILTER_SANITIZE_STRING);
+        
+        $arr['res'] = 'fail';
+        $arr['msg'] = '';
+        
+        if($docente->validarDocumento($documentodocente)){
+            $arr['res'] = 'ok';
+        }
+        
+        exit(json_encode($arr));
+    }
+    
+    public function periodosactivosdocente() {
+        if(Auth::is_valid()){
+            View::template(NULL);
+            
+            $docente = new Docente();
+            $periododocente = new Periododocente();
+            
+            $documentodocente = filter_var(Input::request('documento'), FILTER_SANITIZE_STRING);
+            
+            $this->documentodocente = $documentodocente;
+            $this->datosdocente = $docente->cargarDatosDocente($documentodocente);
+            $this->periodosdocente = $periododocente->cargarPeriodosActivos($documentodocente);
         }else{
             Router::redirect("/");
         }

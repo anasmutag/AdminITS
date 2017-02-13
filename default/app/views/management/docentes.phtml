@@ -1,0 +1,104 @@
+<div id="dv_periodosactivosdocente" class="contenedor_formularioadmin contenedor_formulariomatricula">
+    <span class="etiqueta_encabezadoformlarioadmin">PERIODOS ACTIVOS DOCENTE</span>
+    <div class="contendor_periodosactivosdocente">
+        <form id="frm_consultadocumentodocente">
+            <div>
+                <label>Número de Documento</label>
+                <input id="txt_documentodocente" class="entrada_datoformularioadmin" name="documentodocente" type="text" autofocus required="required">
+            </div><br>
+            <div>
+                <input id="btn_consultardocumentodocente" class="boton_buscardocumento" type="button" value="Consultar">
+            </div>
+        </form>
+    </div>
+</div>
+<div id="dv_dialogodocumentodocenteinexistente">
+    <? Flash::info("El número de documento no se encuentra registrado en nuestra base de datos de docentes") ?>
+</div>
+
+<script type="text/javascript">
+    $('#dv_dialogodocumentodocenteinexistente').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Aceptar": function() {
+                $('#dv_dialogodocumentodocenteinexistente').dialog('close');
+            }
+        },
+        close: function (){}
+    });
+    
+    $('#btn_consultardocumentodocente').on('click', function (){
+        var documento = $('#txt_documentodocente').val();
+        
+        $.ajax({
+            type: 'POST',
+            url: <?= PUBLIC_PATH?> + 'management/consultardocumentodocente/',
+            data: $('#frm_consultadocumentodocente').serialize(),
+            dataType: 'json',
+            beforeSend: function(){
+                //document.getElementById("btn_consultarnotas").disabled = true;
+                
+                $('body').addClass('menuopen');
+                
+                $.blockUI({
+                    message: "Validando documento..."
+                });
+            },
+            success: function(data) {
+                $('body').removeClass('menuopen');
+                //document.getElementById("frm_codigoestudiante").reset();
+                
+                if(data !== null && data.res === 'ok'){
+                    $.ajax({
+                        type: 'POST',
+                        url: <?= PUBLIC_PATH?> + 'management/periodosactivosdocente/',
+                        data: {
+                            documento: documento
+                        },
+                        beforeSend: function(){
+                            //document.getElementById("btn_consultarnotas").disabled = true;
+                            
+                            $('body').addClass('menuopen');
+                            
+                            $.blockUI({
+                                message: "Cargando datos..."
+                            });
+                        },
+                        success: function(data) {
+                            $('body').removeClass('menuopen');
+                            //document.getElementById("frm_codigoestudiante").reset();
+                            
+                            document.getElementById("frm_consultadocumentodocente").reset();
+                            $('#sec_contenidologinadmin').html('');
+                            $('#sec_contenidologinadmin').html(data);
+                        },
+                        error: function(){
+                            console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                        }
+                    }).always(function(){
+                        //document.getElementById("btn_consultarnotas").disabled = false;
+
+                        $.unblockUI();
+                    });
+                }else{
+                    document.getElementById("frm_consultadocumentodocente").reset();
+                    $('#txt_documentodocente').focus();
+                    
+                    $('#dv_dialogodocumentodocenteinexistente').dialog('open');
+                    
+                    console.log(data.msg);
+                }
+            },
+            error: function(){
+                console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }
+        }).always(function(){
+            //document.getElementById("btn_consultarnotas").disabled = false;
+            
+            $.unblockUI();
+        });
+    });
+</script>

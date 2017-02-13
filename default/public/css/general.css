@@ -1194,4 +1194,7 @@ footer #dv_infoinstitutoadmin #dv_contenidoinformacioninstitutoadmin div {
   font-family: 'RobotoMedium';
   font-size: 14px;
 }
+.contendor_regresarprincipal .etiqueta_regresarprincipal:hover {
+  color: #bcafa9;
+}
 /*# sourceMappingURL=general.css.map */

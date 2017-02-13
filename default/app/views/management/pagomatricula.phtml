@@ -18,6 +18,7 @@
                         <label><?= $nombre?></label>
                         <label><?= $abreviaturaid . ' ' . $id?></label>
                         <label>Programa: <?= $programa?></label>
+                        <label>Sede: <?= ($sede==1)?'Pasto':'Ipiales';?></label>
                         <label>Número de Matricula: <?= $numeroMatricula?></label>
                         <label>Matricula realizada el <?= $fechaMatricula?></label>
                         <label>Tipo de Pago: CONTADO</label>
@@ -28,6 +29,7 @@
                         <label><?= $nombre?></label>
                         <label><?= $abreviaturaid . ' ' . $id?></label>
                         <label>Programa: <?= $programa?></label>
+                        <label>Sede: <?= ($sede==1)?'Pasto':'Ipiales';?></label>
                         <label>Número de Matricula: <?= $numeroMatricula?></label>
                         <label>Matricula realizada el <?= $fechaMatricula?></label>
                         <label>Tipo de Pago: A CUOTAS</label>
@@ -85,8 +87,27 @@
         <? endif; ?>
     </div>
 </div>
+<div class="contendor_regresarprincipal">
+    <a href="<?= PUBLIC_PATH?>management/pagos" class="etiqueta_regresarprincipal">Regresar</a>
+</div>
+<div id="dv_dialogodocumentoalumnoinexistente">
+    <? Flash::info("El número de documento no se encuentra registrado en nuestra base de datos de estudiantes") ?>
+</div>
 
 <script type="text/javascript">
+    $('#dv_dialogodocumentoalumnoinexistente').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Aceptar": function() {
+                $('#dv_dialogodocumentoalumnoinexistente').dialog('close');
+            }
+        },
+        close: function (){}
+    });
+    
     $('#btn_consultardocumentopm').on('click', function (){
         var identificacion = $('#txt_documentopagomatricula').val();
         
@@ -115,6 +136,8 @@
                 }else{
                     document.getElementById("frm_consultadocumentopagomatricula").reset();
                     $('#txt_documentopagomatricula').focus();
+                    
+                    $('#dv_dialogodocumentoalumnoinexistente').dialog('open');
                     
                     console.log(data.msg);
                 }

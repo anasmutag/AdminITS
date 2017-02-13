@@ -1,0 +1,26 @@
+<?//= json_encode($periodosdocente)?>
+<?//= json_encode($datosdocente)?>
+
+<div id="dv_datosdocente">
+    <span class="etiqueta_datosdocente">Profesor(a),&nbsp;<?= $datosdocente->nombre_docente . ' ' . $datosdocente->apellido_docente?></span>
+    <span class="etiqueta_datosdocente">C.C.&nbsp;<?= $datosdocente->identificacion_docente?></span>
+</div>
+<div id="dv_periodosdocente">
+    <? if(empty($periodosdocente)): ?>
+        <span id="sp_noperiodosdocente">El número de documento no tiene registro de periodos como docente</span>
+    <? else:
+        $periodo = 1;
+        
+        foreach($periodosdocente as $periododocente): ?>
+            <div class="contenedor_datosperiodosdocente">
+                <span class="etiqueta_datoperiododocente">Periodo&nbsp;<?= $periodo?></span>
+                <span class="etiqueta_datoperiododocente">Desde:&nbsp;<?= $periododocente->fecha_inicio_periododocente?></span>
+                <span class="etiqueta_datoperiododocente">Hasta:&nbsp;<?= ($periododocente->fecha_fin_periododocente==='')?'Vigente':$periododocente->fecha_fin_periododocente;?></span>
+                <!--span class="etiqueta_detalleperiododocente">Detalle</span-->
+            </div>
+        <? $periodo += 1;
+        
+        endforeach; ?>
+        <a class="enlace_periodosactivosdocente" href="<?= PUBLIC_PATH?>management/docentes">Nueva Busqueda</a>
+    <? endif; ?>
+</div>
