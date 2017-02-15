@@ -1,0 +1,76 @@
+<div class="contenedor_formularioadmin contenedor_formulariomatricula">
+    <span class="etiqueta_encabezadoformlarioadmin">CONSULTAR ACTAS</span>
+    <div id="dv_numeroacta">
+        <input class="radio_sedeacta" name="sedeacta" type="radio" value="Pasto" checked="checked"><span class="etiqueta_sedeacta">Sede Pasto</span>
+        <input class="radio_sedeacta" name="sedeacta" type="radio" value="Ipiales"><span class="etiqueta_sedeacta">Sede Ipiales</span>
+        <div>
+            <span>Número de Acta</span>
+            <input id="txt_numeroactaconsultar" class="entrada_datoformularioadmin" type="text" autofocus required="required" onkeypress="return soloNumeros(event);">
+        </div>
+        <div>
+            <input id="btn_consultaracta" class="boton_buscardocumento" type="button" value="Buscar">
+        </div>
+    </div>
+</div>
+<div class="contendor_regresarprincipal">
+    <a href="<?= PUBLIC_PATH?>management/actas" class="etiqueta_regresarprincipal">Regresar</a>
+</div>
+
+<script type="text/javascript">
+    $('#btn_consultaracta').on('click', function (){
+        var sede = document.querySelector('input[name="sedeacta"]:checked').value,
+            acta = $('#txt_numeroactaconsultar').val();
+        
+        if(acta.length > 0){
+            $.ajax({
+                type: 'POST',
+                url: <?= PUBLIC_PATH?> + 'management/consultardatosactas/',
+                data: {
+                    sede: sede,
+                    acta: acta
+                },
+                beforeSend: function(){
+                    //document.getElementById("btn_consultarnotas").disabled = true;
+                    
+                    $('body').addClass('menuopen');
+                    
+                    $.blockUI({
+                        message: "Validando datos..."
+                    });
+                },
+                success: function(data) {
+                    $('body').removeClass('menuopen');
+                    //document.getElementById("frm_codigoestudiante").reset();
+                    
+                    $('#sec_contenidologinadmin').html('');
+                    $('#sec_contenidologinadmin').html(data);
+                },
+                error: function(){
+                    console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                }
+            }).always(function(){
+                //document.getElementById("btn_consultarnotas").disabled = false;
+                
+                $.unblockUI();
+            });
+        }else{
+            $input = $('#txt_numeroactaconsultar');
+            if(acta.length === 0){
+                $input.addClass('entrada_textonovalido');
+                $input.focus();
+            }else{
+                $input.removeClass('entrada_textonovalido');
+            }
+        }
+    });
+    
+    $('#txt_numeroactaconsultar').on('keyup', function() {
+        var txt = $(this).val();
+        
+        if (txt.length <= 0) {
+            $(this).addClass('entrada_textonovalido');
+        } else {
+            $(this).removeClass('entrada_textonovalido');
+        }
+    });
+</script>

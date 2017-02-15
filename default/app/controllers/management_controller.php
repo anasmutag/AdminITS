@@ -1,6 +1,6 @@
 <?php
 
-Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota', 'Egresado', 'Egresadoprograma', 'Acta', 'Seguimientoegresado', 'Docente', 'Periododocente');
+Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota', 'Egresado', 'Egresadoprograma', 'Acta', 'Seguimientoegresado', 'Docente', 'Periododocente', 'Pagov');
 
 class ManagementController extends AppController {
     public function administracion() {
@@ -184,7 +184,7 @@ class ManagementController extends AppController {
         
         $documento = Input::request('documento');
         
-        if($acta->validarDocumentoAlumno($documento)){
+        if($acta->validarActaAlumno($documento)){
             $arr['res'] = 'ok';
         }else{
             $arr['msg'] = 'El número de documento del estudiante no tiene una acta de grado asociada';
@@ -527,6 +527,9 @@ class ManagementController extends AppController {
         
         $pago->begin();
         
+        $numerorecibo = (int) $pago->cargarNumeroReciboPago()[0]->recibo;
+        
+        $pago->numero_recibo_pago = ($numerorecibo + 1);
         $pago->valor_pago = $valor;
         $pago->id_matricula = $idmatricula;
         $pago->id_mediopago = 1;
@@ -606,6 +609,9 @@ class ManagementController extends AppController {
         
         $pago->begin();
         
+        $numerorecibo = (int) $pago->cargarNumeroReciboPago()[0]->recibo;
+        
+        $pago->numero_recibo_pago = ($numerorecibo + 1);
         $pago->valor_pago = $valor;
         $pago->id_matricula = $idmatricula;
         $pago->id_mediopago = 1;
@@ -649,9 +655,23 @@ class ManagementController extends AppController {
         $pago->valor_pagovalidacion = $pago->valor_pagovalidacion + 10000;
         
         if($pago->update()){
-            $arr['res'] = 'ok';
+            $pagov = new Pagov();
             
-            $pago->commit();
+            $numerorecibo = (int) $pagov->cargarNumeroReciboPago()[0]->recibo;
+            
+            $pagov->numero_recibo_pagov = ($numerorecibo + 1);
+            $pagov->id_pagovalidacion = $pago->id_pagovalidacion;
+            
+            if($pagov->save()){
+                $arr['res'] = 'ok';
+                $arr['pagov'] = $pagov->id_pagov;
+                
+                $pago->commit();
+            }else{
+                $arr['msg'] = 'Error al registrar el pago de la validacion';
+                
+                $pago->rollback();
+            }
         }else{
             $arr['msg'] = 'Error al registrar el pago de la validacion';
             
@@ -1083,6 +1103,31 @@ class ManagementController extends AppController {
             $this->documentodocente = $documentodocente;
             $this->datosdocente = $docente->cargarDatosDocente($documentodocente);
             $this->periodosdocente = $periododocente->cargarPeriodosActivos($documentodocente);
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function consultaactapromocion() {
+        if(Auth::is_valid()){
+            View::template('general_template');
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function consultardatosactas() {
+        if(Auth::is_valid()){
+            View::template(NULL);
+            
+            $acta = new Acta();
+            
+            $sedeacta = filter_var(Input::request('sede'), FILTER_SANITIZE_STRING);
+            $numeroacta = filter_var(Input::request('acta'), FILTER_SANITIZE_STRING);
+            
+            $this->sede = $sedeacta;
+            $this->acta = $numeroacta;
+            $this->actas = $acta->cargarActasPromocion($sedeacta, $numeroacta);
         }else{
             Router::redirect("/");
         }

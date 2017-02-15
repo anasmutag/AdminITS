@@ -15,7 +15,7 @@
     <a href="<?= PUBLIC_PATH?>management/actas" class="etiqueta_regresarprincipal">Regresar</a>
 </div>
 <div id="dv_dialogodocumnetoinexistente">
-    <span>El número de documento no se encuentra registrado en nuestra base de datos de egresados. Click en "Aceptar" para regresar</span>
+    <? Flash::info('El número de documento no se encuentra registrado en nuestra base de datos de egresados. Click en "Aceptar" para regresar') ?>
 </div>
 
 <script type="text/javascript">

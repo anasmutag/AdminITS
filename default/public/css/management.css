@@ -294,7 +294,8 @@
 }
 #dv_buscardocumento,
 #dv_documentoacta,
-#dv_documentomatricula {
+#dv_documentomatricula,
+#dv_numeroacta {
   width: 100%;
   height: auto;
   display: -webkit-box;
@@ -331,7 +332,8 @@
 }
 #dv_buscardocumento div,
 #dv_documentoacta div,
-#dv_documentomatricula div {
+#dv_documentomatricula div,
+#dv_numeroacta div {
   margin: 15px 0;
   padding: 0;
   width: 100%;
@@ -370,7 +372,8 @@
 }
 #dv_buscardocumento div span,
 #dv_documentoacta div span,
-#dv_documentomatricula div span {
+#dv_documentomatricula div span,
+#dv_numeroacta div span {
   margin: 0 10px 0 0;
   text-align: right;
   width: 170px;
@@ -378,7 +381,8 @@
 }
 #dv_buscardocumento div .entrada_datoformularioadmin,
 #dv_documentoacta div .entrada_datoformularioadmin,
-#dv_documentomatricula div .entrada_datoformularioadmin {
+#dv_documentomatricula div .entrada_datoformularioadmin,
+#dv_numeroacta div .entrada_datoformularioadmin {
   padding: 5px 6px;
   color: #00529B;
   border: 1px solid #00529B;
@@ -395,7 +399,8 @@
 }
 #dv_buscardocumento div .boton_buscardocumento,
 #dv_documentoacta div .boton_buscardocumento,
-#dv_documentomatricula div .boton_buscardocumento {
+#dv_documentomatricula div .boton_buscardocumento,
+#dv_numeroacta div .boton_buscardocumento {
   width: 125px;
   min-width: 100px;
   height: 35px;
@@ -415,21 +420,30 @@
 }
 #dv_buscardocumento div .boton_buscardocumento:hover,
 #dv_documentoacta div .boton_buscardocumento:hover,
-#dv_documentomatricula div .boton_buscardocumento:hover {
+#dv_documentomatricula div .boton_buscardocumento:hover,
+#dv_numeroacta div .boton_buscardocumento:hover {
   color: #00529B;
   background-color: #ffffff;
 }
 #dv_buscardocumento div:nth-of-type(2),
 #dv_documentoacta div:nth-of-type(2),
-#dv_documentomatricula div:nth-of-type(2) {
+#dv_documentomatricula div:nth-of-type(2),
+#dv_numeroacta div:nth-of-type(2) {
   margin-bottom: 45px;
 }
 #dv_buscardocumento {
   margin: 35px 0 0 0;
 }
 #dv_documentoacta,
-#dv_documentomatricula {
+#dv_documentomatricula,
+#dv_numeroacta {
   margin: 55px 0 0 0;
+}
+#dv_numeroacta .radio_sedeacta {
+  margin: 15px 10px 15px 0;
+}
+#dv_numeroacta .etiqueta_sedeacta {
+  margin: 15px 30px 15px 0;
 }
 #dv_contenidomatricula {
   padding: 0 35px;
@@ -814,6 +828,7 @@
 #dv_periodosactivosdocente .contendor_pagomatricula .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada,
 #dv_pagomatricula .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada,
 #dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_datospagomatricula #dv_cuotaspagomatricula .contendor_cuotapagomatricula .etiqueta_cuotapagada {
+  margin: 0 15px 0 0;
   border-color: green;
   background-color: green;
   display: -webkit-box;
@@ -1116,6 +1131,107 @@
   -ms-border-radius: 5px;
   -khtml-border-radius: 5px;
   -webkit-border-radius: 5px;
+}
+#dv_pagomatricula .contendor_pagomatricula .contenedor_recibopago,
+#dv_periodosactivosdocente .contendor_pagomatricula .contenedor_recibopago,
+#dv_pagomatricula .contendor_periodosactivosdocente .contenedor_recibopago,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .contenedor_recibopago {
+  margin: 30px 0 0 0;
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+}
+#dv_pagomatricula .contendor_pagomatricula .enlace_generarrecibopago,
+#dv_periodosactivosdocente .contendor_pagomatricula .enlace_generarrecibopago,
+#dv_pagomatricula .contendor_periodosactivosdocente .enlace_generarrecibopago,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .enlace_generarrecibopago {
+  margin: 0;
+  cursor: pointer;
+  text-decoration: none;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+  width: 125px;
+  min-width: 100px;
+  height: 35px;
+  min-height: 35px;
+  font-family: 'RobotoRegular';
+  font-size: 16px;
+  color: #ffffff;
+  border: 2px solid #00529B;
+  background-color: #00529B;
+  padding: 0;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+#dv_pagomatricula .contendor_pagomatricula .enlace_generarrecibopago:hover,
+#dv_periodosactivosdocente .contendor_pagomatricula .enlace_generarrecibopago:hover,
+#dv_pagomatricula .contendor_periodosactivosdocente .enlace_generarrecibopago:hover,
+#dv_periodosactivosdocente .contendor_periodosactivosdocente .enlace_generarrecibopago:hover {
+  color: #00529B;
+  background-color: #ffffff;
 }
 .entrada_textonovalido {
   border: 1px solid #ff0000 !important;
@@ -1883,7 +1999,9 @@
 #dv_dialogoconfirmacionregistroseguimiento,
 #dv_dialogoconfirmacioncierresemestre,
 #dv_dialogodocumnetoinexistente,
-#dv_dialogoactaexistente {
+#dv_dialogoactaexistente,
+#dv_dialogodocumentoalumnoinexistente,
+#dv_dialogogenerarrecibopago {
   padding: 5px 15px;
 }
 #dv_resultadoseguimientoegresados {
@@ -2387,7 +2505,8 @@
 #dv_paginacion .paginator .etiqueta_direccionpaginacion:hover {
   border-color: #00529B;
 }
-#dv_datosdocente {
+#dv_datosdocente,
+#dv_datosacta {
   color: #00529B;
   width: 75%;
   height: auto;
@@ -2423,7 +2542,8 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_datosdocente .etiqueta_datosdocente {
+#dv_datosdocente .etiqueta_datosdocente,
+#dv_datosacta .etiqueta_datosdocente {
   margin: 0 0 5px 0;
   width: 100%;
   height: auto;
@@ -2461,11 +2581,16 @@
   font-family: 'RobotoMedium';
   font-size: 16px;
 }
-#dv_datosdocente .etiqueta_datosdocente:nth-of-type(1) {
+#dv_datosdocente .etiqueta_datosdocente:nth-of-type(1),
+#dv_datosacta .etiqueta_datosdocente:nth-of-type(1) {
   font-size: 20px;
   text-shadow: 0 0 1px #000000;
 }
-#dv_periodosdocente {
+#dv_datosacta {
+  margin: 15px 0 0 0;
+}
+#dv_periodosdocente,
+#dv_resultadoactas {
   margin: 35px 0 0 0;
   padding: 40px 0 25px 0;
   color: #00529B;
@@ -2514,12 +2639,14 @@
   -moz-box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
 }
-#dv_periodosdocente #sp_noperiodosdocente {
+#dv_periodosdocente #sp_noperiodosdocente,
+#dv_resultadoactas #sp_noperiodosdocente {
   margin: 0 0 10px 0;
   font-family: 'RobotoMedium';
   font-size: 16px;
 }
-#dv_periodosdocente .contenedor_datosperiodosdocente {
+#dv_periodosdocente .contenedor_datosperiodosdocente,
+#dv_resultadoactas .contenedor_datosperiodosdocente {
   margin: 0 0 10px 0;
   width: 100%;
   height: auto;
@@ -2555,7 +2682,8 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_periodosdocente .contenedor_datosperiodosdocente .etiqueta_datoperiododocente {
+#dv_periodosdocente .contenedor_datosperiodosdocente .etiqueta_datoperiododocente,
+#dv_resultadoactas .contenedor_datosperiodosdocente .etiqueta_datoperiododocente {
   margin: 0 15px 0 0;
   text-align: left;
   width: 145px;
@@ -2563,14 +2691,17 @@
   font-family: 'RobotoMedium';
   font-size: 16px;
 }
-#dv_periodosdocente .contenedor_datosperiodosdocente .etiqueta_datoperiododocente:nth-of-type(1) {
+#dv_periodosdocente .contenedor_datosperiodosdocente .etiqueta_datoperiododocente:nth-of-type(1),
+#dv_resultadoactas .contenedor_datosperiodosdocente .etiqueta_datoperiododocente:nth-of-type(1) {
   width: 85px;
 }
-#dv_periodosdocente .contenedor_datosperiodosdocente .etiqueta_datoperiododocente:nth-of-type(3) {
+#dv_periodosdocente .contenedor_datosperiodosdocente .etiqueta_datoperiododocente:nth-of-type(3),
+#dv_resultadoactas .contenedor_datosperiodosdocente .etiqueta_datoperiododocente:nth-of-type(3) {
   /*margin-right: 30px;*/
   margin-right: 0;
 }
-#dv_periodosdocente .contenedor_datosperiodosdocente .etiqueta_detalleperiododocente {
+#dv_periodosdocente .contenedor_datosperiodosdocente .etiqueta_detalleperiododocente,
+#dv_resultadoactas .contenedor_datosperiodosdocente .etiqueta_detalleperiododocente {
   cursor: pointer;
   display: -webkit-box;
   display: -moz-box;
@@ -2620,11 +2751,13 @@
   -khtml-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-#dv_periodosdocente .contenedor_datosperiodosdocente .etiqueta_detalleperiododocente:hover {
+#dv_periodosdocente .contenedor_datosperiodosdocente .etiqueta_detalleperiododocente:hover,
+#dv_resultadoactas .contenedor_datosperiodosdocente .etiqueta_detalleperiododocente:hover {
   color: #00529B;
   background-color: #ffffff;
 }
-#dv_periodosdocente .enlace_periodosactivosdocente {
+#dv_periodosdocente .enlace_periodosactivosdocente,
+#dv_resultadoactas .enlace_periodosactivosdocente {
   margin: 20px 0 10px 0;
   cursor: pointer;
   text-decoration: none;
@@ -2676,9 +2809,109 @@
   -khtml-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-#dv_periodosdocente .enlace_periodosactivosdocente:hover {
+#dv_periodosdocente .enlace_periodosactivosdocente:hover,
+#dv_resultadoactas .enlace_periodosactivosdocente:hover {
   color: #00529B;
   background-color: #ffffff;
+}
+#dv_resultadoactas {
+  width: 85%;
+}
+#dv_resultadoactas .contenedor_resultadoactas {
+  margin: 0 0 15px 0;
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+}
+#dv_resultadoactas .contenedor_resultadoactas span {
+  margin: 0 5px 0 0;
+  text-align: left;
+}
+#dv_resultadoactas .contenedor_resultadoactas span:nth-of-type(1) {
+  width: 25px;
+  height: auto;
+}
+#dv_resultadoactas .contenedor_resultadoactas span:nth-of-type(2) {
+  margin-right: 15px;
+  width: 90px;
+  height: auto;
+}
+#dv_resultadoactas .contenedor_resultadoactas span:nth-of-type(3) {
+  margin-right: 15px;
+  width: 225px;
+  height: auto;
+}
+#dv_resultadoactas .contenedor_resultadoactas span:nth-of-type(4) {
+  width: 425px;
+  height: auto;
+}
+#dv_resultadosinactas {
+  color: #00529B;
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+  font-family: 'RobotoBold';
+  font-size: 18px;
 }
 .displaynone {
   display: none !important;

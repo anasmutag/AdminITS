@@ -16,7 +16,7 @@
                 <? switch($tipoPago):
                     case 1: ?>
                         <label><?= $nombre?></label>
-                        <label><?= $abreviaturaid . ' ' . $id?></label>
+                        <label><?= $abreviaturaid . ' ' . number_format($id, 0, '', '.')?></label>
                         <label>Programa: <?= $programa?></label>
                         <label>Sede: <?= ($sede==1)?'Pasto':'Ipiales';?></label>
                         <label>Número de Matricula: <?= $numeroMatricula?></label>
@@ -27,7 +27,7 @@
                         <? break;
                     case 2: ?>
                         <label><?= $nombre?></label>
-                        <label><?= $abreviaturaid . ' ' . $id?></label>
+                        <label><?= $abreviaturaid . ' ' . number_format($id, 0, '', '.')?></label>
                         <label>Programa: <?= $programa?></label>
                         <label>Sede: <?= ($sede==1)?'Pasto':'Ipiales';?></label>
                         <label>Número de Matricula: <?= $numeroMatricula?></label>
@@ -42,6 +42,7 @@
                                     
                                     <? if($i<$cuotasPagadas): ?>
                                         <label class="etiqueta_cuotapagada">Cuota Pagada</label>
+                                        <a class="enlace_generarrecibopago" href="<?= PUBLIC_PATH?>pdf/recibopago/" target="_blanck">Generar Recibo</a>
                                     <? elseif($i==$cuotasPagadas): ?>
                                         <input class="boton_registrarPagoCuotaMatricula boton_pagarcuota" data-valor="<?= ($valorsemestre/$numeroCuotas)?>" type="button" value="Pagar Cuota">
                                     <? elseif($i>$cuotasPagadas): ?>
@@ -73,6 +74,9 @@
                 <? if($valorsemestre > 0):
                     if($estadosaldo): ?>
                         <label class="etiqueta_matriculapagada">Total del valor de matricula pagado</label>
+                        <div class="contenedor_recibopago">
+                            <a class="enlace_generarrecibopago" href="<?= PUBLIC_PATH?>pdf/recibopago/" target="_blanck">Generar Recibo</a>
+                        </div>
                     <? else: ?>
                         <? if($tipoPago == 1): ?>
                             <input id="btn_registrarpagocontadomatricula" class="boton_accionpagomatricula" type="button" value="Registrar Pago">

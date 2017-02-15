@@ -123,7 +123,7 @@
         .flexBox;
     }
 }
-#dv_buscardocumento, #dv_documentoacta, #dv_documentomatricula {
+#dv_buscardocumento, #dv_documentoacta, #dv_documentomatricula, #dv_numeroacta {
     .dimensions;
     .flexBox;
     
@@ -164,8 +164,16 @@
 #dv_buscardocumento {
     margin: 35px 0 0 0;
 }
-#dv_documentoacta, #dv_documentomatricula {
+#dv_documentoacta, #dv_documentomatricula, #dv_numeroacta {
     margin: 55px 0 0 0;
+}
+#dv_numeroacta {
+    .radio_sedeacta {
+        margin: 15px 10px 15px 0;
+    }
+    .etiqueta_sedeacta {
+        margin: 15px 30px 15px 0;
+    }
 }
 #dv_contenidomatricula {
     padding: 0 35px;
@@ -255,6 +263,7 @@
                         .button(@width:125px;@font-size:16px;@border-color:@grisnav;@background-color:@grisnav);
                     }
                     .etiqueta_cuotapagada {
+                        margin: 0 15px 0 0;
                         border-color: @ok;
                         background-color: @ok;
                         
@@ -319,6 +328,25 @@
                 .flexBox;
                 
                 .button(@width:200px;@height:60px;@font-size:20px;@border-color:@grisnav;@background-color:@grisnav);
+            }
+        }
+        .contenedor_recibopago {
+            margin: 30px 0 0 0;
+            
+            .dimensions;
+            .flexBox;
+        }
+        .enlace_generarrecibopago {
+            margin: 0;
+            color: @blanco;
+            cursor: pointer;
+            text-decoration: none;
+
+            .flexBox;
+            .button(@width:125px;@font-size:16px;@border-color:@base;@background-color:@base);
+
+            &:hover {
+                .hoverButton(@base);
             }
         }
     }

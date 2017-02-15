@@ -12,14 +12,23 @@ class Validacion extends ActiveRecord {
     }*/
     
     public function cargarValidacionesAlumno($id) {
-        return $this->find("columns: validacion.id_validacion,codigo_materia,nombre_materia,semestre.id_semestre",
+        /*return $this->find("columns: validacion.id_validacion,codigo_materia,nombre_materia,semestre.id_semestre",
                 "join: join pagovalidacion on validacion.id_validacion = pagovalidacion.id_validacion
                     join materia on validacion.id_materia = materia.id_materia
                     join alumno on validacion.id_alumno = alumno.id_alumno
                     join matricula on alumno.id_alumno = matricula.id_alumno
                     join semestre on matricula.id_semestre = semestre.id_semestre",
                 "conditions: identificacion_alumno = $id and estado_pagovalidacion = 1",
-                "order: semestre.id_semestre");
+                "order: semestre.id_semestre");*/
+        
+        return $this->find("columns: validacion.id_validacion,codigo_materia,nombre_materia",
+                "join: join pagovalidacion on validacion.id_validacion = pagovalidacion.id_validacion
+                    join materia on validacion.id_materia = materia.id_materia
+                    join alumno on validacion.id_alumno = alumno.id_alumno
+                    join materiaprograma on materia.id_materia = materiaprograma.id_materia",
+                "conditions: identificacion_alumno = $id
+                    and estado_pagovalidacion = 1",
+                "order: semestre");
     }
     
     public function cargarNotasValidacionesMateriasAlumno($id) {

@@ -1,0 +1,25 @@
+<?//= json_encode($actas)?>
+
+<? if(!empty($actas)): ?>
+    <div id="dv_datosacta">
+        <span class="etiqueta_datosdocente">Acta Número&nbsp;<?= $acta?></span>
+        <span class="etiqueta_datosdocente">Sede&nbsp;<?= $sede?></span>
+    </div>
+    <div id="dv_resultadoactas">
+        <? foreach($actas as $acta): ?>
+            <div class="contenedor_resultadoactas">
+                <span><?= $acta->item_acta?></span>
+                <span><?= $acta->identificacion_alumno?></span>
+                <span><?= $acta->nombre_alumno . ' ' . $acta->apellido_alumno?></span>
+                <span><?= $acta->nombre_programa?></span>
+            </div>
+        <? endforeach; ?>
+    </div>
+<? else: ?>
+    <div id="dv_resultadosinactas">
+        <? Flash::info("Busqueda sin resultados. Verifique los criterios de busqueda")?>
+    </div>
+<? endif; ?>
+<div class="contendor_regresarprincipal">
+    <a href="<?= PUBLIC_PATH?>management/consultaactapromocion" class="etiqueta_regresarprincipal">Salir</a>
+</div>

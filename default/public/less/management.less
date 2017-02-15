@@ -262,7 +262,7 @@
         }
     }
 }
-#dv_dialogoconfirmacionregistroacta, #dv_dialogoconfirmacionactualizacionegresado, #dv_dialogoconfirmacionregistroseguimiento, #dv_dialogoconfirmacioncierresemestre, #dv_dialogodocumnetoinexistente, #dv_dialogoactaexistente {
+#dv_dialogoconfirmacionregistroacta, #dv_dialogoconfirmacionactualizacionegresado, #dv_dialogoconfirmacionregistroseguimiento, #dv_dialogoconfirmacioncierresemestre, #dv_dialogodocumnetoinexistente, #dv_dialogoactaexistente, #dv_dialogodocumentoalumnoinexistente, #dv_dialogogenerarrecibopago {
     padding: 5px 15px;
 }
 #dv_resultadoseguimientoegresados {
@@ -425,7 +425,7 @@
         }
     }
 }
-#dv_datosdocente {
+#dv_datosdocente, #dv_datosacta {
     color: @base;
     
     .dimensions(75%);
@@ -445,7 +445,10 @@
         }
     }
 }
-#dv_periodosdocente {
+#dv_datosacta {
+    margin: 15px 0 0 0;
+}
+#dv_periodosdocente, #dv_resultadoactas {
     margin: 35px 0 0 0;
     padding: 40px 0 25px 0;
     color: @base;
@@ -506,6 +509,45 @@
             .hoverButton(@base);
         }
     }
+}
+#dv_resultadoactas {
+    width: 85%;
+    
+    .contenedor_resultadoactas {
+        margin: 0 0 15px 0;
+        
+        .dimensions;
+        .flexBox;
+        
+        span {
+            margin: 0 5px 0 0;
+            text-align: left;
+            
+            &:nth-of-type(1) {
+                .dimensions(@width:25px);
+            }
+            &:nth-of-type(2) {
+                margin-right: 15px;
+                
+                .dimensions(@width:90px);
+            }
+            &:nth-of-type(3) {
+                margin-right: 15px;
+                
+                .dimensions(@width:225px);
+            }
+            &:nth-of-type(4) {
+                .dimensions(@width:425px);
+            }
+        }
+    }
+}
+#dv_resultadosinactas {
+    color: @base;
+    
+    .dimensions;
+    .flexBox;
+    .font(@robotobold;18px);
 }
 .displaynone {
     display: none !important;

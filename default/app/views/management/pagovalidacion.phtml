@@ -1,3 +1,5 @@
+<?//= json_encode($validaciones)?>
+
 <div id="dv_pagomatricula" class="contenedor_formularioadmin contenedor_formulariomatricula">
     <span class="etiqueta_encabezadoformlarioadmin">PAGO DE VALIDACIÓN</span>
     <div class="contendor_pagomatricula">
@@ -14,7 +16,7 @@
         <? else: ?>
             <div class="contenedor_datospagomatricula">
                 <label><?= $nombre?></label>
-                <label><?= $abreviaturaid . ' ' . $id?></label>
+                <label><?= $abreviaturaid . ' ' . number_format($id, 0, '', '.')?></label>
                 <label>Programa: <?= $programa?></label>
                 <label>Valor a Pagar (Por cada materia): 10.000</label>
                 <? if(!empty($validaciones)): ?>
@@ -41,11 +43,31 @@
 <div class="contendor_regresarprincipal">
     <a href="<?= PUBLIC_PATH?>management/pagos" class="etiqueta_regresarprincipal">Regresar</a>
 </div>
+<div id="dv_dialogogenerarrecibopago">
+    <? Flash::valid("Registro del pago de validación exitoso. Puede generar el recibo de pago") ?>
+</div>
 <div id="dv_dialogodocumentoalumnoinexistente">
     <? Flash::info("El número de documento no se encuentra registrado en nuestra base de datos de estudiantes") ?>
 </div>
 
 <script type="text/javascript">
+    $('#dv_dialogogenerarrecibopago').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Generar Recibo": function() {
+                window.open("<?= PUBLIC_PATH?>pdf/recibopago/", "_blanck");
+            },
+            "Continuar": function() {
+                window.localStorage.removeItem('idPagoV');
+                document.location = <?= PUBLIC_PATH?> + 'management/pagovalidacion/' + window.localStorage.idPagoValidacion;
+            }
+        },
+        close: function (){}
+    });
+    
     $('#dv_dialogodocumentoalumnoinexistente').dialog({
         autoOpen: false,
         modal: true,
@@ -133,7 +155,9 @@
                 //document.getElementById("frm_codigoestudiante").reset();
                 
                 if(data !== null && data.res === 'ok'){
-                    document.location = <?= PUBLIC_PATH?> + 'management/pagovalidacion/' + window.localStorage.idPagoValidacion;
+                    window.localStorage.idPagoV = data.pagov;
+                    
+                    $('#dv_dialogogenerarrecibopago').dialog('open');
                 }else{
                     console.log(data.msg);
                 }
