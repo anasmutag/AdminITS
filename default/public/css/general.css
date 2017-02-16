@@ -716,6 +716,9 @@ header #nav_opcionesadmin ul li span:hover {
                         border-right: 1px solid @base;*/
   background-color: #f0f0f0;
 }
+header #nav_opcionesadmin ul li:nth-of-type(2) {
+  width: 125px;
+}
 .cabecera_admin {
   border-radius: 8px 8px 0 0;
   -moz-border-radius: 8px 8px 0 0;

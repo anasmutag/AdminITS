@@ -1,9 +1,21 @@
 <form id="frm_matriculaestudiante" class="formulario_admin">
-    <?if($bandera==1):?><span class="etiqueta_encabezadoelementoformularioadmin">MATRICULA SEMESTRE NÚMERO:&nbsp;<input class="texto_semestre" type="text" name="semestre" value="<?= ($datos[0]->id_semestre + 1)?>" readonly="readonly"></span><?endif;?>
+    <?if($bandera==1):?><span class="etiqueta_encabezadoelementoformularioadmin">MATRICULA SEMESTRE NÚMERO:&nbsp;<input class="texto_semestre" type="text" name="semestre" value="<?= ($datos[0]->id_semestre + 1)?>" readonly="readonly"></span><?endif;
+    if($bandera == 2): ?>
+        <div id="dv_semestrematriculavalidacion">
+            <div>
+                <input type="radio" name="matricula" value="1" checked>
+                <span class="etiqueta_textoradioformularioadmin">Primer Semestre</span>
+                <input type="radio" name="matricula" value="2">
+                <span class="etiqueta_textoradioformularioadmin">Segundo Semetre</span>
+                <input type="radio" name="matricula" value="3">
+                <span class="etiqueta_textoradioformularioadmin">Tercer Semetre</span>
+            </div>
+        </div>
+    <? endif; ?>
     <span class="etiqueta_encabezadoelementoformularioadmin">Sede Instituto Técnico Surcolombiano</span>
     <div class="contendor_elementoformularioadmin">
         <div>
-            <input type="radio" name="sedematricula" value="1" <?= ($bandera==1&&$datos[0]->id_sede==1)?'cheked':($bandera==0)?'checked':'';?>>
+            <input type="radio" name="sedematricula" value="1" <?= ($bandera==1&&$datos[0]->id_sede==1)?'cheked':($bandera==0||$bandera==2)?'checked':'';?>>
             <span class="etiqueta_textoradioformularioadmin">Pasto</span>
             <input type="radio" name="sedematricula" value="2" <?= ($bandera==1&&$datos[0]->id_sede==2)?'cheked':'';?>>
             <span class="etiqueta_textoradioformularioadmin">Ipiales</span>
@@ -14,7 +26,7 @@
         <div>
             <span class="etiqueta_textoelementoformularioadmin etiqueta_espacioelementoformularioadmin">Tipo de Documento</span>
             <?foreach($tipodocumentos as $tipodocumento):?>
-                <input type="radio" name="tipodocumento" value="<?= $tipodocumento->id_tipodocumento?>" <?= ($bandera==0&&$tipodocumento===end($tipodocumentos))?'checked':($bandera==1&&$datos[0]->id_tipodocumento==$tipodocumento->id_tipodocumento)?'checked':'';?>><?/*= ($bandera==1)?'onclick="return false;"':''*/?>
+                <input type="radio" name="tipodocumento" value="<?= $tipodocumento->id_tipodocumento?>" <?= (($bandera==0||$bandera==2)&&$tipodocumento===end($tipodocumentos))?'checked':($bandera==1&&$datos[0]->id_tipodocumento==$tipodocumento->id_tipodocumento)?'checked':'';?>><?/*= ($bandera==1)?'onclick="return false;"':''*/?>
                 <span class="etiqueta_textoradioformularioadmin"><?= $tipodocumento->abreviatura_tipodocumento?></span>
             <?endforeach;?>
             <!--select id="slt_tipodocumento" class="entrada_datoformularioadmin">
@@ -36,7 +48,7 @@
             <span class="etiqueta_textoelementoformularioadmin">Lugar de Expedición</span>
             <select id="slt_paisE" class="combo_paises entrada_datoformularioadmin entrada_datocomboformularioadmin" name="paisE" <?= ($bandera==1)?'disabled':'';?>>
                 <?foreach($paises as $pais):?>
-                    <option value="<?= $pais->id_pais?>" <?= ($bandera==0&&$pais->id_pais==='82')?'selected':($bandera==1&&$datoslocalidad[0]->id_pais==$pais->id_pais)?'selected':'';?>><?= $pais->nombre_pais?></option>
+                    <option value="<?= $pais->id_pais?>" <?= (($bandera==0||$bandera==2)&&$pais->id_pais==='82')?'selected':($bandera==1&&$datoslocalidad[0]->id_pais==$pais->id_pais)?'selected':'';?>><?= $pais->nombre_pais?></option>
                 <?endforeach;?>
             </select>
             <select id="slt_regionE" class="combo_regiones entrada_datoformularioadmin entrada_datocomboformularioadmin" name="regionE" <?= ($bandera==1)?'disabled':'';?>>
@@ -46,7 +58,7 @@
                 <?endforeach;?>
             </select>
             <select id="slt_localidadE" class="combo_localidades entrada_datoformularioadmin entrada_datocomboformularioadmin" name="localidadE" <?= ($bandera==1)?'disabled':'';?>>
-                <? if($bandera==0): ?>
+                <? if($bandera==0||$bandera==2): ?>
                     <option value="0">Localidad</option>
                 <? else: ?>
                     <?foreach($localidadesE as $localidadE):?>
@@ -79,7 +91,7 @@
             <span class="etiqueta_textoelementoformularioadmin">Lugar de Nacimiento</span>
             <select id="slt_paisN" class="combo_paises entrada_datoformularioadmin entrada_datocomboformularioadmin" name="paisN" <?= ($bandera==1)?'disabled':'';?>>
                 <?foreach($paises as $pais):?>
-                    <option value="<?= $pais->id_pais?>" <?= ($bandera==0&&$pais->id_pais==='82')?'selected':($bandera==1&&$datoslocalidad[0]->id_pais==$pais->id_pais)?'selected':'';?>><?= $pais->nombre_pais?></option>
+                    <option value="<?= $pais->id_pais?>" <?= (($bandera==0||$bandera==2)&&$pais->id_pais==='82')?'selected':($bandera==1&&$datoslocalidad[0]->id_pais==$pais->id_pais)?'selected':'';?>><?= $pais->nombre_pais?></option>
                 <?endforeach;?>
             </select>
             <select id="slt_regionN" class="combo_regiones entrada_datoformularioadmin entrada_datocomboformularioadmin" name="regionN" <?= ($bandera==1)?'disabled':'';?>>
@@ -89,7 +101,7 @@
                 <?endforeach;?>
             </select>
             <select id="slt_localidadN" class="combo_localidades entrada_datoformularioadmin entrada_datocomboformularioadmin" name="localidadN" <?= ($bandera==1)?'disabled':'';?>>
-                <? if($bandera==0): ?>
+                <? if($bandera==0||$bandera==2): ?>
                     <option value="0">Localidad</option>
                 <? else: ?>
                     <?foreach($localidades as $localidad):?>
@@ -188,7 +200,7 @@
     <div class="contendor_elementoformularioadmin">
         <div>
             <span class="etiqueta_textoelementoformularioadmin etiqueta_anchoelementoformularioadmin">Periodo (<?= date("Y");?>)</span>
-            <input type="radio" name="periodomatricula" value="1" <?= ($bandera==1&&$datos[0]->id_periodo==1)?'checked':($bandera==0)?'checked':'';?>>
+            <input type="radio" name="periodomatricula" value="1" <?= ($bandera==1&&$datos[0]->id_periodo==1)?'checked':($bandera==0||$bandera==2)?'checked':'';?>>
             <span class="etiqueta_textoradioformularioadmin">A</span>
             <input type="radio" name="periodomatricula" value="2" <?= ($bandera==1&&$datos[0]->id_periodo==2)?'checked':'';?>>
             <span class="etiqueta_textoradioformularioadmin">B</span>
@@ -251,7 +263,7 @@
 </form>
 
 <script type="text/javascript">
-    <? if($bandera == 0): ?>
+    <? if($bandera == 0 || $bandera == 2): ?>
         $('#txt_fechanacimiento').datepicker({
             changeMonth: true,
             changeYear: true,
@@ -417,87 +429,126 @@
             && telefono.length > 0 && correoElectronico.length > 0 && validar_email(correoElectronico)
             && convertiranumero(programa) > 0 && codigoEstudiante.length > 0
             && numeroMatricula.length > 0 && fechaMatricula.length > 0 && valorMatricula.length > 0){
-        
-            switch(matricula){
-                case 1:
-                    $.ajax({
-                        type: 'POST',
-                        url: <?= PUBLIC_PATH?> + 'management/registrarEstudiante/',
-                        data: $('#frm_matriculaestudiante').serialize(),
-                        dataType: 'json',
-                        beforeSend: function(){
-                            //document.getElementById("btn_consultarnotas").disabled = true;
-                            
-                            $('body').addClass('menuopen');
-                            
-                            $.blockUI({
-                                message: "Registrando y matriculando estudiante..."
-                            });
-                        },
-                        success: function(data) {
-                            $('body').removeClass('menuopen');
-                            //document.getElementById("frm_codigoestudiante").reset();
-                            
-                            if(data !== null && data.res === 'ok'){
-                                window.localStorage.idPagoMatricula = data.id;
-                                
-                                document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + data.id;
-                                
-                                console.log(data.res);
-                            }else{
-                                console.log(data.msg);
-                            }
-                        },
-                        error: function(){
-                            //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            
+            <? if($bandera==2): ?>
+                $.ajax({
+                    type: 'POST',
+                    url: <?= PUBLIC_PATH?> + 'management/registrarEstudiante/',
+                    data: $('#frm_matriculaestudiante').serialize(),
+                    dataType: 'json',
+                    beforeSend: function(){
+                        //document.getElementById("btn_consultarnotas").disabled = true;
+
+                        $('body').addClass('menuopen');
+
+                        $.blockUI({
+                            message: "Registrando y matriculando estudiante..."
+                        });
+                    },
+                    success: function(data) {
+                        $('body').removeClass('menuopen');
+                        //document.getElementById("frm_codigoestudiante").reset();
+
+                        if(data !== null && data.res === 'ok'){
+                            window.localStorage.idPagoMatricula = data.id;
+
+                            document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + data.id;
+
+                            console.log(data.res);
+                        }else{
+                            console.log(data.msg);
                         }
-                    }).always(function(){
-                        //*document.getElementById("btn_consultarnotas").disabled = false;
-                        
-                        $.unblockUI();
-                    });
-                    
-                    break;
-                case 2:
-                    $.ajax({
-                        type: 'POST',
-                        url: <?= PUBLIC_PATH?> + 'management/registrarMatricula/',
-                        data: $('#frm_matriculaestudiante').serialize(),
-                        dataType: 'json',
-                        beforeSend: function(){
-                            //document.getElementById("btn_consultarnotas").disabled = true;
-                            
-                            $('body').addClass('menuopen');
-                            
-                            $.blockUI({
-                                message: "Matriculando estudiante..."
-                            });
-                        },
-                        success: function(data) {
-                            $('body').removeClass('menuopen');
-                            //document.getElementById("frm_codigoestudiante").reset();
-                            
-                            if(data !== null && data.res === 'ok'){
-                                window.localStorage.idPagoMatricula = data.id;
-                                
-                                document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + data.id;
-                                
-                                console.log(data.res);
-                            }else{
-                                console.log(data.msg);
+                    },
+                    error: function(){
+                        //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                    }
+                }).always(function(){
+                    //*document.getElementById("btn_consultarnotas").disabled = false;
+
+                    $.unblockUI();
+                });
+            <? else: ?>
+                switch(matricula){
+                    case 1:
+                        $.ajax({
+                            type: 'POST',
+                            url: <?= PUBLIC_PATH?> + 'management/registrarEstudiante/',
+                            data: $('#frm_matriculaestudiante').serialize(),
+                            dataType: 'json',
+                            beforeSend: function(){
+                                //document.getElementById("btn_consultarnotas").disabled = true;
+
+                                $('body').addClass('menuopen');
+
+                                $.blockUI({
+                                    message: "Registrando y matriculando estudiante..."
+                                });
+                            },
+                            success: function(data) {
+                                $('body').removeClass('menuopen');
+                                //document.getElementById("frm_codigoestudiante").reset();
+
+                                if(data !== null && data.res === 'ok'){
+                                    window.localStorage.idPagoMatricula = data.id;
+
+                                    document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + data.id;
+
+                                    console.log(data.res);
+                                }else{
+                                    console.log(data.msg);
+                                }
+                            },
+                            error: function(){
+                                //console.log('Ocurrio un error inesperado. Intenta nuevamente');
                             }
-                        },
-                        error: function(){
-                            //console.log('Ocurrio un error inesperado. Intenta nuevamente');
-                        }
-                    }).always(function(){
-                        //document.getElementById("btn_consultarnotas").disabled = false;
-                        
-                        $.unblockUI();
-                    });
-                    
-                    break;
-            }
+                        }).always(function(){
+                            //*document.getElementById("btn_consultarnotas").disabled = false;
+
+                            $.unblockUI();
+                        });
+
+                        break;
+                    case 2:
+                        $.ajax({
+                            type: 'POST',
+                            url: <?= PUBLIC_PATH?> + 'management/registrarMatricula/',
+                            data: $('#frm_matriculaestudiante').serialize(),
+                            dataType: 'json',
+                            beforeSend: function(){
+                                //document.getElementById("btn_consultarnotas").disabled = true;
+
+                                $('body').addClass('menuopen');
+
+                                $.blockUI({
+                                    message: "Matriculando estudiante..."
+                                });
+                            },
+                            success: function(data) {
+                                $('body').removeClass('menuopen');
+                                //document.getElementById("frm_codigoestudiante").reset();
+
+                                if(data !== null && data.res === 'ok'){
+                                    window.localStorage.idPagoMatricula = data.id;
+
+                                    document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + data.id;
+
+                                    console.log(data.res);
+                                }else{
+                                    console.log(data.msg);
+                                }
+                            },
+                            error: function(){
+                                //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                            }
+                        }).always(function(){
+                            //document.getElementById("btn_consultarnotas").disabled = false;
+
+                            $.unblockUI();
+                        });
+
+                        break;
+                }
+            <? endif; ?>
         }else{
             //validarcampos(documento, convertiranumero(region), convertiranumero(localidad), nombre, apellido, fechaNacimiento, convertiranumero(regionNacimiento), convertiranumero(localidadNacimiento), direccion, telefono, correoElectronico, nombreAcudiente, apellidoAcudiente, telefonoAcudiente, empresa, cargo, direccionEmpresa, telefonoEmpresa, convertiranumero(programa), codigoEstudiante, numeroMatricula, fechaMatricula);
             validarcampos(documento, convertiranumero(region), convertiranumero(localidad), nombre, apellido, fechaNacimiento, convertiranumero(regionNacimiento), convertiranumero(localidadNacimiento), direccion, telefono, correoElectronico, convertiranumero(programa), codigoEstudiante, numeroMatricula, fechaMatricula, valorMatricula);

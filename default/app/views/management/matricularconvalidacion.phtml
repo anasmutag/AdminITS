@@ -1,0 +1,50 @@
+<div class="contenedor_formularioadmin contenedor_formulariomatricula">
+    <span class="etiqueta_encabezadoformlarioadmin">MATRICULAR ESTUDIANTE</span>
+    <!--div id="dv_semestrematricula">
+        <div>
+            <input type="radio" name="matricula" value="1" checked>
+            <span class="etiqueta_textoradioformularioadmin">Primer Semestre</span>
+            <input type="radio" name="matricula" value="2">
+            <span class="etiqueta_textoradioformularioadmin">Segundo Semetre</span>
+            <input type="radio" name="matricula" value="3">
+            <span class="etiqueta_textoradioformularioadmin">Tercer Semetre</span>
+        </div>
+    </div-->
+    <div id="dv_formulariomatricula"></div>
+</div>
+
+<script type="text/javascript">
+    $.ajax({
+            type: 'POST',
+            url: <?= PUBLIC_PATH?> + 'management/formulariomatricula/',
+            data: {
+                tipoForm: 2,
+                documento: 0
+            },
+            beforeSend: function(){
+                //document.getElementById("btn_consultarnotas").disabled = true;
+                
+                $('body').addClass('menuopen');
+                
+                $.blockUI({
+                    message: "Cargando formulario de matricula..."
+                });
+            },
+            success: function(data) {
+                $('body').removeClass('menuopen');
+                //document.getElementById("frm_codigoestudiante").reset();
+                
+                $('#dv_formulariomatricula').html('');
+                $('#dv_formulariomatricula').html(data);
+                
+                rs();
+            },
+            error: function(){
+                //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }
+        }).always(function(){
+            //document.getElementById("btn_consultarnotas").disabled = false;
+            
+            $.unblockUI();
+        });
+</script>

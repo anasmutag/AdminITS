@@ -1308,7 +1308,8 @@
   font-family: 'RobotoBold';
   font-size: 18px;
 }
-.contenedor_formularioadmin #dv_semestrematricula {
+.contenedor_formularioadmin #dv_semestrematricula,
+.contenedor_formularioadmin #dv_semestrematriculavalidacion {
   margin: 70px 0 15px 0;
   padding: 0;
   width: 100%;
@@ -1346,7 +1347,8 @@
     -webkit-order: 2;
     order: 2;*/
 }
-.contenedor_formularioadmin #dv_semestrematricula div {
+.contenedor_formularioadmin #dv_semestrematricula div,
+.contenedor_formularioadmin #dv_semestrematriculavalidacion div {
   width: 100%;
   height: auto;
   display: -webkit-box;
@@ -1381,8 +1383,12 @@
     -webkit-order: 2;
     order: 2;*/
 }
-.contenedor_formularioadmin #dv_semestrematricula div:nth-of-type(1) .etiqueta_textoradioformularioadmin {
+.contenedor_formularioadmin #dv_semestrematricula div:nth-of-type(1) .etiqueta_textoradioformularioadmin,
+.contenedor_formularioadmin #dv_semestrematriculavalidacion div:nth-of-type(1) .etiqueta_textoradioformularioadmin {
   margin: 0 20px 0 5px;
+}
+.contenedor_formularioadmin #dv_semestrematriculavalidacion {
+  margin: 55px 0 30px 0;
 }
 .contenedor_formularioadmin .formulario_admin {
   margin: 15px 0 0 0;

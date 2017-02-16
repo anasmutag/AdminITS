@@ -12,6 +12,10 @@
                 <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
             <li>
+                <a id="lnk_convalidacion" href="<?= PUBLIC_PATH?>management/convalidacion">Convalidación</a>
+                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
+            </li>
+            <li>
                 <a id="lnk_pagos" href="<?= PUBLIC_PATH?>management/pagos">Pagos</a>
                 <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
@@ -27,10 +31,14 @@
                 <a id="lnk_docentes" href="<?= PUBLIC_PATH?>management/docentes">Docentes</a>
                 <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
-            <li>
-                <span id="sp_cierresemestre">Cerrar Semestre</span>
-                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
-            </li>
+            <? $acl = new Acl('privilegios');
+            
+            if($acl->check(Auth::get('rol_usuario'), '', 'management', 'cerrarsemestre')): ?>
+                <li>
+                    <span id="sp_cierresemestre">Cerrar Semestre</span>
+                    <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
+                </li>
+            <? endif; ?>
             <li>
                 <span id="sp_salir" onclick="window.location = '<?= PUBLIC_PATH?>account/salirAdmin'">Salir</span>
                 <!--button onclick="window.location = '<?= PUBLIC_PATH?>account/salirAdmin'">Salir</button-->
@@ -45,7 +53,7 @@
 <? endif; ?>
 
 <script type="text/javascript">
-    $('#lnk_pagos, #lnk_matricula, #sp_cierresemestre, #lnk_egresados, #lnk_actas, #lnk_docentes, #sp_salir').on('click', function (){
+    $('#lnk_pagos, #lnk_matricula, lnk_convalidacion, #sp_cierresemestre, #lnk_egresados, #lnk_actas, #lnk_docentes, #sp_salir').on('click', function (){
         if(!isNaN(window.localStorage.idPagoMatricula)){
             window.localStorage.removeItem('idPagoMatricula');
             window.localStorage.removeItem('idPagoValidacion');
@@ -78,16 +86,22 @@
                     success: function(data) {
                         $('body').removeClass('menuopen');
                         //document.getElementById("frm_codigoestudiante").reset();
-
+                        
                         if(data !== null && data.res === 'ok'){
                             window.location = "<?= PUBLIC_PATH?>management/administracion/";
-
+                            
                             console.log(data.res);
                         }else{
                             console.log(data.msg);
                         }
                     },
-                    error: function(){
+                    error: function(xhr, ajaxOptions, thrownError){
+                        if(xhr.status === 200 && xhr.statusText === 'OK'){
+                            console.log('Aqui es...');
+                        }else{
+                            console.log(xhr);
+                        }
+                        
                         //console.log('Ocurrio un error inesperado. Intenta nuevamente');
                     }
                 }).always(function(){

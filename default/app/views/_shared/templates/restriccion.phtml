@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv='Content-type' content='text/html; charset=<?= APP_CHARSET ?>' />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        
+        <title>ITS - Administración</title>
+        
+        <? Tag::css("style") ?>
+        <?= Html::includeCss() ?>
+        
+        <link rel="icon" type="img/ico" href="<?= PUBLIC_PATH."img/favicon.ico "?>">
+    </head>
+    <body>
+        <div id="dv_restriccionprivilegios">
+            <? Flash::error("No tienes suficientes privilegios para acceder a esta sección") ?>
+            <div id="dv_regresarppalrestriccionprivilegios">
+                <a href="<?= PUBLIC_PATH?>">Regresar</a>
+            </div>
+        </div>
+    </body>
+</html>

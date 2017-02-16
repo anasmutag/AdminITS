@@ -60,21 +60,31 @@ class ManagementController extends AppController {
         $this->regiones = $region->regiones(82);
         $this->numeromatricula = $matricula->ultimoNumero()[0]->resultado + 1;
         
-        if($bandera != 0){
-            $datos = $matricula->cargarDatosMatriculaInactiva($documento);
-            $this->datos = $datos;
-            $datoslocalidad = $localidad->cargarDatosLocalidad($datos[0]->lugar_nacimiento_alumno, LANGUAGE_PATH);
-            $this->datoslocalidad = $datoslocalidad;
-            
-            $this->localidades = $localidad->localidades($datoslocalidad[0]->id_pais, $datoslocalidad[0]->id_region);
-            
-            $datoslocalidadE = $localidad->cargarDatosLocalidad($datos[0]->lugar_expedicion_identificacion_alumno, LANGUAGE_PATH);
-            $this->datoslocalidadE = $datoslocalidadE;
-            
-            $this->localidadesE = $localidad->localidades($datoslocalidadE[0]->id_pais, $datoslocalidadE[0]->id_region);
-            
-            $date = new DateTime($datos[0]->fecha_nacimiento_alumno);
-            $this->fechanacimiento = $date->format('Y-m-d');
+        switch ($bandera) {
+            case 1:
+                /* Matricula normal de segundo o tercer semestre */
+                
+                $datos = $matricula->cargarDatosMatriculaInactiva($documento);
+                $this->datos = $datos;
+                $datoslocalidad = $localidad->cargarDatosLocalidad($datos[0]->lugar_nacimiento_alumno, LANGUAGE_PATH);
+                $this->datoslocalidad = $datoslocalidad;
+
+                $this->localidades = $localidad->localidades($datoslocalidad[0]->id_pais, $datoslocalidad[0]->id_region);
+
+                $datoslocalidadE = $localidad->cargarDatosLocalidad($datos[0]->lugar_expedicion_identificacion_alumno, LANGUAGE_PATH);
+                $this->datoslocalidadE = $datoslocalidadE;
+
+                $this->localidadesE = $localidad->localidades($datoslocalidadE[0]->id_pais, $datoslocalidadE[0]->id_region);
+
+                $date = new DateTime($datos[0]->fecha_nacimiento_alumno);
+                $this->fechanacimiento = $date->format('Y-m-d');
+                
+                break;
+            case 2:
+                /* Matricula convalidación */
+                
+                
+                break;
         }
     }
     
@@ -202,6 +212,7 @@ class ManagementController extends AppController {
             $alumnoprograma= new Alumnoprograma();
             
             /** Data **/
+            $semestre = filter_var(Input::request('matricula'), FILTER_SANITIZE_STRING);
             $sede = filter_var(Input::request('sedematricula'), FILTER_SANITIZE_STRING);
             $tipoDocumento = filter_var(Input::request('tipodocumento'), FILTER_SANITIZE_STRING);
             $documento = filter_var(Input::request('numerodocumento'), FILTER_SANITIZE_STRING);
@@ -229,7 +240,7 @@ class ManagementController extends AppController {
             //$codigoEstudiante = filter_var(Input::request('codigoestudiantil'), FILTER_SANITIZE_STRING);
             $numeroMatricula = filter_var(Input::request('numeromatricula'), FILTER_SANITIZE_STRING);
             $fechaMatricula = filter_var(Input::request('fechamatricula'), FILTER_SANITIZE_STRING);
-            $beca = filter_var(Input::request('beca'), FILTER_SANITIZE_STRING);
+            //$beca = filter_var(Input::request('beca'), FILTER_SANITIZE_STRING);
             $valorMatricula = filter_var(Input::request('valormatricula'), FILTER_SANITIZE_STRING);
             $formaPago = filter_var(Input::request('formapago'), FILTER_SANITIZE_STRING);
             $numeroCuotas = filter_var(Input::request('numerocuotas'), FILTER_SANITIZE_STRING);
@@ -280,7 +291,13 @@ class ManagementController extends AppController {
                     
                     $matricula->id_sede = $sede;
                     $matricula->id_alumno = $alumno->id_alumno;
-                    $matricula->id_semestre = 1;
+                    
+                    if(is_null($semestre)){
+                        $matricula->id_semestre = 1;
+                    }else{
+                        $matricula->id_semestre = $semestre;
+                    }
+                    
                     $matricula->id_periodo = $periodo;
                     $matricula->id_formapago = $formaPago;
                     
@@ -535,6 +552,8 @@ class ManagementController extends AppController {
         $pago->id_mediopago = 1;
         
         if($pago->save()){
+            $arr['pago'] = $pago->id_pago;
+            
             $matricula->cargarDatosMatriculaActualizar($idmatricula);
             $matricula->numero_cuotaspagadas_matricula = 1;
             
@@ -569,11 +588,16 @@ class ManagementController extends AppController {
         
         $pago->begin();
         
+        $numerorecibo = (int) $pago->cargarNumeroReciboPago()[0]->recibo;
+        
+        $pago->numero_recibo_pago = ($numerorecibo + 1);
         $pago->valor_pago = $valor;
         $pago->id_matricula = $idmatricula;
         $pago->id_mediopago = 3;
         
         if($pago->save()){
+            $arr['pago'] = $pago->id_pago;
+            
             $matricula->cargarDatosMatriculaActualizar($idmatricula);
             $matricula->valor_matricula = $valor;
             $matricula->numero_cuotaspagadas_matricula = 1;
@@ -617,6 +641,8 @@ class ManagementController extends AppController {
         $pago->id_mediopago = 1;
         
         if($pago->save()){
+            $arr['pago'] = $pago->id_pago;
+            
             $matricula->cargarDatosMatriculaActualizar($idmatricula);
             //$cuotaspagas = $matricula->numero_cuotaspagadas_matricula;
             $matricula->numero_cuotaspagadas_matricula = $matricula->numero_cuotaspagadas_matricula + 1;
@@ -683,7 +709,7 @@ class ManagementController extends AppController {
     
     public function cerrarsemestre() {
         if(Auth::is_valid()){
-            View::template(NULL);
+            View::select(NULL, NULL);
             
             $matricula = new Matricula();
             
@@ -1128,6 +1154,34 @@ class ManagementController extends AppController {
             $this->sede = $sedeacta;
             $this->acta = $numeroacta;
             $this->actas = $acta->cargarActasPromocion($sedeacta, $numeroacta);
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function convalidacion() {
+        if(Auth::is_valid()){
+            View::template('general_template');
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function matricularconvalidacion() {
+        if(Auth::is_valid()){
+            View::template('general_template');
+            
+            
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function registrarnotasconvalidacion() {
+        if(Auth::is_valid()){
+            View::template('general_template');
+            
+            
         }else{
             Router::redirect("/");
         }
