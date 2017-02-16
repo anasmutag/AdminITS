@@ -52,7 +52,7 @@ function rs(){
 }
 
 function convertiranumero(cadena){
-    cadena = cadena.replace(/\./g, "");
+    //cadena = cadena.replace(/\./g, "");
     cadena = cadena.replace(',','.');
     
     return parseFloat(cadena);

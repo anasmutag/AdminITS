@@ -1,0 +1,52 @@
+<?//= json_encode($datos)?>
+
+<div id="dv_resultadoseguimientoegresados">
+    <span id="sp_tituloresultadoseguimientoegresados">Registro Notas Convalidación</span>
+    <div id="dv_resultadonotasconvalidacion" class="contenedor_resultadonotasconvalidacion">
+        <span class="etiqueta_semestreconvalidacion">Primer Semestre</span>
+        <? foreach($datos1s as $dato1s): ?>
+            <div class="contenedor_materiaconvalidacion">
+                <span class="etiqueta_codigomateriaconvalidacion"><?= $dato1s->codigo_materia?></span>
+                <span class="etiqueta_nombremateriaconvalidacion"><?= $dato1s->nombre_materia?></span>
+                <input class="numero_notaconvalidacion" type="number" maxlength="3" min="1" max="5" step="0.1" value="1" onkeyup="validarNota.call(this);">
+            </div>
+        <? endforeach;
+        if(!empty($datos2s)): ?>
+            <span class="etiqueta_semestreconvalidacion">Segundo Semestre</span>
+            <? foreach($datos2s as $dato2s): ?>
+                <div class="contenedor_materiaconvalidacion">
+                    <span class="etiqueta_codigomateriaconvalidacion"><?= $dato2s->codigo_materia?></span>
+                    <span class="etiqueta_nombremateriaconvalidacion"><?= $dato2s->nombre_materia?></span>
+                    <input class="numero_notaconvalidacion" type="number" maxlength="3" min="1" max="5" step="0.1" value="1" onkeyup="validarNota.call(this);">
+                </div>
+            <? endforeach; ?>
+        <? endif;
+        if(!empty($datos3s)): ?>
+            <span class="etiqueta_semestreconvalidacion">Tercer Semestre</span>
+            <? foreach($datos3s as $dato3s): ?>
+                <div class="contenedor_materiaconvalidacion">
+                    <span class="etiqueta_codigomateriaconvalidacion"><?= $dato3s->codigo_materia?></span>
+                    <span class="etiqueta_nombremateriaconvalidacion"><?= $dato3s->nombre_materia?></span>
+                    <input class="numero_notaconvalidacion" type="number" maxlength="3" min="1" max="5" step="0.1" value="1" onkeyup="validarNota.call(this);">
+                </div>
+            <? endforeach; ?>
+        <? endif; ?>
+        <div id="dv_registrarnotasconvalidacion">
+            <input id="btn_registrarnotasconvalidacion" type="button" value="Registrar">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#btn_registrarnotasconvalidacion').on('click', function(){
+        
+    });
+    
+    function validarNota(){
+        if($(this).val().length > 0 && convertiranumero($(this).val()) >= 1 && convertiranumero($(this).val()) <= 5){
+            $(this).removeClass('etiqueta_tiponotanovalido');
+        }else{
+            $(this).addClass('etiqueta_tiponotanovalido');
+        }
+    }
+</script>

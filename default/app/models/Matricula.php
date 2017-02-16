@@ -99,4 +99,21 @@ class Matricula extends ActiveRecord {
                 . " order by id_semestre desc",
                 "page: $page", "per_page: 10");
     }
+    
+    public function validarDocumentoConvalidacion($documento) {
+        if ($this->exists("id_alumno = (select id_alumno from alumno where identificacion_alumno = $documento) and convalidacion_matricula = 1")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function cargarProgramaMatriculaConvalidacion($documento) {
+        return $this->find("columns: programa.id_programa,id_semestre",
+                "join: join alumno on matricula.id_alumno = alumno.id_alumno
+                    join alumnoprograma on alumno.id_alumno = alumnoprograma.id_alumno
+                    join programa on alumnoprograma.id_programa = programa.id_programa",
+                "conditions: identificacion_alumno = $documento
+                    and convalidacion_matricula = 1");
+    }
 }

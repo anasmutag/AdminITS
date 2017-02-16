@@ -2054,6 +2054,7 @@
   font-size: 30px;
 }
 #dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados {
+  margin: 0 0 30px 0;
   width: 100%;
   height: auto;
   display: -webkit-box;
@@ -2207,7 +2208,8 @@
 #dv_resultadoseguimientoegresados #dv_opcionesresultadoseguimientoegresados:nth-last-child(1) div {
   margin-bottom: 30px;
 }
-#dv_resultadoseguimientoegresados .contenedor_resultadoegresados {
+#dv_resultadoseguimientoegresados .contenedor_resultadoegresados,
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion {
   padding: 15px 0 30px 0;
   background-color: #ffffff;
   width: 65%;
@@ -2253,7 +2255,8 @@
   -moz-box-shadow: 0 0 6px 0 #000000;
   box-shadow: 0 0 6px 0 #000000;
 }
-#dv_resultadoseguimientoegresados .contenedor_resultadoegresados #dv_resultadosegresados {
+#dv_resultadoseguimientoegresados .contenedor_resultadoegresados #dv_resultadosegresados,
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion #dv_resultadosegresados {
   margin: 15px 0 30px 0;
   width: 100%;
   height: auto;
@@ -2289,7 +2292,8 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_resultadoseguimientoegresados .contenedor_resultadoegresados #dv_resultadosegresados .contenedor_resultadoegresado {
+#dv_resultadoseguimientoegresados .contenedor_resultadoegresados #dv_resultadosegresados .contenedor_resultadoegresado,
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion #dv_resultadosegresados .contenedor_resultadoegresado {
   margin: 0 0 5px 0;
   width: 100%;
   height: auto;
@@ -2325,15 +2329,169 @@
     -webkit-order: 2;
     order: 2;*/
 }
-#dv_resultadoseguimientoegresados .contenedor_resultadoegresados #dv_resultadosegresados .enlace_datosegresado {
+#dv_resultadoseguimientoegresados .contenedor_resultadoegresados #dv_resultadosegresados .enlace_datosegresado,
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion #dv_resultadosegresados .enlace_datosegresado {
   color: #00529B;
   cursor: pointer;
   text-decoration: none;
   font-family: 'RobotoRegular';
   font-size: 16px;
 }
-#dv_resultadoseguimientoegresados .contenedor_resultadoegresados #dv_resultadosegresados .enlace_datosegresado:hover {
+#dv_resultadoseguimientoegresados .contenedor_resultadoegresados #dv_resultadosegresados .enlace_datosegresado:hover,
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion #dv_resultadosegresados .enlace_datosegresado:hover {
   color: #bcafa9;
+}
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion {
+  padding-top: 0;
+}
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion .etiqueta_semestreconvalidacion {
+  margin: 15px 0;
+  padding: 10px 0;
+  text-align: center;
+  color: #ffffff;
+  background-color: #00529B;
+  width: 100%;
+  height: auto;
+  font-family: 'RobotoMedium';
+  font-size: 16px;
+}
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion .etiqueta_semestreconvalidacion:nth-of-type(1) {
+  margin-top: 0;
+  border-radius: 8px 8px 0 0;
+  -moz-border-radius: 8px 8px 0 0;
+  -o-border-radius: 8px 8px 0 0;
+  -ms-border-radius: 8px 8px 0 0;
+  -khtml-border-radius: 8px 8px 0 0;
+  -webkit-border-radius: 8px 8px 0 0;
+}
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion .contenedor_materiaconvalidacion {
+  padding: 5px 0;
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+  font-family: 'RobotoRegular';
+  font-size: 14px;
+}
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion .contenedor_materiaconvalidacion .etiqueta_codigomateriaconvalidacion,
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion .contenedor_materiaconvalidacion .etiqueta_nombremateriaconvalidacion {
+  margin: 0 15px 0 0;
+  text-align: left;
+  width: 50px;
+  height: auto;
+}
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion .contenedor_materiaconvalidacion .etiqueta_nombremateriaconvalidacion {
+  width: 245px;
+}
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion .contenedor_materiaconvalidacion .numero_notaconvalidacion {
+  padding: 5px 2px;
+  border: 1px solid #00529B;
+  color: #00529B;
+  text-align: center;
+  outline: none;
+  -moz-appearance: textfield;
+  width: 30px;
+  height: auto;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion .contenedor_materiaconvalidacion .numero_notaconvalidacion::-webkit-outer-spin-button,
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion .contenedor_materiaconvalidacion .numero_notaconvalidacion::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion #dv_registrarnotasconvalidacion {
+  margin: 15px 0 0 0;
+  padding: 20px 0 0 0;
+  border-top: 1px solid #00529B;
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -ms-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-pack: center;
+  align-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  /*-webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;*/
+}
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion #dv_registrarnotasconvalidacion input {
+  width: 100px;
+  min-width: 100px;
+  height: 35px;
+  min-height: 35px;
+  font-family: 'RobotoRegular';
+  font-size: 18px;
+  color: #ffffff;
+  border: 2px solid #00529B;
+  background-color: #00529B;
+  padding: 0;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+#dv_resultadoseguimientoegresados .contenedor_resultadonotasconvalidacion #dv_registrarnotasconvalidacion input:hover {
+  color: #00529B;
+  background-color: #ffffff;
 }
 #dv_paginacion {
   padding: 8px 25px;
@@ -2918,6 +3076,9 @@
     order: 2;*/
   font-family: 'RobotoBold';
   font-size: 18px;
+}
+.etiqueta_tiponotanovalido {
+  border: 1px solid #ff0000 !important;
 }
 .displaynone {
   display: none !important;

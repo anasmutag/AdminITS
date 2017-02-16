@@ -281,6 +281,8 @@
         .font(@robotoblack;30px);
     }
     #dv_opcionesresultadoseguimientoegresados {
+        margin: 0 0 30px 0;
+        
         .dimensions;
         .flexBox;
         .font(@robotomedium;14px);
@@ -346,7 +348,7 @@
             margin-bottom: 30px;
         }
     }
-    .contenedor_resultadoegresados {
+    .contenedor_resultadoegresados, .contenedor_resultadonotasconvalidacion {
         padding: 15px 0 30px 0;
         background-color: @blanco;
         
@@ -376,6 +378,75 @@
                 
                 &:hover {
                     color: @grisnav;
+                }
+            }
+        }
+    }
+    .contenedor_resultadonotasconvalidacion {
+        padding-top: 0;
+        
+        .etiqueta_semestreconvalidacion {
+            margin: 15px 0;
+            padding: 10px 0;
+            text-align: center;
+            color: @blanco;
+            background-color: @base;
+            
+            .dimensions;
+            .font(@robotomedium;16px);
+            
+            &:nth-of-type(1) {
+                margin-top: 0;
+                
+                .borderRadius(8px;8px;0;0);
+            }
+        }
+        .contenedor_materiaconvalidacion {
+            padding: 5px 0;
+            
+            .dimensions;
+            .flexBox;
+            .font(@robotoregular;14px);
+            
+            .etiqueta_codigomateriaconvalidacion, .etiqueta_nombremateriaconvalidacion {
+                margin: 0 15px 0 0;
+                text-align: left;
+                
+                .dimensions(@width:50px);
+            }
+            .etiqueta_nombremateriaconvalidacion {
+                width: 245px;
+            }
+            .numero_notaconvalidacion {
+                padding: 5px 2px;
+                border: 1px solid @base;
+                color: @base;
+                text-align: center;
+                outline: none;
+                -moz-appearance:textfield;
+
+                .dimensions(@width:30px);
+                .borderRadius;
+
+                &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+            }
+        }
+        #dv_registrarnotasconvalidacion {
+            margin: 15px 0 0 0;
+            padding: 20px 0 0 0;
+            border-top: 1px solid @base;
+            
+            .dimensions;
+            .flexBox;
+            
+            input {
+                .button;
+                
+                &:hover {
+                    .hoverButton(@base);
                 }
             }
         }
@@ -551,6 +622,9 @@
     .dimensions;
     .flexBox;
     .font(@robotobold;18px);
+}
+.etiqueta_tiponotanovalido {
+    border: 1px solid @error !important;
 }
 .displaynone {
     display: none !important;

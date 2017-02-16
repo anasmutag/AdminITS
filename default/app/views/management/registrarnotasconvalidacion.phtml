@@ -1,0 +1,124 @@
+<div class="contenedor_formularioadmin contenedor_formulariomatricula">
+    <span class="etiqueta_encabezadoformlarioadmin">CONSULTAR MATRICULA</span>
+    <div id="dv_documentoacta">
+        <div>
+            <span>Número de Documento</span>
+            <input id="txt_numerodocumentoconsultar" class="entrada_datoformularioadmin" type="text" autofocus required="required" onkeypress="return soloNumeros(event);">
+        </div>
+        <div>
+            <input id="btn_consultardocumento" class="boton_buscardocumento" type="button" value="Buscar">
+        </div>
+    </div>
+    <div id="dv_registronotasconvalidacion" class="displaynone"></div>
+</div>
+<div class="contendor_regresarprincipal">
+    <a href="<?= PUBLIC_PATH?>management/convalidacion" class="etiqueta_regresarprincipal">Regresar</a>
+</div>
+<div id="dv_dialogodocumnetoinexistente">
+    <? Flash::info('El número de documento no se encuentra registrado en nuestra base de datos de matriculas. Click en "Aceptar" para regresar') ?>
+</div>
+
+<script type="text/javascript">
+    $('#dv_dialogodocumnetoinexistente').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Aceptar": function() {
+                $('#dv_dialogodocumnetoinexistente').dialog('close');
+            }
+        },
+        close: function (){}
+    });
+    
+    $('#btn_consultardocumento').on('click', function (){
+        var documento = $('#txt_numerodocumentoconsultar').val();
+        
+        if(documento.length > 0){
+            $.ajax({
+                type: 'POST',
+                url: <?= PUBLIC_PATH?> + 'management/consultardocumentoconvalidacion/',
+                data: {
+                    documento: documento
+                },
+                dataType: 'json',
+                beforeSend: function(){
+                    //document.getElementById("btn_consultarnotas").disabled = true;
+                    
+                    $('body').addClass('menuopen');
+                    
+                    $.blockUI({
+                        message: "Validando datos..."
+                    });
+                },
+                success: function(data) {
+                    $('body').removeClass('menuopen');
+                    //document.getElementById("frm_codigoestudiante").reset();
+                    
+                    if(data !== null && data.res === 'ok'){
+                        $.ajax({
+                            type: 'POST',
+                            url: "<?= PUBLIC_PATH?>management/cargardatosnotasconvalidacion/",
+                            data: {
+                                programa: data.programa[0].id_programa,
+                                semestre: data.programa[0].id_semestre
+                            },
+                            beforeSend: function(){
+                                //document.getElementById("btn_consultarnotas").disabled = true;
+
+                                $('body').addClass('menuopen');
+
+                                $.blockUI({
+                                    message: "Cargando datos..."
+                                });
+                            },
+                            success: function(data){
+                                $('body').removeClass('menuopen');
+                                //document.getElementById("frm_codigoestudiante").reset();
+
+                                $('#sec_contenidologinadmin').html('');
+                                $('#sec_contenidologinadmin').html(data);
+                            },
+                            error: function (xhr, ajaxOptions, thrownError){ }
+                        }).always(function(){
+                            //document.getElementById("btn_consultarnotas").disabled = false;
+
+                            $.unblockUI();
+                        });
+                    }else{
+                        $('#txt_numerodocumentoconsultar').val('').focus();
+                        $('#dv_dialogodocumnetoinexistente').dialog('open');
+                        
+                        console.log(data.msg);
+                    }
+                },
+                error: function(){
+                    console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                }
+            }).always(function(){
+                //document.getElementById("btn_consultarnotas").disabled = false;
+                
+                $.unblockUI();
+            });
+        }else{
+            $input = $('#txt_numerodocumentoconsultar');
+            if(documento.length === 0){
+                $input.addClass('entrada_textonovalido');
+                $input.focus();
+            }else{
+                $input.removeClass('entrada_textonovalido');
+            }
+        }
+    });
+    
+    $('#txt_numerodocumentoconsultar').on('keyup', function() {
+        var txt = $(this).val();
+        
+        if (txt.length <= 0) {
+            $(this).addClass('entrada_textonovalido');
+        } else {
+            $(this).removeClass('entrada_textonovalido');
+        }
+    });
+</script>

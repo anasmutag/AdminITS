@@ -1,6 +1,6 @@
 <?php
 
-Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota', 'Egresado', 'Egresadoprograma', 'Acta', 'Seguimientoegresado', 'Docente', 'Periododocente', 'Pagov');
+Load::models('Alumno', 'Matricula', 'Alumnoprograma', 'Tipodocumento', 'Programa', 'Semestre', 'Formapago', 'Pais', 'Region', 'Localidad', 'Pago', 'Validacion', 'Pagovalidacion', 'Nota', 'Egresado', 'Egresadoprograma', 'Acta', 'Seguimientoegresado', 'Docente', 'Periododocente', 'Pagov', 'Materiaprograma');
 
 class ManagementController extends AppController {
     public function administracion() {
@@ -296,6 +296,7 @@ class ManagementController extends AppController {
                         $matricula->id_semestre = 1;
                     }else{
                         $matricula->id_semestre = $semestre;
+                        $matricula->convalidacion = 1;
                     }
                     
                     $matricula->id_periodo = $periodo;
@@ -1180,10 +1181,50 @@ class ManagementController extends AppController {
     public function registrarnotasconvalidacion() {
         if(Auth::is_valid()){
             View::template('general_template');
-            
-            
         }else{
             Router::redirect("/");
         }
+    }
+    
+    public function cargardatosnotasconvalidacion() {
+        View::template(NULL);
+        
+        $materiaprograma = new Materiaprograma();
+        
+        $programa = filter_var(Input::request('programa'), FILTER_SANITIZE_STRING);
+        $semestre = filter_var(Input::request('semestre'), FILTER_SANITIZE_STRING);
+        
+        $this->datos1s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 1);
+        
+        switch ($semestre) {
+            case 2:
+                $this->datos2s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 2);
+                
+                break;
+            case 3:
+                $this->datos2s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 2);
+                $this->datos3s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 3);
+                
+                break;
+        }
+    }
+    
+    public function consultardocumentoconvalidacion() {
+        View::select(NULL, NULL);
+        
+        $matricula = new Matricula();
+        
+        $documento = filter_var(Input::request('documento'), FILTER_SANITIZE_STRING);
+        
+        $arr['res'] = 'fail';
+        $arr['msg'] = '';
+        
+        if($matricula->validarDocumentoConvalidacion($documento)){
+            $arr['programa'] = $matricula->cargarProgramaMatriculaConvalidacion($documento);
+            
+            $arr['res'] = 'ok';
+        }
+        
+        exit(json_encode($arr));
     }
 }
