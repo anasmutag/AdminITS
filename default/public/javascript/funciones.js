@@ -68,6 +68,12 @@ function validar_email(email){
     }
 }
 
+function puntoporcoma(cadena){
+    cadena = cadena.replace(',','.');
+    
+    return parseFloat(cadena);
+}
+
 function cargaregresados(page, programa, anio){
     $.ajax({
         type: 'POST',

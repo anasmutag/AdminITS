@@ -1194,6 +1194,7 @@ class ManagementController extends AppController {
         $programa = filter_var(Input::request('programa'), FILTER_SANITIZE_STRING);
         $semestre = filter_var(Input::request('semestre'), FILTER_SANITIZE_STRING);
         
+        $this->documento = filter_var(Input::request('documento'), FILTER_SANITIZE_STRING);
         $this->datos1s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 1);
         
         switch ($semestre) {
@@ -1223,6 +1224,51 @@ class ManagementController extends AppController {
             $arr['programa'] = $matricula->cargarProgramaMatriculaConvalidacion($documento);
             
             $arr['res'] = 'ok';
+        }
+        
+        exit(json_encode($arr));
+    }
+    
+    public function registrarnotascv() {
+        View::select(NULL, NULL);
+        
+        $alumno = new Alumno();
+        $grade = new Nota();
+        
+        $documento = Input::request('alumno');
+        $notascv = json_decode(stripslashes(Input::request('notascv')));
+        $bannotascv = 1;
+        
+        $arr['res'] = 'fail';
+        $arr['msg'] = '';
+        
+        $grade->begin();
+        
+        $idalumno = $alumno->cargarIdAlumno($documento)[0]->id_alumno;
+        
+        foreach ($notascv as $ncv) {
+            $nota = new Nota();
+            
+            $nota->valor_nota = $ncv->valor;
+            $nota->id_tiponota = 4;
+            $nota->id_alumno = $idalumno;
+            $nota->id_materia = $ncv->materia;
+            $nota->docente_nota = '0';
+            $nota->faltas_nota = '0';
+
+            if(!$nota->save()){
+                $bannotascv = 0;
+            }
+        }
+        
+        if($bannotascv === 1){
+            $arr['res'] = 'ok';
+            
+            $grade->commit();
+        }else{
+            $arr['msg'] = 'El registro de notas no fue exitoso. Intentar nuevamente';
+            
+            $grade->rollback();
         }
         
         exit(json_encode($arr));

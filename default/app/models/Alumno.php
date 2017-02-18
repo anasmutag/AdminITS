@@ -16,6 +16,11 @@ class Alumno extends ActiveRecord {
                 "conditions: identificacion_alumno = $id");
     }
     
+    public function cargarIdAlumno($documento) {
+        return $this->find("columns: id_alumno",
+                "conditions: identificacion_alumno = $documento");
+    }
+    
     public function validarAlumno($id, $correo) {
         if ($this->exists("identificacion_alumno = '" . $id . "'") || $this->exists("correo_electronico_alumno = '" . $correo . "'")) {
             return true;

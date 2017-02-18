@@ -8,7 +8,7 @@
             <div class="contenedor_materiaconvalidacion">
                 <span class="etiqueta_codigomateriaconvalidacion"><?= $dato1s->codigo_materia?></span>
                 <span class="etiqueta_nombremateriaconvalidacion"><?= $dato1s->nombre_materia?></span>
-                <input class="numero_notaconvalidacion" type="number" maxlength="3" min="1" max="5" step="0.1" value="1" onkeyup="validarNota.call(this);">
+                <input id="num_notacv<?= $dato1s->id_materia?>" class="numero_notaconvalidacion" type="number" maxlength="3" min="1" max="5" step="0.1" value="1" onkeyup="validarNota.call(this);">
             </div>
         <? endforeach;
         if(!empty($datos2s)): ?>
@@ -17,7 +17,7 @@
                 <div class="contenedor_materiaconvalidacion">
                     <span class="etiqueta_codigomateriaconvalidacion"><?= $dato2s->codigo_materia?></span>
                     <span class="etiqueta_nombremateriaconvalidacion"><?= $dato2s->nombre_materia?></span>
-                    <input class="numero_notaconvalidacion" type="number" maxlength="3" min="1" max="5" step="0.1" value="1" onkeyup="validarNota.call(this);">
+                    <input id="num_notacv<?= $dato2s->id_materia?>" class="numero_notaconvalidacion" type="number" maxlength="3" min="1" max="5" step="0.1" value="1" onkeyup="validarNota.call(this);">
                 </div>
             <? endforeach; ?>
         <? endif;
@@ -27,7 +27,7 @@
                 <div class="contenedor_materiaconvalidacion">
                     <span class="etiqueta_codigomateriaconvalidacion"><?= $dato3s->codigo_materia?></span>
                     <span class="etiqueta_nombremateriaconvalidacion"><?= $dato3s->nombre_materia?></span>
-                    <input class="numero_notaconvalidacion" type="number" maxlength="3" min="1" max="5" step="0.1" value="1" onkeyup="validarNota.call(this);">
+                    <input id="num_notacv<?= $dato3s->id_materia?>" class="numero_notaconvalidacion" type="number" maxlength="3" min="1" max="5" step="0.1" value="1" onkeyup="validarNota.call(this);">
                 </div>
             <? endforeach; ?>
         <? endif; ?>
@@ -36,10 +36,185 @@
         </div>
     </div>
 </div>
+<div id="dv_dialogoconfirmacionregistronotascv">
+    <? Flash::valid("Registro de calificaciones extoso. Aceptar para continuar") ?>
+</div>
+<div id="dv_dialogosinregistronotascv">
+    <? Flash::info("No hay notas de convalidación que registrar. Aceptar para verificar") ?>
+</div>
 
 <script type="text/javascript">
+    $('#dv_dialogoconfirmacionregistronotascv').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Aceptar": function() {
+                window.location = "<?= PUBLIC_PATH?>management/convalidacion/";
+            }
+        },
+        close: function (){}
+    });
+    
+    $('#dv_dialogosinregistronotascv').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Aceptar": function() {
+                $('#dv_dialogosinregistronotascv').dialog('close');
+                
+                if($inputfocus !== null){
+                    $('html, body').animate({scrollTop: $inputfocus.position().top+'px'}, 1000);
+                    $inputfocus.focus();
+                }
+            }
+        },
+        close: function (){}
+    });
+    
     $('#btn_registrarnotasconvalidacion').on('click', function(){
+        var notascv = new Array(),
+            notacv,
+            alumno = <?= $documento?>,
+            banderanotascv = 1;
         
+        <? foreach($datos1s as $dato1s): ?>
+            notacv = $('#num_notacv' + <?= $dato1s->id_materia?>).val();
+            
+            if(notacv.length === 0 || convertiranumero(notacv) < 1 || convertiranumero(notacv) > 5){
+                banderanotascv = 0;
+            }else{
+                if(convertiranumero(notacv) > 1){
+                    notascv.push({
+                        valor: puntoporcoma(notacv),
+                        materia: <?= $dato1s->id_materia?>
+                    });
+                }
+            }
+        <? endforeach;
+        if(!empty($datos2s)): ?>
+            <? foreach($datos2s as $dato2s): ?>
+                notacv = $('#num_notacv' + <?= $dato2s->id_materia?>).val();
+                
+                if(notacv.length === 0 || convertiranumero(notacv) < 1 || convertiranumero(notacv) > 5){
+                    banderanotascv = 0;
+                }else{
+                    if(convertiranumero(notacv) > 1){
+                        notascv.push({
+                            valor: puntoporcoma(notacv),
+                            materia: <?= $dato2s->id_materia?>
+                        });
+                    }
+                }
+            <? endforeach; ?>
+        <? endif;
+        if(!empty($datos3s)): ?>
+            <? foreach($datos3s as $dato3s): ?>
+                var notacv = $('#num_notacv' + <?= $dato3s->id_materia?>).val();
+                
+                if(notacv.length === 0 || convertiranumero(notacv) < 1 || convertiranumero(notacv) > 5){
+                    banderanotascv = 0;
+                }else{
+                    if(convertiranumero(notacv) > 1){
+                        notascv.push({
+                            valor: puntoporcoma(notacv),
+                            materia: <?= $dato3s->id_materia?>
+                        });
+                    }
+                }
+            <? endforeach; ?>
+        <? endif; ?>
+        
+        if(notascv.length > 0 && banderanotascv > 0){
+            $.ajax({
+                type: 'POST',
+                url: <?= PUBLIC_PATH?> + 'management/registrarnotascv/',
+                data: {
+                    alumno: alumno,
+                    notascv: JSON.stringify(notascv)
+                },
+                dataType: 'json',
+                beforeSend: function(){
+                    //document.getElementById("btn_consultarnotas").disabled = true;
+
+                    $('body').addClass('menuopen');
+
+                    $.blockUI({
+                        message: "Registrando calificaciones..."
+                    });
+                },
+                success: function(data) {
+                    $('body').removeClass('menuopen');
+                    //document.getElementById("frm_codigoestudiante").reset();
+
+                    if(data !== null && data.res === 'ok'){
+                        $('#dv_dialogoconfirmacionregistronotascv').dialog('open');
+                        
+                        console.log(data.res);
+                    }else{
+                        console.log(data.msg);
+                    }
+                },
+                error: function(){
+                    //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                }
+            }).always(function(){
+                //*document.getElementById("btn_consultarnotas").disabled = false;
+
+                $.unblockUI();
+            });
+        }else{
+            $inputfocus = null;
+            <? foreach($datos1s as $dato1s): ?>
+                var nota = $('#num_notacv' + <?= $dato1s->id_materia?>).val();
+
+                $input = $('#num_notacv' + <?= $dato1s->id_materia?>);
+                if(nota.length === 0  || convertiranumero(nota) < 1 || convertiranumero(nota) > 5){
+                    $input.addClass('etiqueta_tiponotanovalido');
+                    if($inputfocus === null)$inputfocus = $input;
+                }else{
+                    $input.removeClass('etiqueta_tiponotanovalido');
+                }
+            <? endforeach;
+            if(!empty($datos2s)): ?>
+                <? foreach($datos2s as $dato2s): ?>
+                    var nota = $('#num_notacv' + <?= $dato2s->id_materia?>).val();
+
+                    $input = $('#num_notacv' + <?= $dato2s->id_materia?>);
+                    if(nota.length === 0  || convertiranumero(nota) < 1 || convertiranumero(nota) > 5){
+                        $input.addClass('etiqueta_tiponotanovalido');
+                        if($inputfocus === null)$inputfocus = $input;
+                    }else{
+                        $input.removeClass('etiqueta_tiponotanovalido');
+                    }
+                <? endforeach; ?>
+            <? endif;
+            if(!empty($datos3s)): ?>
+                <? foreach($datos3s as $dato3s): ?>
+                    var nota = $('#num_notacv' + <?= $dato3s->id_materia?>).val();
+
+                    $input = $('#num_notacv' + <?= $dato3s->id_materia?>);
+                    if(nota.length === 0  || convertiranumero(nota) < 1 || convertiranumero(nota) > 5){
+                        $input.addClass('etiqueta_tiponotanovalido');
+                        if($inputfocus === null)$inputfocus = $input;
+                    }else{
+                        $input.removeClass('etiqueta_tiponotanovalido');
+                    }
+                <? endforeach; ?>
+            <? endif; ?>
+
+            if(notascv.length <= 0){
+                $('#dv_dialogosinregistronotascv').dialog('open');
+            }else{
+                if($inputfocus !== null){
+                    $('html, body').animate({scrollTop: $inputfocus.position().top+'px'}, 1000);
+                    $inputfocus.focus();
+                }
+            }
+        }
     });
     
     function validarNota(){

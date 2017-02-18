@@ -62,7 +62,8 @@
                             url: "<?= PUBLIC_PATH?>management/cargardatosnotasconvalidacion/",
                             data: {
                                 programa: data.programa[0].id_programa,
-                                semestre: data.programa[0].id_semestre
+                                semestre: data.programa[0].id_semestre,
+                                documento: documento
                             },
                             beforeSend: function(){
                                 //document.getElementById("btn_consultarnotas").disabled = true;
@@ -79,6 +80,8 @@
 
                                 $('#sec_contenidologinadmin').html('');
                                 $('#sec_contenidologinadmin').html(data);
+                                
+                                rs();
                             },
                             error: function (xhr, ajaxOptions, thrownError){ }
                         }).always(function(){
