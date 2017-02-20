@@ -2007,7 +2007,9 @@
 #dv_dialogodocumnetoinexistente,
 #dv_dialogoactaexistente,
 #dv_dialogodocumentoalumnoinexistente,
-#dv_dialogogenerarrecibopago {
+#dv_dialogogenerarrecibopago,
+#dv_dialogoconfirmacionregistronotascv,
+#dv_dialogosinregistronotascv {
   padding: 5px 15px;
 }
 #dv_resultadoseguimientoegresados {
