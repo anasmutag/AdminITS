@@ -32,6 +32,13 @@
                     $('#dv_infoinstitutoadmin').addClass('pie_admin');
                 }
                 
+                $('#identificacion, #contrasena').keypress(function(e) {
+                    if(e.which == 13) {
+                        $(this).blur();
+                        $('#btn_loginadmin').click();
+                    }
+                });
+                
                 $('#btn_loginadmin').on('click', function (){
                     var id = $('#identificacion').val(),
                         pass = $('#contrasena').val();
@@ -66,17 +73,25 @@
                             $.unblockUI();
                         });
                     }else{
+                        $inputfocus = null;
                         $input = $('#identificacion');
                         if(id.length === 0){
                             $input.addClass('entrada_camponovalido');
+                            if($inputfocus === null)$inputfocus = $input;
                         }else{
                             $input.removeClass('entrada_camponovalido');
                         }
                         $input = $('#contrasena');
                         if(pass.length === 0){
                             $input.addClass('entrada_camponovalido');
+                            if($inputfocus === null)$inputfocus = $input;
                         }else{
                             $input.removeClass('entrada_camponovalido');
+                        }
+                        
+                        if($inputfocus !== null){
+                            $('html, body').animate({scrollTop: $inputfocus.position().top+'px'}, 1000);
+                            $inputfocus.focus();
                         }
                     }
                 });

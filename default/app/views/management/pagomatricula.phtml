@@ -5,7 +5,7 @@
             <form id="frm_consultadocumentopagomatricula">
                 <div>
                     <label>Número de Documento</label>
-                    <input id="txt_documentopagomatricula" class="entrada_datoformularioadmin" name="documentopagomatricula" type="text" autofocus required="required">
+                    <input id="txt_documentopagomatricula" class="entrada_datoformularioadmin" name="documentopagomatricula" type="text" autofocus required="required" onkeypress="return soloNumeros(event);">
                 </div><br>
                 <div>
                     <input id="btn_consultardocumentopm" class="boton_buscardocumento" type="button" value="Consultar">
@@ -115,45 +115,78 @@
     $('#btn_consultardocumentopm').on('click', function (){
         var identificacion = $('#txt_documentopagomatricula').val();
         
-        $.ajax({
-            type: 'POST',
-            url: <?= PUBLIC_PATH?> + 'management/consultardocumentopagomatricula/',
-            data: $('#frm_consultadocumentopagomatricula').serialize(),
-            dataType: 'json',
-            beforeSend: function(){
-                //document.getElementById("btn_consultarnotas").disabled = true;
+        if(identificacion.length > 0){
+            $.ajax({
+                type: 'POST',
+                url: <?= PUBLIC_PATH?> + 'management/consultardocumentopagomatricula/',
+                data: $('#frm_consultadocumentopagomatricula').serialize(),
+                dataType: 'json',
+                beforeSend: function(){
+                    //document.getElementById("btn_consultarnotas").disabled = true;
 
-                $('body').addClass('menuopen');
+                    $('body').addClass('menuopen');
 
-                $.blockUI({
-                    message: "Procesando solicitud..."
-                });
-            },
-            success: function(data) {
-                $('body').removeClass('menuopen');
-                //document.getElementById("frm_codigoestudiante").reset();
+                    $.blockUI({
+                        message: "Procesando solicitud..."
+                    });
+                },
+                success: function(data) {
+                    $('body').removeClass('menuopen');
+                    //document.getElementById("frm_codigoestudiante").reset();
 
-                if(data !== null && data.res === 'ok'){
-                    window.localStorage.idPagoMatricula = identificacion;
+                    if(data !== null && data.res === 'ok'){
+                        window.localStorage.idPagoMatricula = identificacion;
 
-                    document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + identificacion;
-                }else{
-                    document.getElementById("frm_consultadocumentopagomatricula").reset();
-                    $('#txt_documentopagomatricula').focus();
-                    
-                    $('#dv_dialogodocumentoalumnoinexistente').dialog('open');
-                    
-                    console.log(data.msg);
+                        document.location = <?= PUBLIC_PATH?> + 'management/pagomatricula/' + identificacion;
+                    }else{
+                        document.getElementById("frm_consultadocumentopagomatricula").reset();
+                        $('#txt_documentopagomatricula').focus();
+
+                        $('#dv_dialogodocumentoalumnoinexistente').dialog('open');
+
+                        console.log(data.msg);
+                    }
+                },
+                error: function(){
+                    console.log('Ocurrio un error inesperado. Intenta nuevamente');
                 }
-            },
-            error: function(){
-                console.log('Ocurrio un error inesperado. Intenta nuevamente');
-            }
-        }).always(function(){
-            //document.getElementById("btn_consultarnotas").disabled = false;
+            }).always(function(){
+                //document.getElementById("btn_consultarnotas").disabled = false;
 
-            $.unblockUI();
-        });
+                $.unblockUI();
+            });
+        }else{
+            $inputfocus = null;
+            $input = $('#txt_documentopagomatricula');
+            if(identificacion.length === 0){
+                $input.addClass('entrada_textonovalido');
+                if($inputfocus === null)$inputfocus = $input;
+            }else{
+                $input.removeClass('entrada_textonovalido');
+            }
+            
+            if($inputfocus !== null){
+                $('html, body').animate({scrollTop: $inputfocus.position().top+'px'}, 1000);
+                $inputfocus.focus();
+            }
+        }
+    });
+    
+    $('#txt_documentopagomatricula').keypress(function(e) {
+        if(e.which == 13) {
+            $(this).blur();
+            $('#btn_consultardocumentopm').click();
+        }
+    });
+    
+    $('#txt_documentopagomatricula').on('keyup', function() {
+        var txt = $(this).val();
+        
+        if (txt.length <= 0) {
+            $(this).addClass('entrada_textonovalido');
+        } else {
+            $(this).removeClass('entrada_textonovalido');
+        }
     });
     
     $('#btn_cancelarpagomatricula').on('click', function (){

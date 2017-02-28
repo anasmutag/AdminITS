@@ -119,13 +119,26 @@
                 $.unblockUI();
             });
         }else{
+            $inputfocus = null;
             $input = $('#txt_numerodocumentoconsultar');
             if(documento.length === 0){
                 $input.addClass('entrada_textonovalido');
-                $input.focus();
+                if($inputfocus === null)$inputfocus = $input;
             }else{
                 $input.removeClass('entrada_textonovalido');
             }
+            
+            if($inputfocus !== null){
+                $('html, body').animate({scrollTop: $inputfocus.position().top+'px'}, 1000);
+                $inputfocus.focus();
+            }
+        }
+    });
+    
+    $('#txt_numerodocumentoconsultar').keypress(function(e) {
+        if(e.which == 13) {
+            $(this).blur();
+            $('#btn_consultardocumento').click();
         }
     });
     

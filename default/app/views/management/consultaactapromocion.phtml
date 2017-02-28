@@ -17,6 +17,10 @@
 </div>
 
 <script type="text/javascript">
+    $('.radio_sedeacta').on('click', function (){
+        $('#txt_numeroactaconsultar').focus();
+    });
+    
     $('#btn_consultaracta').on('click', function (){
         var sede = document.querySelector('input[name="sedeacta"]:checked').value,
             acta = $('#txt_numeroactaconsultar').val();
@@ -54,13 +58,26 @@
                 $.unblockUI();
             });
         }else{
+            $inputfocus = null;
             $input = $('#txt_numeroactaconsultar');
             if(acta.length === 0){
                 $input.addClass('entrada_textonovalido');
-                $input.focus();
+                if($inputfocus === null)$inputfocus = $input;
             }else{
                 $input.removeClass('entrada_textonovalido');
             }
+            
+            if($inputfocus !== null){
+                $('html, body').animate({scrollTop: $inputfocus.position().top+'px'}, 1000);
+                $inputfocus.focus();
+            }
+        }
+    });
+    
+    $('#txt_numeroactaconsultar').keypress(function(e) {
+        if(e.which == 13) {
+            $(this).blur();
+            $('#btn_consultaracta').click();
         }
     });
     

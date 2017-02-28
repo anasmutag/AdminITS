@@ -7,7 +7,7 @@
             <form id="frm_consultadocumentopagovalidacion">
                 <div>
                     <label>Número de Documento</label>
-                    <input id="txt_documentopagovalidacion" class="entrada_datoformularioadmin" name="documentopagomatricula" type="text" autofocus required="required">
+                    <input id="txt_documentopagovalidacion" class="entrada_datoformularioadmin" name="documentopagomatricula" type="text" autofocus required="required" onkeypress="return soloNumeros(event);">
                 </div><br>
                 <div>
                     <input id="btn_consultardocumentopv" class="boton_buscardocumento" type="button" value="Consultar">
@@ -84,45 +84,78 @@
     $('#btn_consultardocumentopv').on('click', function (){
         var identificacion = $('#txt_documentopagovalidacion').val();
         
-        $.ajax({
-            type: 'POST',
-            url: <?= PUBLIC_PATH?> + 'management/consultardocumentopagomatricula/',
-            data: $('#frm_consultadocumentopagovalidacion').serialize(),
-            dataType: 'json',
-            beforeSend: function(){
-                //document.getElementById("btn_consultarnotas").disabled = true;
-                
-                $('body').addClass('menuopen');
-                
-                $.blockUI({
-                    message: "Procesando solicitud..."
-                });
-            },
-            success: function(data) {
-                $('body').removeClass('menuopen');
-                //document.getElementById("frm_codigoestudiante").reset();
-                
-                if(data !== null && data.res === 'ok'){
-                    window.localStorage.idPagoValidacion = identificacion;
-                    
-                    document.location = <?= PUBLIC_PATH?> + 'management/pagovalidacion/' + identificacion;
-                }else{
-                    document.getElementById("frm_consultadocumentopagovalidacion").reset();
-                    $('#txt_documentopagovalidacion').focus();
-                    
-                    $('#dv_dialogodocumentoalumnoinexistente').dialog('open');
-                    
-                    console.log(data.msg);
+        if(identificacion.length > 0){
+            $.ajax({
+                type: 'POST',
+                url: <?= PUBLIC_PATH?> + 'management/consultardocumentopagomatricula/',
+                data: $('#frm_consultadocumentopagovalidacion').serialize(),
+                dataType: 'json',
+                beforeSend: function(){
+                    //document.getElementById("btn_consultarnotas").disabled = true;
+
+                    $('body').addClass('menuopen');
+
+                    $.blockUI({
+                        message: "Procesando solicitud..."
+                    });
+                },
+                success: function(data) {
+                    $('body').removeClass('menuopen');
+                    //document.getElementById("frm_codigoestudiante").reset();
+
+                    if(data !== null && data.res === 'ok'){
+                        window.localStorage.idPagoValidacion = identificacion;
+
+                        document.location = <?= PUBLIC_PATH?> + 'management/pagovalidacion/' + identificacion;
+                    }else{
+                        document.getElementById("frm_consultadocumentopagovalidacion").reset();
+                        $('#txt_documentopagovalidacion').focus();
+
+                        $('#dv_dialogodocumentoalumnoinexistente').dialog('open');
+
+                        console.log(data.msg);
+                    }
+                },
+                error: function(){
+                    console.log('Ocurrio un error inesperado. Intenta nuevamente');
                 }
-            },
-            error: function(){
-                console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }).always(function(){
+                //document.getElementById("btn_consultarnotas").disabled = false;
+
+                $.unblockUI();
+            });
+        }else{
+            $inputfocus = null;
+            $input = $('#txt_documentopagovalidacion');
+            if(identificacion.length === 0){
+                $input.addClass('entrada_textonovalido');
+                if($inputfocus === null)$inputfocus = $input;
+            }else{
+                $input.removeClass('entrada_textonovalido');
             }
-        }).always(function(){
-            //document.getElementById("btn_consultarnotas").disabled = false;
             
-            $.unblockUI();
-        });
+            if($inputfocus !== null){
+                $('html, body').animate({scrollTop: $inputfocus.position().top+'px'}, 1000);
+                $inputfocus.focus();
+            }
+        }
+    });
+    
+    $('#txt_documentopagovalidacion').keypress(function(e) {
+        if(e.which == 13) {
+            $(this).blur();
+            $('#btn_consultardocumentopv').click();
+        }
+    });
+    
+    $('#txt_documentopagovalidacion').on('keyup', function() {
+        var txt = $(this).val();
+        
+        if (txt.length <= 0) {
+            $(this).addClass('entrada_textonovalido');
+        } else {
+            $(this).removeClass('entrada_textonovalido');
+        }
     });
     
     $('#btn_cancelarpagovalidacion').on('click', function (){

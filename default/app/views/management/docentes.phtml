@@ -4,7 +4,7 @@
         <form id="frm_consultadocumentodocente">
             <div>
                 <label>Número de Documento</label>
-                <input id="txt_documentodocente" class="entrada_datoformularioadmin" name="documentodocente" type="text" autofocus required="required">
+                <input id="txt_documentodocente" class="entrada_datoformularioadmin" name="documentodocente" type="text" autofocus required="required" onkeypress="return soloNumeros(event);">
             </div><br>
             <div>
                 <input id="btn_consultardocumentodocente" class="boton_buscardocumento" type="button" value="Consultar">
@@ -33,72 +33,105 @@
     $('#btn_consultardocumentodocente').on('click', function (){
         var documento = $('#txt_documentodocente').val();
         
-        $.ajax({
-            type: 'POST',
-            url: <?= PUBLIC_PATH?> + 'management/consultardocumentodocente/',
-            data: $('#frm_consultadocumentodocente').serialize(),
-            dataType: 'json',
-            beforeSend: function(){
-                //document.getElementById("btn_consultarnotas").disabled = true;
-                
-                $('body').addClass('menuopen');
-                
-                $.blockUI({
-                    message: "Validando documento..."
-                });
-            },
-            success: function(data) {
-                $('body').removeClass('menuopen');
-                //document.getElementById("frm_codigoestudiante").reset();
-                
-                if(data !== null && data.res === 'ok'){
-                    $.ajax({
-                        type: 'POST',
-                        url: <?= PUBLIC_PATH?> + 'management/periodosactivosdocente/',
-                        data: {
-                            documento: documento
-                        },
-                        beforeSend: function(){
-                            //document.getElementById("btn_consultarnotas").disabled = true;
-                            
-                            $('body').addClass('menuopen');
-                            
-                            $.blockUI({
-                                message: "Cargando datos..."
-                            });
-                        },
-                        success: function(data) {
-                            $('body').removeClass('menuopen');
-                            //document.getElementById("frm_codigoestudiante").reset();
-                            
-                            document.getElementById("frm_consultadocumentodocente").reset();
-                            $('#sec_contenidologinadmin').html('');
-                            $('#sec_contenidologinadmin').html(data);
-                        },
-                        error: function(){
-                            console.log('Ocurrio un error inesperado. Intenta nuevamente');
-                        }
-                    }).always(function(){
-                        //document.getElementById("btn_consultarnotas").disabled = false;
+        if(documento.length > 0){
+            $.ajax({
+                type: 'POST',
+                url: <?= PUBLIC_PATH?> + 'management/consultardocumentodocente/',
+                data: $('#frm_consultadocumentodocente').serialize(),
+                dataType: 'json',
+                beforeSend: function(){
+                    //document.getElementById("btn_consultarnotas").disabled = true;
 
-                        $.unblockUI();
+                    $('body').addClass('menuopen');
+
+                    $.blockUI({
+                        message: "Validando documento..."
                     });
-                }else{
-                    document.getElementById("frm_consultadocumentodocente").reset();
-                    $('#txt_documentodocente').focus();
-                    
-                    $('#dv_dialogodocumentodocenteinexistente').dialog('open');
-                    
-                    console.log(data.msg);
+                },
+                success: function(data) {
+                    $('body').removeClass('menuopen');
+                    //document.getElementById("frm_codigoestudiante").reset();
+
+                    if(data !== null && data.res === 'ok'){
+                        $.ajax({
+                            type: 'POST',
+                            url: <?= PUBLIC_PATH?> + 'management/periodosactivosdocente/',
+                            data: {
+                                documento: documento
+                            },
+                            beforeSend: function(){
+                                //document.getElementById("btn_consultarnotas").disabled = true;
+
+                                $('body').addClass('menuopen');
+
+                                $.blockUI({
+                                    message: "Cargando datos..."
+                                });
+                            },
+                            success: function(data) {
+                                $('body').removeClass('menuopen');
+                                //document.getElementById("frm_codigoestudiante").reset();
+
+                                document.getElementById("frm_consultadocumentodocente").reset();
+                                $('#sec_contenidologinadmin').html('');
+                                $('#sec_contenidologinadmin').html(data);
+                            },
+                            error: function(){
+                                console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                            }
+                        }).always(function(){
+                            //document.getElementById("btn_consultarnotas").disabled = false;
+
+                            $.unblockUI();
+                        });
+                    }else{
+                        document.getElementById("frm_consultadocumentodocente").reset();
+                        $('#txt_documentodocente').focus();
+
+                        $('#dv_dialogodocumentodocenteinexistente').dialog('open');
+
+                        console.log(data.msg);
+                    }
+                },
+                error: function(){
+                    console.log('Ocurrio un error inesperado. Intenta nuevamente');
                 }
-            },
-            error: function(){
-                console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }).always(function(){
+                //document.getElementById("btn_consultarnotas").disabled = false;
+
+                $.unblockUI();
+            });
+        }else{
+            $inputfocus = null;
+            $input = $('#txt_documentodocente');
+            if(documento.length === 0){
+                $input.addClass('entrada_textonovalido');
+                if($inputfocus === null)$inputfocus = $input;
+            }else{
+                $input.removeClass('entrada_textonovalido');
             }
-        }).always(function(){
-            //document.getElementById("btn_consultarnotas").disabled = false;
             
-            $.unblockUI();
-        });
+            if($inputfocus !== null){
+                $('html, body').animate({scrollTop: $inputfocus.position().top+'px'}, 1000);
+                $inputfocus.focus();
+            }
+        }
+    });
+    
+    $('#txt_documentodocente').keypress(function(e) {
+        if(e.which == 13) {
+            $(this).blur();
+            $('#btn_consultardocumentodocente').click();
+        }
+    });
+    
+    $('#txt_documentodocente').on('keyup', function() {
+        var txt = $(this).val();
+        
+        if (txt.length <= 0) {
+            $(this).addClass('entrada_textonovalido');
+        } else {
+            $(this).removeClass('entrada_textonovalido');
+        }
     });
 </script>
