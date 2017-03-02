@@ -623,9 +623,182 @@
     .flexBox;
     .font(@robotobold;18px);
 }
+#dv_registronotasdocente {
+    color: @base;
+    
+    .dimensions;
+    .flexBox;
+    
+    #sp_tituloregistronotas {
+        margin: 0 0 30px 0;
+        
+        .dimensions;
+        .font(@robotoblack;30px);
+    }
+    #dv_registronotasprograma {
+        .dimensions;
+        .flexBox;
+        .font(@robotomedium;14px);
+        
+        div {
+            margin: 0 0 10px 0;
+            
+            .dimensions;
+            .flexBox;
+            
+            span {
+                margin: 0 10px 0 0;
+                text-align: right;
+                
+                .dimensions(@width:80px);
+            }
+            select {
+                padding: 5px;
+                color: @base;
+                border: 1px solid @base;
+                outline: none;
+                
+                .dimensions(@width:400px);
+                .borderRadius(5px);
+                .font(@robotomedium;14px);
+            }
+        }
+        &:nth-last-child(1) div {
+            margin-bottom: 30px;
+        }
+    }
+    #dv_registronotasalumnos {
+        .dimensions;
+        .flexBox;
+        
+        #dv_registrodenotas {
+            margin: 15px 0 0 0;
+            padding: 15px 0;
+            background-color: @blanco;
+            
+            .dimensions(@width:65%);
+            .flexBox;
+            .borderRadius(8px);
+            .boxShadow(0;0;6px;0);
+            
+            .etiqueta_estadonotasalumno {
+                text-align: center;
+                
+                .dimensions(@width:70%);
+            }
+            #dv_cortesseestre {
+                margin: 0 0 20px 0;
+                
+                .dimensions;
+                .flexBox;
+                
+                .texto_cortessemestre {
+                    margin: 0 0 0 10px;
+                    padding: 5px 2px;
+                    text-align: center;
+                    border: 1px solid @base;
+                    color: @base;
+                    outline: none;
+                    
+                    .dimensions(@width:125px);
+                    .borderRadius;
+                }
+            }
+            .contenedor_registrodenotas {
+                padding: 5px 0 5px 0;
+                border-bottom: 1px solid @base;
+                
+                .dimensions(@width:85%);
+                .flexBox(@justify-content:space-between);
+                
+                .etiqueta_idalumno {
+                    text-align: left;
+                    
+                    .dimensions(@width:80px);
+                }
+                .etiqueta_namealumno {
+                    text-align: left;
+                    
+                    .dimensions(@width:280px);
+                }
+                .texto_gradealumno {
+                    padding: 5px 2px;
+                    border: 1px solid @base;
+                    color: @base;
+                    text-align: center;
+                    outline: none;
+                    -moz-appearance:textfield;
+                    
+                    .dimensions(@width:30px);
+                    .borderRadius;
+                    
+                    &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                    }
+                }
+                .contenedor_faltascortealumno {
+                    .dimensions(@width:60px);
+                    .flexBox;
+                    
+                    .etiqueta_faltascortealumno {
+                        padding: 5px 2px;
+                        border: 1px solid @base;
+                        color: @blanco;
+                        background-color: @base;
+                        text-align: center;
+                        cursor: pointer;
+
+                        .dimensions(@width:55px);
+                        .borderRadius;
+                        
+                        &:hover {
+                            .hoverButton(@base);
+                        }
+                    }
+                    .contenedor_entradafaltacortesalumno {
+                        .dimensions;
+                        
+                        .etiqueta_cerrarentradafaltascortealumno {
+                            margin: 0 0 0 4px;
+                            cursor: pointer;
+                            
+                            .font(@robotoblack;16px);
+                        }
+                    }
+                }
+            }
+            #dv_registrarnotasalumno {
+                margin: 20px 0 0 0;
+                
+                .dimensions;
+                .flexBox;
+                
+                input {
+                    .button(@font-size:16px);
+                    
+                    &:hover {
+                        .hoverButton(@base);
+                    }
+                }
+            }
+            & div:nth-of-type(2) {
+                padding-top: 0;
+            }
+            & div:nth-last-of-type(2) {
+                padding-bottom: 0;
+                border: 0;
+            }
+        }
+    }
+}
+#dv_dialogoconfirmacionregistronotas {
+    padding: 0 15px;
+}
 .etiqueta_tiponotanovalido {
     border: 1px solid @error !important;
 }
+
 .displaynone {
     display: none !important;
 }

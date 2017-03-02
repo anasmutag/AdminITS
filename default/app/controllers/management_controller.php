@@ -1273,4 +1273,266 @@ class ManagementController extends AppController {
         
         exit(json_encode($arr));
     }
+    
+    public function notas() {
+        if(Auth::is_valid()){
+            View::template('general_template');
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function registrarnotas($tipo = 1) {
+        if(Auth::is_valid()){
+            View::template('general_template');
+            
+            $programa = new Programa();
+            
+            if($tipo === 1){
+                $this->programas = $programa->programasDocente(Auth::get('id_docente'));
+            }else{
+                $this->programas = $programa->programas();
+            }
+            
+            $this->tipo = $tipo;
+        }else{
+            Router::redirect("/");
+        }
+    }
+    
+    public function obtenermaterias($idprograma = '0', $tipo) {
+        View::select(NULL, NULL);
+        
+        $materiaprograma = new Materiaprograma();
+        
+        if($tipo == 1){
+            echo json_encode($materiaprograma->materiasProgramaDocente($idprograma, Auth::get('id_docente')));
+        }else{
+            echo json_encode($materiaprograma->materiasprograma($idprograma));
+        }
+    }
+    
+    public function rnotas() {
+        View::template(NULL);
+        
+        $matricula = new Matricula();
+        $nota = new Nota();
+        
+        $sede = Input::request('sede');
+        $programa = Input::request('programa');
+        $materia = Input::request('materia');
+        
+        $this->tiponota = $nota->cargarTiposNotas($sede, $materia);
+        $numeroalumnos = (int) $matricula->cargarNumeroAlumnosSemestre($sede, $materia)[0]->resultado;
+        $alumnos = $matricula->cargarAlumnosMateria($sede, $programa, $materia);
+        
+        foreach ($alumnos as $key => $alumno) {
+            $notacv = new Nota();
+            
+            if($notacv->cargarNotasCv($alumno->id_alumno, $materia)){
+                unset($alumnos[$key]);
+                $numeroalumnos -= 1;
+            }
+        }
+        
+        /*$this->numeroalumnos = (int) $matricula->cargarNumeroAlumnosSemestre($sede, $materia)[0]->resultado;
+        $this->alumnos = $matricula->cargarAlumnosMateria($sede, $programa, $materia);*/
+        $this->numeroalumnos = $numeroalumnos;
+        $this->alumnos = $alumnos;
+        $this->idmateria = $materia;
+        
+        $alumnosp = $matricula->cargarAlumnosMateriaPerdida($sede, $programa, $materia);
+        
+        foreach ($alumnosp as $key => $alumnop) {
+            $notap = new Nota();
+            
+            $notasp = $notap->cargarNotasMateria($alumnop->id_alumno, $materia);
+            $definitiva = 0;
+            
+            foreach ($notasp as $np) {
+                switch ($np->id_tiponota) {
+                    case 1:
+                        $definitiva += ($np->valor_nota*0.3);
+                        
+                        break;
+                    case 2:
+                        $definitiva += ($np->valor_nota*0.3);
+                        
+                        break;
+                    case 3:
+                        $definitiva += ($np->valor_nota*0.4);
+                        
+                        break;
+                }
+            }
+            
+            if($definitiva >= 3.5){
+                unset($alumnosp[$key]);
+            }
+        }
+        
+        $this->alumnosp = $alumnosp;
+    }
+    
+    public function rvalidaciones() {
+        View::template(NULL);
+        
+        //$matricula = new Matricula();
+        $validacion = new Validacion();
+        
+        $sede = Input::request('sede');
+        $programa = Input::request('programa');
+        $materia = Input::request('materia');
+        
+        //$this->numeroalumnos = $matricula->cargarNumeroAlumnosValidaciones($materia);
+        $this->numeroalumnos = $validacion->cargarNumeroAlumnosValidaciones($sede, $programa, $materia);
+        //$this->alumnos = $matricula->cargarAlumnosMateriaValidaciones($sede, $programa, $materia);
+        $this->alumnos = $validacion->cargarAlumnosMateriaValidaciones($sede, $programa, $materia);
+        $this->idmateria = $materia;
+    }
+    
+    public function registrarnotasalumnos() {
+        View::select(NULL, NULL);
+        
+        $grade = new Nota();
+        
+        $tiponota = Input::request('tiponota');
+        $materia = Input::request('idmateria');
+        $notas = json_decode(stripslashes(Input::request('notas')));
+        $notasp = json_decode(stripslashes(Input::request('notasp')));
+        $docente = Input::request('docente');
+        $bannotas = 1;
+        
+        $arr['res'] = 'fail';
+        $arr['msg'] = '';
+        
+        $grade->begin();
+        
+        foreach ($notas as $n) {
+            $nota = new Nota();
+            
+            if($n->valor == 0){
+                $g = '0';
+                $nota->valor_nota = $g;
+            }else{
+                $nota->valor_nota = $n->valor;
+            }
+            
+            $nota->id_tiponota = $tiponota;
+            $nota->id_alumno = $n->idalumno;
+            $nota->id_materia = $materia;
+            $nota->docente_nota = $docente;
+            $nota->faltas_nota = $n->faltas;
+            
+            if($nota->save()){
+                if($tiponota == 3){
+                    $notamateria = new Nota();
+                    
+                    $notasmateria = $notamateria->cargarNotasMateria($n->idalumno, $materia);
+                    $definitiva = 0;
+                    
+                    foreach($notasmateria as $nm):
+                        switch($nm->id_tiponota):
+                            case 1:
+                                $definitiva += ($nm->valor_nota*0.3);
+                                break;
+                            case 2:
+                                $definitiva += ($nm->valor_nota*0.3);
+                                break;
+                            case 3:
+                                $definitiva += ($nm->valor_nota*0.4);
+                                break;
+                        endswitch;
+                    endforeach;
+                    
+                    if($definitiva < 3.5){
+                        $validacion = new Validacion();
+                        $pagovalidacion = new Pagovalidacion();
+                        
+                        $validacion->valor_validacion = '0';
+                        $validacion->id_alumno = $n->idalumno;
+                        $validacion->id_materia = $materia;
+                        
+                        if($validacion->save()){
+                            $pagovalidacion->valor_pagovalidacion = '0';
+                            $pagovalidacion->id_validacion = $validacion->id_validacion;
+                            
+                            if(!$pagovalidacion->save()){
+                                $bannotas = 0;
+                            }
+                        }else{
+                            $bannotas = 0;
+                        }
+                    }
+                }
+            }else{
+                $bannotas = 0;
+            }
+        }
+        
+        if($bannotas === 1){
+            $arr['res'] = 'ok';
+            
+            $grade->commit();
+        }else{
+            $arr['msg'] = 'El registro de notas no fue exitoso. Intentar nuevamente';
+            
+            $grade->rollback();
+        }
+        
+        exit(json_encode($arr));
+    }
+    
+    public function registrarnotasvalidacionesalumnos() {
+        View::select(NULL, NULL);
+        
+        $grade = new Validacion();
+        
+        $notas = json_decode(stripslashes(Input::request('notas')));
+        $bannotas = 1;
+        
+        $arr['res'] = 'fail';
+        $arr['msg'] = '';
+        
+        $grade->begin();
+        
+        foreach ($notas as $n) {
+            if($n->valor !== '0'){
+                $validacion = new Validacion();
+                $pagovalidacion = new Pagovalidacion();
+                
+                $validacion->cargarDatosValidacion($n->idvalidacion);
+                $validacion->valor_validacion = $n->valor;
+                $validacion->docente_validacion = Auth::get('id_docente');
+                
+                if($validacion->update()){
+                    $pagovalidacion->cargarDatosPagoValidacion($n->idvalidacion);
+                    
+                    if($validacion->valor_validacion >= 3.5){
+                        $pagovalidacion->estado_pagovalidacion = 3;
+                    }else{
+                        $pagovalidacion->estado_pagovalidacion = 1;
+                    }
+                    
+                    if(!$pagovalidacion->update()){
+                        $bannotas = 0;
+                    }
+                }else{
+                    $bannotas = 0;
+                }
+            }
+        }
+        
+        if($bannotas === 1){
+            $arr['res'] = 'ok';
+            
+            $grade->commit();
+        }else{
+            $arr['msg'] = 'El registro de calificaciones de validacion no fue exitoso. Intentar nuevamente';
+            
+            $grade->rollback();
+        }
+        
+        exit(json_encode($arr));
+    }
 }

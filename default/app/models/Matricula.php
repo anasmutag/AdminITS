@@ -116,4 +116,50 @@ class Matricula extends ActiveRecord {
                 "conditions: identificacion_alumno = $documento
                     and convalidacion_matricula = 1");
     }
+    
+    public function cargarAlumnosMateria($sede, $programa, $materia) {
+        return $this->find("columns: alumno.id_alumno,alumno.identificacion_alumno,alumno.nombre_alumno,alumno.apellido_alumno,materia.id_materia",
+                "join: join alumno on matricula.id_alumno = alumno.id_alumno
+                    join alumnoprograma on alumno.id_alumno = alumnoprograma.id_alumno
+                    join programa on alumnoprograma.id_programa = programa.id_programa
+                    join materiaprograma on programa.id_programa = materiaprograma.id_programa
+                    join materia on materiaprograma.id_materia = materia.id_materia",
+                "conditions: matricula.id_sede = $sede
+                    and programa.id_programa = $programa
+                    and materia.id_materia = $materia
+                    and matricula.id_estadomatricula = 1
+                    and matricula.id_semestre = materiaprograma.semestre",
+                "order: apellido_alumno");
+    }
+    
+    public function cargarAlumnosMateriaPerdida($sede, $programa, $materia) {
+        return $this->find("columns: alumno.id_alumno,alumno.identificacion_alumno,alumno.nombre_alumno,alumno.apellido_alumno,materia.id_materia",
+                "join: join alumno on matricula.id_alumno = alumno.id_alumno
+                    join alumnoprograma on alumno.id_alumno = alumnoprograma.id_alumno
+                    join programa on alumnoprograma.id_programa = programa.id_programa
+                    join materiaprograma on programa.id_programa = materiaprograma.id_programa
+                    join materia on materiaprograma.id_materia = materia.id_materia",
+                "conditions: matricula.id_sede = $sede
+                    and programa.id_programa = $programa
+                    and materia.id_materia = $materia
+                    and matricula.id_estadomatricula = 2
+                    and matricula.id_semestre = materiaprograma.semestre",
+                "order: apellido_alumno");
+    }
+    
+    public function cargarNumeroAlumnosSemestre($sede, $materia) {
+        return $this->find("columns: count(*) as resultado",
+                "join: join alumno on matricula.id_alumno = alumno.id_alumno
+                    join alumnoprograma on alumno.id_alumno = alumnoprograma.id_alumno
+                    join programa on alumnoprograma.id_programa = programa.id_programa
+                    join materiaprograma on programa.id_programa = materiaprograma.id_programa",
+                "conditions: id_estadomatricula = 1
+                    and id_semestre = (
+                        select semestre
+                        from materiaprograma
+                        where id_materia = $materia
+                    )
+                    and id_sede = $sede
+                    and materiaprograma.id_materia = $materia");
+    }
 }

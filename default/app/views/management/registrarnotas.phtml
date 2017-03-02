@@ -1,0 +1,104 @@
+<div id="dv_registronotasdocente">
+    <span id="sp_tituloregistronotas">Sistema de Registro de Calificaciones</span>
+    <div id="dv_registronotasprograma">
+        <div>
+            <span>Sede</span>
+            <select id="slt_sedern">
+                <option value="0">Seleccionar sede</option>
+                <option value="1">Sede Pasto</option>
+                <option value="2">Sede Ipiales</option>
+            </select>
+        </div>
+        <div>
+            <span>Programa</span>
+            <select id="slt_programasrn">
+                <option value="0">Seleccionar programa</option>
+                <?foreach($programas as $programa):?>
+                    <option value="<?= $programa->id_programa?>"><?= $programa->nombre_programa?></option>
+                <?endforeach;?>
+            </select>
+        </div>
+        <div>
+            <span>Materia</span>
+            <select id="slt_materiasrn">
+                <option value="0">Seleccionar materia</option>
+            </select>
+        </div>
+    </div>
+    <div id="dv_registronotasalumnos"></div>
+</div>
+
+<script type="text/javascript">
+    $('#slt_sedern').change(function() {
+        $('#dv_registronotasalumnos').html('');
+        $('#slt_materiasrn').empty();
+        $('#slt_materiasrn').append('<option value="0">Seleccionar materia</option>');
+        $("#slt_programasrn").val('0');
+    });
+
+    $('#slt_programasrn').change(function() {
+        if($(this).val().length > 0){
+            var programa = $(this).val();
+            
+            $.ajax({
+                type: 'GET',
+                url: "<?= PUBLIC_PATH . 'management/obtenermaterias/'?>" + programa + "/" + <?= $tipo?>,
+                dataType: 'json',
+                success: function(data){
+                    $('#dv_registronotasalumnos').html('');
+                    $('#slt_materiasrn').empty();
+                    $('#slt_materiasrn').append('<option value="0">Seleccionar materia</option>');
+                    
+                    for(var i = 0; i < data.length; i++){
+                        $('#slt_materiasrn').append('<option value="' + data[i].id_materia + '">'+ data[i].nombre_materia + '</option>');
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError){ }
+            });
+        }
+    });
+    
+    $('#slt_materiasrn').change(function() {
+        var sede = $('#slt_sedern option:selected').val(),
+            programa = $('#slt_programasrn option:selected').val(),
+            materia = $('#slt_materiasrn option:selected').val();
+            
+        if(sede.length > 0 && materia.length > 0){
+            <? if($tipo == 2): ?>
+                $.ajax({
+                    type: 'POST',
+                    url: "<?= PUBLIC_PATH . 'management/rvalidaciones/'?>",
+                    data: {
+                        sede: sede,
+                        programa: programa,
+                        materia: materia
+                    },
+                    success: function(data){
+                        $('#dv_registronotasalumnos').html('');
+                        $('#dv_registronotasalumnos').html(data);
+                        
+                        rs();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError){ }
+                });
+            <? else: ?>
+                $.ajax({
+                    type: 'POST',
+                    url: "<?= PUBLIC_PATH . 'management/rnotas/'?>",
+                    data: {
+                        sede: sede,
+                        programa: programa,
+                        materia: materia
+                    },
+                    success: function(data){
+                        $('#dv_registronotasalumnos').html('');
+                        $('#dv_registronotasalumnos').html(data);
+                        
+                        rs();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError){ }
+                });
+            <? endif; ?>
+        }
+    });
+</script>

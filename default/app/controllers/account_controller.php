@@ -1,6 +1,6 @@
 <?php
 
-Load::models('Usuario');
+Load::models('Usuario', 'Docente');
 
 class AccountController extends AppController {
     function logearAdmin() {
@@ -13,9 +13,18 @@ class AccountController extends AppController {
         $contrasena = Input::request('contrasena');
         
         $usuario = new Usuario();
+        $docente = new Docente();
         
         if($usuario->validarUsuario($identificacion, $contrasena)->RESUL == true){
             $auth = new Auth("model", "class: usuario", "identificacion_usuario: $identificacion");
+
+            if($auth->authenticate()){
+                $arr['res'] = 'ok';
+            }else{
+                $arr['msg'] = 'Ocurrio un error inesperado. Intenta nuevamente';
+            }
+        }elseif($docente->validarDocente($identificacion, $contrasena)->RESUL == true){
+            $auth = new Auth("model", "class: docente", "identificacion_docente: $identificacion");
 
             if($auth->authenticate()){
                 $arr['res'] = 'ok';

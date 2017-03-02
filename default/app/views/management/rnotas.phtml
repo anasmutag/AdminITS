@@ -1,0 +1,222 @@
+<?//= json_encode($docente)?>
+<?//= json_encode($tiponota)?>
+<?//= json_encode($numeroalumnos)?>
+<?//= json_encode(count($alumnos))?>
+<?//= json_encode($alumnos)?>
+<?//= json_encode($alumnosp)?>
+
+<div id="dv_registrodenotas">
+    <? if($tiponota->resultado === '3'): ?>
+        <span class="etiqueta_estadonotasalumno">Notas de primer, segundo y tercer corte registradas</span>
+    <? elseif($numeroalumnos === 0): ?>
+        <span class="etiqueta_estadonotasalumno">No hay estudiantes matriculados en esta materia</span>
+    <? else: ?>
+        <div id="dv_cortesseestre">
+            <span>Tipo de Nota</span>
+            <input id="txt_cortessemestre" class="texto_cortessemestre" type="text" data-tiponota="<?= ($tiponota->resultado + 1)?>" readonly="readonly" value="<? switch($tiponota->resultado): 
+                    case 0:
+                        echo 'Primer Corte';
+                        break;
+                    case 1:
+                        echo 'Segundo Corte';
+                        break;
+                    case 2:
+                        echo 'Tercer Corte';
+                        break;
+                    default:
+                        break;
+                endswitch; ?>">
+        </div>
+        <? foreach($alumnos as $alumno): ?>
+            <div class="contenedor_registrodenotas">
+                <span class="etiqueta_idalumno"><?= $alumno->identificacion_alumno?></span>
+                <span class="etiqueta_namealumno"><?= $alumno->nombre_alumno . ' ' . $alumno->apellido_alumno?></span>
+                <input id="txt_notaalumno<?= $alumno->id_alumno?>" class="texto_gradealumno" type="number" data-idalumno="<?=$alumno->id_alumno?>" maxlength="3" step="0.1" min="1" max="5" value="1" onkeyup="validarNota.call(this);">
+                <div class="contenedor_faltascortealumno">
+                    <span class="etiqueta_faltascortealumno">Faltas</span>
+                    <div class="contenedor_entradafaltacortesalumno displaynone">
+                        <input id="num_faltasalumno<?= $alumno->id_alumno?>" class="texto_gradealumno" type="number" min="1" value="0" onkeyup="validarFaltas.call(this);">
+                        <span class="etiqueta_cerrarentradafaltascortealumno">X</span>
+                    </div>
+                </div>
+            </div>
+        <? endforeach;
+        
+        foreach($alumnosp as $alumnop): ?>
+            <div class="contenedor_registrodenotas">
+                <span class="etiqueta_idalumno"><?= $alumnop->identificacion_alumno?></span>
+                <span class="etiqueta_namealumno"><?= $alumnop->nombre_alumno . ' ' . $alumnop->apellido_alumno?></span>
+                <input id="txt_notaalumno<?= $alumnop->id_alumno?>" class="texto_gradealumno" type="number" data-idalumno="<?=$alumnop->id_alumno?>" maxlength="3" step="0.1" min="1" max="5" value="1" onkeyup="validarNota.call(this);">
+                <div class="contenedor_faltascortealumno">
+                    <span class="etiqueta_faltascortealumno">Faltas</span>
+                    <div class="contenedor_entradafaltacortesalumno displaynone">
+                        <input id="num_faltasalumno<?= $alumnop->id_alumno?>" class="texto_gradealumno" type="number" min="1" value="0" onkeyup="validarFaltas.call(this);">
+                        <span class="etiqueta_cerrarentradafaltascortealumno">X</span>
+                    </div>
+                </div>
+            </div>
+        <? endforeach; ?>
+        <div id="dv_registrarnotasalumno">
+            <input id="btn_registrarnotasalumno" type="button" value="Registrar">
+        </div>
+    <? endif; ?>
+</div>
+<div id="dv_dialogoconfirmacionregistronotas">
+    <span>Registro de calificaciones exitoso. Aceptar para continuar con el registro o salir del sistema de registro de calificaciones</span>
+</div>
+
+<script type="text/javascript">
+    $('#dv_dialogoconfirmacionregistronotas').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Aceptar": function() {
+                window.location = "<?= PUBLIC_PATH?>management/registrarnotas/";
+            }
+        },
+        close: function (){}
+    });
+    
+    $('#btn_registrarnotasalumno').on('click', function (){
+        var tiponota = $('#txt_cortessemestre').data('tiponota'),
+            idmateria = <?= $idmateria?>,
+            banderanotas = 1,
+            banderafaltas = 1;
+        
+        <? foreach($alumnos as $alumno): ?>
+            var nota = $('#txt_notaalumno' + <?= $alumno->id_alumno?>).val(),
+                faltas = $('#num_faltasalumno' + <?= $alumno->id_alumno?>).val();
+            
+            if(nota.length === 0 || convertiranumero(nota) < 1 || convertiranumero(nota) > 5){
+                banderanotas = 0;
+            }
+            
+            if(nota.length === 0 || convertiranumero(nota) < 0){
+                banderafaltas = 0;
+            }
+        <? endforeach; ?>
+        
+        if(tiponota > 0 && banderanotas > 0 && banderafaltas > 0){
+            var notas = new Array();
+            
+            <? foreach($alumnos as $alumno): ?>
+                var nota = $('#txt_notaalumno' + <?= $alumno->id_alumno?>).val(),
+                    faltas = $('#num_faltasalumno' + <?= $alumno->id_alumno?>).val(),
+                    idalumno = $('#txt_notaalumno' + <?= $alumno->id_alumno?>).data('idalumno');
+
+                notas.push({
+                    valor: puntoporcoma(nota),
+                    faltas: faltas,
+                    idalumno: idalumno
+                });
+            <? endforeach;
+            
+            foreach($alumnosp as $alumnop): ?>
+                var notap = $('#txt_notaalumno' + <?= $alumnop->id_alumno?>).val(),
+                    faltasp = $('#num_faltasalumno' + <?= $alumnop->id_alumno?>).val(),
+                    idalumnop = $('#txt_notaalumno' + <?= $alumnop->id_alumno?>).data('idalumno');
+
+                notas.push({
+                    valor: puntoporcoma(notap),
+                    faltas: faltasp,
+                    idalumno: idalumnop
+                });
+            <? endforeach; ?>
+            
+            $.ajax({
+                type: 'POST',
+                url: <?= PUBLIC_PATH?> + 'management/registrarnotasalumnos/',
+                data: {
+                    tiponota: tiponota,
+                    idmateria: idmateria,
+                    notas: JSON.stringify(notas),
+                    docente: <?= Auth::get('id_docente')?>
+                },
+                dataType: 'json',
+                beforeSend: function(){
+                    //document.getElementById("btn_consultarnotas").disabled = true;
+
+                    $('body').addClass('menuopen');
+
+                    $.blockUI({
+                        message: "Registrando calificaciones..."
+                    });
+                },
+                success: function(data) {
+                    $('body').removeClass('menuopen');
+                    //document.getElementById("frm_codigoestudiante").reset();
+
+                    if(data !== null && data.res === 'ok'){
+                        $('#dv_dialogoconfirmacionregistronotas').dialog('open');
+                        
+                        console.log(data.res);
+                    }else{
+                        console.log(data.msg);
+                    }
+                },
+                error: function(){
+                    //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                }
+            }).always(function(){
+                //*document.getElementById("btn_consultarnotas").disabled = false;
+
+                $.unblockUI();
+            });
+        }else{
+            $inputfocus = null;
+            /*$input = $('#slt_cortessemestre');
+            if(convertiranumero(tiponota) === 0){
+                $input.addClass('etiqueta_tiponotanovalido');
+                if($inputfocus === null)$inputfocus = $input;
+            }else{
+                $input.removeClass('etiqueta_tiponotanovalido');
+            }*/
+            <? foreach($alumnos as $alumno): ?>
+                var nota = $('#txt_notaalumno' + <?= $alumno->id_alumno?>).val();
+                
+                $input = $('#txt_notaalumno' + <?= $alumno->id_alumno?>);
+                if(nota.length === 0  || convertiranumero(nota) < 1 || convertiranumero(nota) > 5){
+                    $input.addClass('etiqueta_tiponotanovalido');
+                    if($inputfocus === null)$inputfocus = $input;
+                }else{
+                    $input.removeClass('etiqueta_tiponotanovalido');
+                }
+            <? endforeach; ?>
+
+            if($inputfocus !== null){
+                $('html, body').animate({scrollTop: $inputfocus.position().top+'px'}, 1000);
+                $inputfocus.focus();
+            }
+        }
+    });
+    
+    function validarNota(){
+        if($(this).val().length > 0 && convertiranumero($(this).val()) >= 1 && convertiranumero($(this).val()) <= 5){
+            $(this).removeClass('etiqueta_tiponotanovalido');
+        }else{
+            $(this).addClass('etiqueta_tiponotanovalido');
+        }
+    }
+    
+    $('.etiqueta_faltascortealumno').on('click', function (){
+        $(this).addClass('displaynone');
+        $(this).next('div .contenedor_entradafaltacortesalumno').removeClass('displaynone');
+        $(this).next('div .contenedor_entradafaltacortesalumno').find('input').val('1');
+    });
+    
+    $('.etiqueta_cerrarentradafaltascortealumno').on('click', function (){
+        $(this).parent('div').addClass('displaynone');
+        $(this).prev('input').val('0');
+        $(this).parent('div').prev('span').removeClass('displaynone');
+    });
+    
+    function validarFaltas(){
+        if($(this).val().length > 0 && convertiranumero($(this).val()) >= 0){
+            $(this).removeClass('etiqueta_tiponotanovalido');
+        }else{
+            $(this).addClass('etiqueta_tiponotanovalido');
+        }
+    }
+</script>
