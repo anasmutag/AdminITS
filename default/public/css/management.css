@@ -156,6 +156,12 @@
   font-family: 'RobotoRegular';
   font-size: 28px;
 }
+#dv_iniciosistemaadministrativo .etiqueta_mensajeiniciousuario {
+  margin: 25px 0 0 0;
+  padding: 0 70px;
+  font-family: 'RobotoRegular';
+  font-size: 18px;
+}
 .contenedor_formularioadmin {
   /*min-height: 200px;
     position: relative;

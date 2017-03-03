@@ -1,6 +1,20 @@
 <div id="dv_iniciosistemaadministrativo">
     <span>Sistema Administrativo</span>
-    <span id="sp_mensajeiniciosistemaadministrativo">Bienvenido, <?= $usuario?></span>
+    <span id="sp_mensajeiniciosistemaadministrativo">Bienvenido(a), <?= ($usuario===3)?'Profesor(a) ' . $nombre:$nombre;?></span>
+    <? switch($usuario): 
+        case 1: ?>
+            <span class="etiqueta_mensajeiniciousuario">Usted tiene acceso completo a cada una de los modulos de esta plataforma. En el menu de navegación encontrara el acceso a cada modulo.</span>
+            
+            <? break;
+        case 2: ?>
+            <span class="etiqueta_mensajeiniciousuario">En esta plataforma usted podra matricular estudiantes nuevos y antiguos y registrar pagos de matricula y validaciones generando el correspondiente recibo de pago. Dirigirse al modulo de "Matricula" o "Pagos" del menu de navegación segun corresponda.</span>
+            
+            <? break;
+        case 3: ?>
+            <span class="etiqueta_mensajeiniciousuario">En esta plataforma usted podra registrar las calificaciones de corte y de validaciones de cada una de sus asignaturas a su cargo. Dirigirse al modulo de "Notas" del menu de navegación.</span>
+            
+            <? break;
+    endswitch; ?>
 </div>
 <div style="width: 100%; margin-top: 35px; color: green">
     <a href="<?= PUBLIC_PATH?>pdf/recibopago" target="_blank">Generar PDF</a>

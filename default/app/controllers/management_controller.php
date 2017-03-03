@@ -7,7 +7,23 @@ class ManagementController extends AppController {
         if(Auth::is_valid()){
             View::template('general_template');
             
-            $this->usuario = Auth::get('nombre_usuario') . ' ' . Auth::get('apellido_usuario');
+            switch (Auth::get('rol_usuario')) {
+                case 'administrador':
+                    $this->nombre = Auth::get('nombre_usuario') . ' ' . Auth::get('apellido_usuario');
+                    $this->usuario = 1;
+                    
+                    break;
+                case 'matricula':
+                    $this->nombre = Auth::get('nombre_usuario') . ' ' . Auth::get('apellido_usuario');
+                    $this->usuario = 2;
+                    
+                    break;
+                case 'docente':
+                    $this->nombre = Auth::get('nombre_docente') . ' ' . Auth::get('apellido_docente');
+                    $this->usuario = 3;
+                    
+                    break;
+            }
         }else{
             Router::redirect("/");
         }
