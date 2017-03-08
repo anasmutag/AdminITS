@@ -44,8 +44,6 @@
                 },
                 dataType: 'json',
                 beforeSend: function(){
-                    //document.getElementById("btn_consultarnotas").disabled = true;
-                    
                     $('body').addClass('menuopen');
                     
                     $.blockUI({
@@ -54,7 +52,6 @@
                 },
                 success: function(data) {
                     $('body').removeClass('menuopen');
-                    //document.getElementById("frm_codigoestudiante").reset();
                     
                     if(data !== null && data.res === 'ok'){
                         $.ajax({
@@ -66,8 +63,6 @@
                                 documento: documento
                             },
                             beforeSend: function(){
-                                //document.getElementById("btn_consultarnotas").disabled = true;
-
                                 $('body').addClass('menuopen');
 
                                 $.blockUI({
@@ -76,7 +71,6 @@
                             },
                             success: function(data){
                                 $('body').removeClass('menuopen');
-                                //document.getElementById("frm_codigoestudiante").reset();
 
                                 $('#sec_contenidologinadmin').html('');
                                 $('#sec_contenidologinadmin').html(data);
@@ -85,8 +79,6 @@
                             },
                             error: function (xhr, ajaxOptions, thrownError){ }
                         }).always(function(){
-                            //document.getElementById("btn_consultarnotas").disabled = false;
-
                             $.unblockUI();
                         });
                     }else{
@@ -100,8 +92,6 @@
                     console.log('Ocurrio un error inesperado. Intenta nuevamente');
                 }
             }).always(function(){
-                //document.getElementById("btn_consultarnotas").disabled = false;
-                
                 $.unblockUI();
             });
         }else{

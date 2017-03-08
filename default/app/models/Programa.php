@@ -5,10 +5,6 @@ class Programa extends ActiveRecord {
         return $this->find('columns: id_programa, codigo_programa, nombre_programa, valor_semestre_programa', 'order: nombre_programa');
     }
     
-    /*public function programas() {
-        return $this->find('columns: *', 'order: nombre_programa');
-    }*/
-    
     public function programasDocente($docente) {
         return $this->find("columns: programa.*",
                 "join: join materiaprograma on programa.id_programa = materiaprograma.id_programa

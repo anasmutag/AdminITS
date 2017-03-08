@@ -1,10 +1,3 @@
-<?//= json_encode($docente)?>
-<?//= json_encode($tiponota)?>
-<?//= json_encode($numeroalumnos)?>
-<?//= json_encode(count($alumnos))?>
-<?//= json_encode($alumnos)?>
-<?//= json_encode($alumnosp)?>
-
 <div id="dv_registrodenotas">
     <? if($tiponota->resultado === '3'): ?>
         <span class="etiqueta_estadonotasalumno">Notas de primer, segundo y tercer corte registradas</span>
@@ -136,8 +129,6 @@
                 },
                 dataType: 'json',
                 beforeSend: function(){
-                    //document.getElementById("btn_consultarnotas").disabled = true;
-
                     $('body').addClass('menuopen');
 
                     $.blockUI({
@@ -146,7 +137,6 @@
                 },
                 success: function(data) {
                     $('body').removeClass('menuopen');
-                    //document.getElementById("frm_codigoestudiante").reset();
 
                     if(data !== null && data.res === 'ok'){
                         $('#dv_dialogoconfirmacionregistronotas').dialog('open');
@@ -157,22 +147,14 @@
                     }
                 },
                 error: function(){
-                    //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                    
                 }
             }).always(function(){
-                //*document.getElementById("btn_consultarnotas").disabled = false;
-
                 $.unblockUI();
             });
         }else{
             $inputfocus = null;
-            /*$input = $('#slt_cortessemestre');
-            if(convertiranumero(tiponota) === 0){
-                $input.addClass('etiqueta_tiponotanovalido');
-                if($inputfocus === null)$inputfocus = $input;
-            }else{
-                $input.removeClass('etiqueta_tiponotanovalido');
-            }*/
+            
             <? foreach($alumnos as $alumno): ?>
                 var nota = $('#txt_notaalumno' + <?= $alumno->id_alumno?>).val();
                 

@@ -9,50 +9,39 @@
         <ul>
             <li>
                 <a id="lnk_matricula" href="<?= PUBLIC_PATH?>management/matricula">Matricula</a>
-                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
             <li>
                 <a id="lnk_convalidacion" href="<?= PUBLIC_PATH?>management/convalidacion">Convalidación</a>
-                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
             <li>
                 <a id="lnk_pagos" href="<?= PUBLIC_PATH?>management/pagos">Pagos</a>
-                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
             <li>
                 <a id="lnk_notas" href="<?= PUBLIC_PATH?>management/notas">Notas</a>
-                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
             <li>
                 <a id="lnk_egresados" href="<?= PUBLIC_PATH?>management/egresados">Egresados</a>
-                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
             <li>
                 <a id="lnk_actas" href="<?= PUBLIC_PATH?>management/actas">Actas</a>
-                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
             <li>
                 <a id="lnk_docentes" href="<?= PUBLIC_PATH?>management/docentes">Docentes</a>
-                <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
             </li>
             <? $acl = new Acl('privilegios');
             
             if($acl->check(Auth::get('rol_usuario'), '', 'management', 'cerrarsemestre')): ?>
                 <li>
                     <span id="sp_cierresemestre">Cerrar Semestre</span>
-                    <!--span onclick="window.location = '<?= PUBLIC_PATH?>management/matricula'">Matricula</span-->
                 </li>
             <? endif; ?>
             <li>
                 <span id="sp_salir" onclick="window.location = '<?= PUBLIC_PATH?>account/salirAdmin'">Salir</span>
-                <!--button onclick="window.location = '<?= PUBLIC_PATH?>account/salirAdmin'">Salir</button-->
             </li>
         </ul>
     </div>
     <div id="dv_dialogoconfirmacioncierresemestre">
-        <!--span>Cierre de semestre extoso. Aceptar para continuar o salir del sistema administrativo</span-->
         <? Flash::warning("¿Esta completamente seguro(a) del cierre del presente semeestre?")?>
-        <!--span>¿Esta completamente seguro(a) del cierre del presente semeestre?</span-->
     </div>
 <? endif; ?>
 
@@ -79,8 +68,6 @@
                     data: {},
                     dataType: 'json',
                     beforeSend: function(){
-                        //document.getElementById("btn_consultarnotas").disabled = true;
-
                         $('body').addClass('menuopen');
 
                         $.blockUI({
@@ -89,7 +76,6 @@
                     },
                     success: function(data) {
                         $('body').removeClass('menuopen');
-                        //document.getElementById("frm_codigoestudiante").reset();
                         
                         if(data !== null && data.res === 'ok'){
                             window.location = "<?= PUBLIC_PATH?>management/administracion/";
@@ -105,12 +91,8 @@
                         }else{
                             console.log(xhr);
                         }
-                        
-                        //console.log('Ocurrio un error inesperado. Intenta nuevamente');
                     }
                 }).always(function(){
-                    //*document.getElementById("btn_consultarnotas").disabled = false;
-
                     $.unblockUI();
                 });
             },

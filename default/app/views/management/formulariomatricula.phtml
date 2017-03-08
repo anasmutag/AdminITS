@@ -29,12 +29,6 @@
                 <input type="radio" name="tipodocumento" value="<?= $tipodocumento->id_tipodocumento?>" <?= (($bandera==0||$bandera==2)&&$tipodocumento===end($tipodocumentos))?'checked':($bandera==1&&$datos[0]->id_tipodocumento==$tipodocumento->id_tipodocumento)?'checked':'';?>><?/*= ($bandera==1)?'onclick="return false;"':''*/?>
                 <span class="etiqueta_textoradioformularioadmin"><?= $tipodocumento->abreviatura_tipodocumento?></span>
             <?endforeach;?>
-            <!--select id="slt_tipodocumento" class="entrada_datoformularioadmin">
-                <option value="0">Seleccionar tipo de documento</option>
-                <?foreach($tipodocumentos as $tipodocumento):?>
-                    <option value="<?= $tipodocumento->id_tipodocumento?>"><?= $tipodocumento->nombre_tipodocumento?></option>
-                <?endforeach;?>
-            </select-->
         </div>
     </div>
     <div class="contendor_elementoformularioadmin">
@@ -185,17 +179,6 @@
             </select>
         </div>
     </div>
-    <!--div class="contendor_elementoformularioadmin">
-        <div>
-            <span class="etiqueta_textoelementoformularioadmin">Semestre</span>
-            <select id="slt_tipodocumento" class="entrada_datoformularioadmin">
-                <option value="0">Seleccionar semestre</option>
-                <?foreach($semestres as $semestre):?>
-                    <option value="<?= $semestre->id_semestre?>"><?= $semestre->nombre_semestre?></option>
-                <?endforeach;?>
-            </select>
-        </div>
-    </div-->
     <span class="etiqueta_encabezadoelementoformularioadmin">Datos Matrícula</span>
     <div class="contendor_elementoformularioadmin">
         <div>
@@ -275,18 +258,6 @@
             }
         });
     <? endif; ?>
-    
-    /*$('#txt_fechanacimiento').datetimepicker({
-	controlType: 'select',
-	oneLine: true,
-	dateFormat: 'yy-mm-dd',
-	timeFormat: 'HH:mm:ss',
-        minDate: new Date(),
-        
-        onSelect: function (selectedDateTime){
-            $(this).removeClass('cajastexto_novalida');
-        }
-    });*/
     
     $('#rb_fpContado').on('click', function (){
         $('#dv_numerocuotas').addClass('displaynone');
@@ -437,8 +408,6 @@
                     data: $('#frm_matriculaestudiante').serialize(),
                     dataType: 'json',
                     beforeSend: function(){
-                        //document.getElementById("btn_consultarnotas").disabled = true;
-
                         $('body').addClass('menuopen');
 
                         $.blockUI({
@@ -447,7 +416,6 @@
                     },
                     success: function(data) {
                         $('body').removeClass('menuopen');
-                        //document.getElementById("frm_codigoestudiante").reset();
 
                         if(data !== null && data.res === 'ok'){
                             window.localStorage.idPagoMatricula = data.id;
@@ -460,11 +428,9 @@
                         }
                     },
                     error: function(){
-                        //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                        
                     }
                 }).always(function(){
-                    //*document.getElementById("btn_consultarnotas").disabled = false;
-
                     $.unblockUI();
                 });
             <? else: ?>
@@ -476,8 +442,6 @@
                             data: $('#frm_matriculaestudiante').serialize(),
                             dataType: 'json',
                             beforeSend: function(){
-                                //document.getElementById("btn_consultarnotas").disabled = true;
-
                                 $('body').addClass('menuopen');
 
                                 $.blockUI({
@@ -486,7 +450,6 @@
                             },
                             success: function(data) {
                                 $('body').removeClass('menuopen');
-                                //document.getElementById("frm_codigoestudiante").reset();
 
                                 if(data !== null && data.res === 'ok'){
                                     window.localStorage.idPagoMatricula = data.id;
@@ -499,11 +462,9 @@
                                 }
                             },
                             error: function(){
-                                //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                                
                             }
                         }).always(function(){
-                            //*document.getElementById("btn_consultarnotas").disabled = false;
-
                             $.unblockUI();
                         });
 
@@ -515,8 +476,6 @@
                             data: $('#frm_matriculaestudiante').serialize(),
                             dataType: 'json',
                             beforeSend: function(){
-                                //document.getElementById("btn_consultarnotas").disabled = true;
-
                                 $('body').addClass('menuopen');
 
                                 $.blockUI({
@@ -525,7 +484,6 @@
                             },
                             success: function(data) {
                                 $('body').removeClass('menuopen');
-                                //document.getElementById("frm_codigoestudiante").reset();
 
                                 if(data !== null && data.res === 'ok'){
                                     window.localStorage.idPagoMatricula = data.id;
@@ -538,11 +496,9 @@
                                 }
                             },
                             error: function(){
-                                //console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                                
                             }
                         }).always(function(){
-                            //document.getElementById("btn_consultarnotas").disabled = false;
-
                             $.unblockUI();
                         });
 
@@ -550,12 +506,10 @@
                 }
             <? endif; ?>
         }else{
-            //validarcampos(documento, convertiranumero(region), convertiranumero(localidad), nombre, apellido, fechaNacimiento, convertiranumero(regionNacimiento), convertiranumero(localidadNacimiento), direccion, telefono, correoElectronico, nombreAcudiente, apellidoAcudiente, telefonoAcudiente, empresa, cargo, direccionEmpresa, telefonoEmpresa, convertiranumero(programa), codigoEstudiante, numeroMatricula, fechaMatricula);
             validarcampos(documento, convertiranumero(region), convertiranumero(localidad), nombre, apellido, fechaNacimiento, convertiranumero(regionNacimiento), convertiranumero(localidadNacimiento), direccion, telefono, correoElectronico, convertiranumero(programa), codigoEstudiante, numeroMatricula, fechaMatricula, valorMatricula);
         }
     });
     
-    //nombreAcudiente, apellidoAcudiente, telefonoAcudiente, empresa, cargo, direccionEmpresa, telefonoEmpresa
     function validarcampos(documento, region, localidad, nombre, apellido, fechaNacimiento, regionNacimiento, localidadNacimiento, direccion, telefono, correoElectronico, programa, codigoEstudiante, numeroMatricula, fechaMatricula, valorMatricula){
         $inputfocus = null;
         $input = $('#txt_numerodocumento');
@@ -635,55 +589,6 @@
         }else{
             $input.removeClass('entrada_textonovalido');
         }
-        /*$input = $('#txt_nombreA');
-        if(nombreAcudiente.length === 0){
-            $input.addClass('entrada_textonovalido');
-            if($inputfocus === null)$inputfocus = $input;
-        }else{
-            $input.removeClass('entrada_textonovalido');
-        }
-        $input = $('#txt_apellidoA');
-        if(apellidoAcudiente.length === 0){
-            $input.addClass('entrada_textonovalido');
-            if($inputfocus === null)$inputfocus = $input;
-        }else{
-            $input.removeClass('entrada_textonovalido');
-        }
-        $input = $('#txt_telefonoA');
-        if(telefonoAcudiente.length === 0){
-            $input.addClass('entrada_textonovalido');
-            if($inputfocus === null)$inputfocus = $input;
-        }else{
-            $input.removeClass('entrada_textonovalido');
-        }*/
-        /*$input = $('#txt_empresa');
-        if(empresa.length === 0){
-            $input.addClass('entrada_textonovalido');
-            if($inputfocus === null)$inputfocus = $input;
-        }else{
-            $input.removeClass('entrada_textonovalido');
-        }
-        $input = $('#txt_cargo');
-        if(cargo.length === 0){
-            $input.addClass('entrada_textonovalido');
-            if($inputfocus === null)$inputfocus = $input;
-        }else{
-            $input.removeClass('entrada_textonovalido');
-        }
-        $input = $('#txt_direccionE');
-        if(direccionEmpresa.length === 0){
-            $input.addClass('entrada_textonovalido');
-            if($inputfocus === null)$inputfocus = $input;
-        }else{
-            $input.removeClass('entrada_textonovalido');
-        }
-        $input = $('#txt_telefonoE');
-        if(telefonoEmpresa.length === 0){
-            $input.addClass('entrada_textonovalido');
-            if($inputfocus === null)$inputfocus = $input;
-        }else{
-            $input.removeClass('entrada_textonovalido');
-        }*/
         $input = $('#slt_programa');
         if(programa === 0){
             $input.addClass('entrada_textonovalido');
@@ -736,8 +641,6 @@
         }
     });
     
-    //#txt_empresa, #txt_cargo, #txt_direccionE, #txt_telefonoE
-    //#txt_nombreA, #txt_apellidoA, #txt_telefonoA
     $("#txt_nombre, #txt_apellido, #txt_fechanacimiento, #txt_direccion, #txt_telefono, #txt_correoelectronico, #num_numerocuotas, #txt_valormatricula").on('keyup', function (){
         if($(this).val().length > 0){
             $(this).removeClass('entrada_textonovalido');

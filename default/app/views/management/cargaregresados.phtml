@@ -2,7 +2,6 @@
     <? foreach($egresados->items as $egresado): ?>
         <div class="contenedor_resultadoegresado">
             <a class="enlace_datosegresado" href="<?= PUBLIC_PATH?>management/egresado/<?= $egresado->identificacion_alumno?>" target="_blank">(<?= $egresado->identificacion_alumno?>) <?= $egresado->nombre_alumno . ' ' . $egresado->apellido_alumno?></a>
-            <!--span class="etiqueta_datosegresado">(<?= $egresado->id_alumno?>) <?= $egresado->valor_nota?></span-->
         </div>
     <? endforeach; ?>
 </div>

@@ -440,14 +440,6 @@ class ManagementController extends AppController {
         }
     }
     
-    /*private function validacion($sede) {
-        if($sede !== '1'){
-            return true;
-        }else{
-            return false;
-        }
-    }*/
-    
     public function pagos() {
         if(Auth::is_valid()){
             View::template('general_template');
@@ -1393,16 +1385,13 @@ class ManagementController extends AppController {
     public function rvalidaciones() {
         View::template(NULL);
         
-        //$matricula = new Matricula();
         $validacion = new Validacion();
         
         $sede = Input::request('sede');
         $programa = Input::request('programa');
         $materia = Input::request('materia');
         
-        //$this->numeroalumnos = $matricula->cargarNumeroAlumnosValidaciones($materia);
         $this->numeroalumnos = $validacion->cargarNumeroAlumnosValidaciones($sede, $programa, $materia);
-        //$this->alumnos = $matricula->cargarAlumnosMateriaValidaciones($sede, $programa, $materia);
         $this->alumnos = $validacion->cargarAlumnosMateriaValidaciones($sede, $programa, $materia);
         $this->idmateria = $materia;
     }

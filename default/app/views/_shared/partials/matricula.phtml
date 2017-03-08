@@ -1,6 +1,5 @@
 <? if($estado === 1): ?>
     <div>
-        <?//= json_encode($datosmatricula)?>
         <? Flash::valid($datosmatricula[0]->nombre_alumno . " " . $datosmatricula[0]->apellido_alumno . " identificado con el numero de documento " . number_format($datosmatricula[0]->identificacion_alumno, 0, '', '.') . " tiene una matricula en estado " . $datosmatricula[0]->nombre_estadomatricula . " del " . $datosmatricula[0]->nombre_semestre . " del programa " . $datosmatricula[0]->nombre_programa . " en la " . $datosmatricula[0]->nombre_sede)?>
     </div>
 <? else: ?>

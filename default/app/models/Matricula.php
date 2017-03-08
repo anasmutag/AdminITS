@@ -76,18 +76,6 @@ class Matricula extends ActiveRecord {
     }
     
     public function cargarEgresados($page = 1, $programa, $anio, $periodo) {
-        /*return $this->paginate_by_sql("select id_alumno,valor_nota"
-                . " from nota",
-                "page: $page", "per_page: 10");*/
-        
-        /*return $this->paginate_by_sql("select alumnoprograma.id_programa,alumno.id_alumno,alumno.identificacion_alumno,alumno.nombre_alumno,alumno.apellido_alumno"
-                . " from acta join alumno on acta.id_alumno = alumno.id_alumno"
-                    . " join alumnoprograma on alumno.id_alumno = alumnoprograma.id_alumno"
-                . " where id_programa = $programa"
-                    . " and year(fecha_acta) = $anio"
-                . " order by year(fecha_acta) and alumno.apellido_alumno",
-                "page: $page", "per_page: 10");*/
-        
         return $this->paginate_by_sql("select alumnoprograma.id_programa,alumno.id_alumno,alumno.identificacion_alumno,alumno.nombre_alumno,alumno.apellido_alumno"
                 . " from matricula join alumno on matricula.id_alumno = alumno.id_alumno"
                     . " join acta on alumno.id_alumno = acta.id_alumno"
