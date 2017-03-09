@@ -21,9 +21,9 @@
             <? endif; ?>
         <? $periodo += 1;
         
-        endforeach; ?>
-        <a class="enlace_periodosactivosdocente" href="<?= PUBLIC_PATH?>management/docentes">Nueva Busqueda</a>
-    <? endif; ?>
+        endforeach;
+    endif; ?>
+    <a class="enlace_periodosactivosdocente" href="<?= PUBLIC_PATH?>management/docentes">Nueva Busqueda</a>
 </div>
 <div id="dv_dialogodoregistroperiododocente">
     <? Flash::valid("El registro de finalizacion de periodo del docente se realizó con exito") ?>
