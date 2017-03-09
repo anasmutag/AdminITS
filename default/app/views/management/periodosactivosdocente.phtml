@@ -1,6 +1,6 @@
 <div id="dv_datosdocente">
     <span class="etiqueta_datosdocente">Profesor(a),&nbsp;<?= $datosdocente->nombre_docente . ' ' . $datosdocente->apellido_docente?></span>
-    <span class="etiqueta_datosdocente">C.C.&nbsp;<?= $datosdocente->identificacion_docente?></span>
+    <span class="etiqueta_datosdocente">C.C.&nbsp;<?= number_format($datosdocente->identificacion_docente, 0, '', '.')?></span>
 </div>
 <div id="dv_periodosdocente">
     <? if(empty($periodosdocente)): ?>
@@ -13,11 +13,95 @@
                 <span class="etiqueta_datoperiododocente">Periodo&nbsp;<?= $periodo?></span>
                 <span class="etiqueta_datoperiododocente">Desde:&nbsp;<?= $periododocente->fecha_inicio_periododocente?></span>
                 <span class="etiqueta_datoperiododocente">Hasta:&nbsp;<?= ($periododocente->fecha_fin_periododocente==='')?'Vigente':$periododocente->fecha_fin_periododocente;?></span>
-                <!--span class="etiqueta_detalleperiododocente">Detalle</span-->
             </div>
+            <? if($periododocente->fecha_fin_periododocente===''): ?>
+                <div id="dv_finalizarperiodo">
+                    <span id="sp_finalizarperiodo" data-periododocente="<?= $periododocente->id_periododocente?>">Finalizar Periodo Vigente</span>
+                </div>
+            <? endif; ?>
         <? $periodo += 1;
         
         endforeach; ?>
         <a class="enlace_periodosactivosdocente" href="<?= PUBLIC_PATH?>management/docentes">Nueva Busqueda</a>
     <? endif; ?>
 </div>
+<div id="dv_dialogodoregistroperiododocente">
+    <? Flash::valid("El registro de finalizacion de periodo del docente se realizó con exito") ?>
+</div>
+
+<script type="text/javascript">
+    $('#dv_dialogodoregistroperiododocente').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Aceptar": function() {
+                var documento = $('#dv_dialogodoregistroperiododocente').data('documento');
+                
+                $.ajax({
+                    type: 'POST',
+                    url: <?= PUBLIC_PATH?> + 'management/periodosactivosdocente/',
+                    data: {
+                        documento: documento
+                    },
+                    beforeSend: function(){
+                        $('body').addClass('menuopen');
+
+                        $.blockUI({
+                            message: "Cargando datos..."
+                        });
+                    },
+                    success: function(data) {
+                        $('#dv_dialogodoregistroperiododocente').dialog('close');
+                        
+                        $('body').removeClass('menuopen');
+
+                        $('#sec_contenidologinadmin').html('');
+                        $('#sec_contenidologinadmin').html(data);
+                    },
+                    error: function(){
+                        console.log('Ocurrio un error inesperado. Intenta nuevamente');
+                    }
+                }).always(function(){
+                    $.unblockUI();
+                });
+            }
+        },
+        close: function (){}
+    });
+    
+    $('#sp_finalizarperiodo').on('click', function (){
+        $.ajax({
+            type: 'POST',
+            url: <?= PUBLIC_PATH?> + 'management/registroperiododocente/',
+            data: {
+                documento: <?= $datosdocente->identificacion_docente?>,
+                periododocente: $(this).data('periododocente'),
+                fechafin: "<?= date("Y-m-d")?>"
+            },
+            dataType: 'json',
+            beforeSend: function(){
+                $('body').addClass('menuopen');
+
+                $.blockUI({
+                    message: "Registrando datos..."
+                });
+            },
+            success: function(data) {
+                $('body').removeClass('menuopen');
+
+                if(data !== null && data.res === 'ok'){
+                    $('#dv_dialogodoregistroperiododocente').data('documento', data.documento).dialog('open');
+                }else{
+                    console.log(data.msg);
+                }
+            },
+            error: function(){
+                console.log('Ocurrio un error inesperado. Intenta nuevamente');
+            }
+        }).always(function(){
+            $.unblockUI();
+        });
+    });
+</script>

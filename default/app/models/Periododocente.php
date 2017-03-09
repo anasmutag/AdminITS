@@ -6,4 +6,8 @@ class Periododocente extends ActiveRecord {
                 "join: join docente on periododocente.id_docente = docente.id_docente",
                 "conditions: identificacion_docente = $documento");
     }
+    
+    public function cargarPeriodoActivoDocente($periododocente) {
+        return $this->find_first("conditions: id_periododocente = $periododocente");
+    }
 }

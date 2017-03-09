@@ -1540,4 +1540,33 @@ class ManagementController extends AppController {
         
         exit(json_encode($arr));
     }
+    
+    public function registroperiododocente() {
+        if(Auth::is_valid()){
+            View::select(NULL, NULL);
+            
+            $periododocente = new Periododocente();
+            
+            $arr['res'] = 'fail';
+            $arr['msg'] = '';
+            
+            $documento = Input::request('documento');
+            $periodo = Input::request('periododocente');
+            $fecha = Input::request('fechafin');
+            
+            $periododocente->cargarPeriodoActivoDocente($periodo);
+            $periododocente->fecha_fin_periododocente = $fecha;
+            
+            if($periododocente->update()){
+                $arr['res'] = 'ok';
+                $arr['documento'] = $documento;
+            }else{
+                $arr['msg'] = 'Ocurrio un error en el registro en base de datos. Intentar nuevamente';
+            }
+            
+            exit(json_encode($arr));
+        }else{
+            Router::redirect("/");
+        }
+    }
 }
