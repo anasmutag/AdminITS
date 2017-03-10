@@ -80,6 +80,7 @@
     background-position: @bpx @bpy;
 }*/
 #dv_iniciosistemaadministrativo {
+  margin: 0 0 35px 0;
   color: #00529B;
   width: 100%;
   height: auto;
