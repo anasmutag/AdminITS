@@ -1202,17 +1202,53 @@ class ManagementController extends AppController {
         $programa = filter_var(Input::request('programa'), FILTER_SANITIZE_STRING);
         $semestre = filter_var(Input::request('semestre'), FILTER_SANITIZE_STRING);
         
-        $this->documento = filter_var(Input::request('documento'), FILTER_SANITIZE_STRING);
-        $this->datos1s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 1);
+        $documento = filter_var(Input::request('documento'), FILTER_SANITIZE_STRING);
+        $this->documento = $documento;
+        //$this->datos1s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 1);
+        $datos1s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 1);
+        
+        foreach ($datos1s as $key => $dato1s) {
+            if($materiaprograma->validarNotaConvalidacion($programa, 1, $dato1s->id_materia, $documento)){
+                unset($datos1s[$key]);
+            }
+        }
+        
+        $this->datos1s = $datos1s;
         
         switch ($semestre) {
             case 2:
-                $this->datos2s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 2);
+                //$this->datos2s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 2);
+                $datos2s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 2);
+                
+                foreach ($datos2s as $key => $dato2s) {
+                    if($materiaprograma->validarNotaConvalidacion($programa, 2, $dato2s->id_materia, $documento)){
+                        unset($datos2s[$key]);
+                    }
+                }
+                
+                $this->datos2s = $datos2s;
                 
                 break;
             case 3:
-                $this->datos2s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 2);
-                $this->datos3s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 3);
+                /*$this->datos2s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 2);
+                $this->datos3s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 3);*/
+                $datos2s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 2);
+                $datos3s = $materiaprograma->cargarDatosNotasConvalidacion($programa, 3);
+                
+                foreach ($datos2s as $key => $dato2s) {
+                    if($materiaprograma->validarNotaConvalidacion($programa, 2, $dato2s->id_materia, $documento)){
+                        unset($datos2s[$key]);
+                    }
+                }
+                
+                foreach ($datos3s as $key => $dato3s) {
+                    if($materiaprograma->validarNotaConvalidacion($programa, 3, $dato3s->id_materia, $documento)){
+                        unset($datos3s[$key]);
+                    }
+                }
+                
+                $this->datos2s = $datos2s;
+                $this->datos3s = $datos3s;
                 
                 break;
         }
@@ -1297,7 +1333,11 @@ class ManagementController extends AppController {
             $programa = new Programa();
             
             if($tipo === 1){
-                $this->programas = $programa->programasDocente(Auth::get('id_docente'));
+                if(Auth::get('rol_usuario') === 'docente'){
+                    $this->programas = $programa->programasDocente(Auth::get('id_docente'));
+                }else{
+                    $this->programas = $programa->programas();
+                }
             }else{
                 $this->programas = $programa->programas();
             }
@@ -1314,7 +1354,11 @@ class ManagementController extends AppController {
         $materiaprograma = new Materiaprograma();
         
         if($tipo == 1){
-            echo json_encode($materiaprograma->materiasProgramaDocente($idprograma, Auth::get('id_docente')));
+            if(Auth::get('rol_usuario') === 'docente'){
+                echo json_encode($materiaprograma->materiasProgramaDocente($idprograma, Auth::get('id_docente')));
+            }else{
+                echo json_encode($materiaprograma->materiasprograma($idprograma));
+            }
         }else{
             echo json_encode($materiaprograma->materiasprograma($idprograma));
         }
@@ -1508,7 +1552,12 @@ class ManagementController extends AppController {
                 
                 $validacion->cargarDatosValidacion($n->idvalidacion);
                 $validacion->valor_validacion = $n->valor;
-                $validacion->docente_validacion = Auth::get('id_docente');
+                
+                if(Auth::get('rol_usuario') === 'docente'){
+                    $validacion->docente_validacion = Auth::get('id_docente');
+                }else{
+                    $validacion->docente_validacion = '0';
+                }
                 
                 if($validacion->update()){
                     $pagovalidacion->cargarDatosPagoValidacion($n->idvalidacion);

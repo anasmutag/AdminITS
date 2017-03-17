@@ -1,76 +1,76 @@
 <div id="dv_resultadoseguimientoegresados">
     <span id="sp_tituloresultadoseguimientoegresados">Egresado, <?= $datosegresado[0]->nombre_egresado . ' ' . $datosegresado[0]->apellido_egresado?></span>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <label class="etiqueta_datoegresado">Número de Documento</label>
             <input class="texto_datoegresado" type="text" value="<?= $datosegresado[0]->identificacion_egresado?>" readonly="readonly" disabled="disabled">
         </div>
     </div>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <label class="etiqueta_datoegresado">Programa de Egreso</label>
             <input class="texto_datoegresado" type="text" value="<?= $datosegresado[0]->nombre_programa?>" readonly="readonly" disabled="disabled">
         </div>
     </div>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <label class="etiqueta_datoegresado">Correo Electrónico Egresado</label>
             <input id="txt_correoelectronicoegresado" class="texto_datoegresado" type="text" value="<?= $datosegresado[0]->correo_electronico_egresado?>">
         </div>
     </div>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <label class="etiqueta_datoegresado">Teléfono/Celular Egresado</label>
             <input id="txt_telefonoegresado" class="texto_datoegresado" type="text" value="<?= $datosegresado[0]->telefono_egresado?>" onkeypress="return soloNumeros(event);">
         </div>
     </div>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <label class="etiqueta_datoegresado">Dirección Egresado</label>
             <input id="txt_direccionegresado" class="texto_datoegresado" type="text" value="<?= $datosegresado[0]->direccion_egresado?>">
         </div>
     </div>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <label class="etiqueta_secciondatosegresado">Datos Laborales</label>
         </div>
     </div>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <label class="etiqueta_datoegresado">Empresa Egresado</label>
             <input id="txt_empresaegresado" class="texto_datoegresado" type="text" value="<?= $datosegresado[0]->empresa_egresado?>">
         </div>
     </div>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <label class="etiqueta_datoegresado">Ocupación/Cargo Egresado</label>
             <input id="txt_ocupacionegresado" class="texto_datoegresado" type="text" value="<?= $datosegresado[0]->ocupacion_egresado?>">
         </div>
     </div>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <label class="etiqueta_datoegresado">Dirección Empresa Egresado</label>
             <input id="txt_direccionempresaegresado" class="texto_datoegresado" type="text" value="<?= $datosegresado[0]->direccion_empresa_egresado?>">
         </div>
     </div>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <label class="etiqueta_datoegresado">Teléfono Empresa Egresado</label>
             <input id="txt_telefonoempresaegresado" class="texto_datoegresado" type="text" value="<?= $datosegresado[0]->telefono_empresa_egresado?>" onkeypress="return soloNumeros(event);">
         </div>
     </div>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <input id="btn_actualizardatosegresado" class="boton_actualizardatosegresado" type="button" value="Actualizar Datos">
         </div>
     </div>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <label class="etiqueta_secciondatosegresado">Seguimiento a Egresado</label>
         </div>
     </div>
     <? if(!empty($seguimiento)): ?>
-        <div id="dv_opcionesresultadoseguimientoegresados">
+        <div class="contenedor_opcionesresultadoseguimientoegresados">
             <div>
                 <label class="etiqueta_datoegresado">Fecha Último Seguimiento</label>
                 <input class="texto_datoegresado" type="text" value="<?
@@ -82,19 +82,19 @@
             </div>
         </div>
     <? endif; ?>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <label class="etiqueta_datoegresado">Observación/Descripción</label>
             <textarea id="txt_observacionseguimiento" class="texto_datoegresado texto_seguimientoegresado" rows="5"></textarea>
         </div>
     </div>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <label class="etiqueta_datoegresado etiqueta_llamadaseguimientoegresado">LLamada</label>
             <input class="caja_llamadaseguimientoegresado" type="checkbox" name="llamada" value="1">
         </div>
     </div>
-    <div id="dv_opcionesresultadoseguimientoegresados">
+    <div class="contenedor_opcionesresultadoseguimientoegresados">
         <div>
             <input id="btn_seguimientoegresado" class="boton_seguimientoegresado" type="button" value="Registrar Seguimiento">
         </div>

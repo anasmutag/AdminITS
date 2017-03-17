@@ -125,7 +125,7 @@
                     tiponota: tiponota,
                     idmateria: idmateria,
                     notas: JSON.stringify(notas),
-                    docente: <?= Auth::get('id_docente')?>
+                    docente: <?= (Auth::get('rol_usuario')==='docente')?Auth::get('id_docente'):'0';?>
                 },
                 dataType: 'json',
                 beforeSend: function(){

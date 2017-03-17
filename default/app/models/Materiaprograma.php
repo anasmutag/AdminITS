@@ -24,4 +24,18 @@ class Materiaprograma extends ActiveRecord {
                     and id_docente = $docente",
                 "order: nombre_materia" );
     }
+    
+    public function validarNotaConvalidacion($programa, $semestre, $materia, $documento) {
+        if ($this->find("columns: count(*) as resultado",
+                "join: join materia on materiaprograma.id_materia = materia.id_materia join nota on materia.id_materia = nota.id_materia",
+                "conditions: id_programa = $programa
+                    and semestre = $semestre
+                    and materiaprograma.id_materia = $materia
+                    and nota.id_alumno = (select id_alumno from alumno where identificacion_alumno = $documento)",
+                "order: semestre,nombre_materia")[0]->resultado > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
